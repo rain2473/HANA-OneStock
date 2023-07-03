@@ -1,2 +1,0 @@
-# HANA-OneStock
-HANA-OneStock
