@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.stock.model.dao.FundamentalMapper">
+    <select id="findAll" parameterType="com.hanaonestock.stock.model.dto.Fundamental" resultType="com.hanaonestock.stock.model.dto.Fundamental">
+        SELECT *
+        FROM fundamental where s_date = '20230704'
+    </select>
+</mapper>
