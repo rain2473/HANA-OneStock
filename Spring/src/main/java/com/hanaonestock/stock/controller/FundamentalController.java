@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class FundamentalController {
 
-    private final FundamentalService fundamentalService;
-
-    @Autowired
-    public FundamentalController(FundamentalService fundamentalService) {
-        this.fundamentalService = fundamentalService;
-    }
-
+//    private final FundamentalService fundamentalService;
+//
+//    @Autowired
+//    public FundamentalController(FundamentalService fundamentalService) {
+//        this.fundamentalService = fundamentalService;
+//    }
+//
 
 }
