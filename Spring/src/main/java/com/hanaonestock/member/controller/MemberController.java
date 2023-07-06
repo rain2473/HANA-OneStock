@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -18,6 +19,14 @@ public class MemberController {
     private final MemberService memberService;
     @Autowired
     public MemberController(MemberService memberService) {this.memberService = memberService;}
+
+    @RequestMapping("/")
+    public ModelAndView index() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+        return mav;
+    }
+
     @ResponseBody
     @GetMapping(value="/main")
     public ResponseEntity<String>  index(Model model) {
