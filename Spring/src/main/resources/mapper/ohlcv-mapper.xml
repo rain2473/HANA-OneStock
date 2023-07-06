@@ -3,7 +3,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hanaonestock.stock.model.dao.OhlcvMapper">
-    <select id="findAll" parameterType="com.hanaonestock.stock.model.dto.Ohlcv" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
-        select * from ohlcv where isin = '095570'
+    <select id="findAll" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        select * from ohlcv
     </select>
+
+    <insert id="insertData" parameterType="com.hanaonestock.stock.model.dto.Ohlcv">
+        INSERT INTO OHLCV
+            (isin, s_date, open, high, low, close, volume, amount, updown)
+        VALUES
+            (#{isin}, #{s_date}, #{open}, #{high}, #{low}, #{close}, #{volume}, #{amount}, #{updown})
+    </insert>
+
 </mapper>

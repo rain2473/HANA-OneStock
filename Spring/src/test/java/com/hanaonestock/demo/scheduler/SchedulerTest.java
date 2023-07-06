@@ -7,15 +7,18 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
-//@SpringBootTest
+import static com.hanaonestock.scheduler.Scheduler.fundamentalStr;
+import static com.hanaonestock.scheduler.Scheduler.ohlcvStr;
+
+// @SpringBootTest
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(AutoAppConfig.class)
-//@Transactional  // 롤백을 위한 트랜잭션 설정
+@Transactional
 public class SchedulerTest {
 
     @Autowired
@@ -23,9 +26,9 @@ public class SchedulerTest {
 
     @Test
     @DisplayName("스케줄링 - restful get 요청 테스트")
-//    @Transactional  // 롤백을 위한 트랜잭션 설정
     void restfulTest() {
-        System.out.println(scheduler.getResquestString());
+        System.out.println(scheduler.getResquestJson(ohlcvStr));
+        System.out.println(scheduler.getResquestJson(fundamentalStr));
         scheduler.runAt4PMGet();
     }
 }

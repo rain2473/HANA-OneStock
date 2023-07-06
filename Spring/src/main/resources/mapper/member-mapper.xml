@@ -5,7 +5,7 @@
 <mapper namespace="com.hanaonestock.member.model.dao.MemberMapper">
     <select id="getAllMember" parameterType="com.hanaonestock.member.model.dto.Member" resultType="com.hanaonestock.member.model.dto.Member">
         SELECT id
-        , name
+             , name
         FROM member
     </select>
 </mapper>
