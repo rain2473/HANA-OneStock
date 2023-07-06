@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="../../resources/style/main.css">
+    <style>
+        .highlight {
+            color: #008485;
+            white-space: nowrap;
+            display: inline-block;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: 900;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #888888;
+        }
+
+        p {
+            color: #888888;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .btn {
+            display: inline-block;
+            position: relative;
+            text-align: center;
+            background-color: #008485;
+            color: white;
+            border-radius: 20px;
+            font-size: 25px;
+            width: 250px;
+            height: 60px;
+            line-height: 60px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #006363;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <img src="../../resources/img/logo.png" height="40">
+        <div class="justify-content-end">
+            <ul class="justify-content-end">
+                <li class="nav-list">
+                    <div class="nav-menu">서비스소개</div>
+                <li class="nav-list">
+                    <div class="nav-menu">마이페이지</div>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="main">
+        <div class="animate__animated animate__slideInLeft slow 4s">
+            <h1><span class="highlight">HANA - One Stock</span> SMART TRADING</h1>
+        </div>
+        <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
+        <div onclick="openModal()">
+            <a href="#" class="btn">시작하기</a>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <img src="/static" alt="">
+        </div>
+        <div class="modal-body">
+            <h3>로그인</h3>
+            <button class="button">로그인 카카오로 계속하기</button>
+            <button class="button">네이버로 계속하기</button>
+            <button class="button">이메일로 로그인</button>
+            <button class="button">이메일로 회원가입</button>
+
+        </div>
+        <span class="close" onclick="closeModal()">&times;</span>
+    </div>
+</div>
+
+<footer>
+    <hr>
+    <p>
+        <span>고객센터 1800-0000</span><br/>
+        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
+        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
+        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
+    </p>
+    <br>
+    <div class="footer_btns">
+        <div class="moveTopBtn">맨 위로</div>
+        <div class="moveBottomBtn">맨 아래로</div>
+    </div>
+</footer>
+<script>
+    // 모달 열기 함수
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    // 모달 닫기 함수
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // footer.html
+    $(document).ready(function() {
+        // 현재 URL을 가져와서 활성화된 링크를 찾음
+        var currentURL = window.location.href;
+
+        $('.nav-link').each(function() {
+            // 각 링크의 href 속성 값을 가져옴
+            var linkURL = $(this).attr('href');
+
+            // 현재 URL과 href 속성 값이 일치하는 경우 "active" 클래스를 추가함
+            if (currentURL.indexOf(linkURL) !== -1) {
+                $(this).addClass('active');
+            }
+        });
+    });
+
+    // 페이지 이동 버튼
+    const $topBtn = document.querySelector(".moveTopBtn");
+
+    // 버튼 클릭 시 맨 위로 이동
+    $topBtn.onclick = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    const $bottomBtn = document.querySelector(".moveBottomBtn");
+
+    // 버튼 클릭 시 맨 아래로 이동
+    $bottomBtn.onclick = () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    };
+</script>
+</body>
+</html>
