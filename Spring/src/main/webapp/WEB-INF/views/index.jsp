@@ -8,6 +8,7 @@
 <body>
 <div>
     <h1>인덱스 찾아줘</h1>
+    <a href="/oauth2/authorization/kakao" class="btn btn-third active" role="button">Kakao Login</a>
 </div>
 </body>
 </html>

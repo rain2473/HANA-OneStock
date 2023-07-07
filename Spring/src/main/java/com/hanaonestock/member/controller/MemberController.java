@@ -7,12 +7,15 @@ import com.hanaonestock.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MemberController {
@@ -28,7 +31,7 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping(value="/main")
+    @GetMapping(value="/api/main")
     public ResponseEntity<String>  index(Model model) {
         List<Member> memberList = memberService.getAllMember();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -41,4 +44,6 @@ public class MemberController {
         model.addAttribute("memberList",memberList);
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
+
+
 }

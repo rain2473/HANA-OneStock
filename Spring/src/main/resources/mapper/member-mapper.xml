@@ -4,8 +4,11 @@
 
 <mapper namespace="com.hanaonestock.member.model.dao.MemberMapper">
     <select id="getAllMember" parameterType="com.hanaonestock.member.model.dto.Member" resultType="com.hanaonestock.member.model.dto.Member">
-        SELECT id
-             , name
+        SELECT
+        *
         FROM member
     </select>
+    <insert id="updateOrSaveUser" parameterType="com.hanaonestock.member.model.dto.Member">
+        INSERT INTO member(id,email,name) VALUES (seq_member.NEXTVAL,#{email},#{name})
+    </insert>
 </mapper>
