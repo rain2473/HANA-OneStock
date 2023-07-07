@@ -9,13 +9,14 @@ import com.hanaonestock.stock.model.dto.Ohlcv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 
 @Component
 public class Scheduler {
@@ -61,8 +62,7 @@ public class Scheduler {
         try {
             // Remove the starting and ending double quotes from the JSON string
             json = json.substring(1, json.length() - 1);
-            List<Ohlcv> Ohlcvs = mapper.readValue(json, new TypeReference<List<Ohlcv>>() {
-            });
+            List<Ohlcv> Ohlcvs = mapper.readValue(json, new TypeReference<List<Ohlcv>>() {});
             return Ohlcvs;
 
         } catch (Exception e) {
@@ -71,7 +71,7 @@ public class Scheduler {
         }
     }
 
-    // @Scheduled(cron = "0 0 16 * * ?")
+    @Scheduled(cron = "0 0 16 * * ?")
     public void runAt4PMGet() {
 
         String fundamentalJson = getResquestJson(fundamentalStr);
@@ -80,26 +80,35 @@ public class Scheduler {
         List<Fundamental> fundamentals = createFundamentalsFromJson(fundamentalJson);
         List<Ohlcv> ohlcvs = createOhlcvsFromJson(ohlcvJson);
 
-        for (Fundamental fundamental : fundamentals) {
-            System.out.println(fundamental.toString());
-        }
-        for (Ohlcv ohlcv : ohlcvs) {
-            System.out.println(ohlcv.toString());
-        }
-
-        saveFundamental(fundamentals);
         saveOhlcv(ohlcvs);
+        saveFundamental(fundamentals);
     }
 
     private void saveFundamental(List<Fundamental> fundamentals) {
-        for (Fundamental fundamental : fundamentals) {
-            fundamentalMapper.insertData(fundamental);
+        Fundamental tmp = null;
+        try {
+            for (Fundamental fundamental : fundamentals) {
+                fundamental.setIsin(fundamental.getIsin().toUpperCase());
+                tmp = fundamental;
+                fundamentalMapper.insertData(fundamental);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(tmp.toString());
         }
     }
 
     private void saveOhlcv(List<Ohlcv> ohlcvs) {
-        for (Ohlcv ohlcv : ohlcvs) {
-            ohlcvMapper.insertData(ohlcv);
+        Ohlcv tmp = null;
+        try {
+            for (Ohlcv ohlcv : ohlcvs) {
+                ohlcv.setIsin(ohlcv.getIsin().toUpperCase());
+                tmp = ohlcv;
+                ohlcvMapper.insertData(ohlcv);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(tmp.toString());
         }
     }
 }
