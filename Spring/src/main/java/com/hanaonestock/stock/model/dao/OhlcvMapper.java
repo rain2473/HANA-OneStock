@@ -10,4 +10,8 @@ public interface OhlcvMapper {
 
     List<Ohlcv> findAll();
 
+    Ohlcv findByIsinAndDate(String isin, String Date);
+
+    void insertData(Ohlcv ohlcv);
+
 }
