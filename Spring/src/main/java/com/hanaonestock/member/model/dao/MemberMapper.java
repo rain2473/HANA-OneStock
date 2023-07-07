@@ -7,4 +7,5 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
     List<Member> getAllMember();
+    void updateOrSaveUser(Member member);
 }
