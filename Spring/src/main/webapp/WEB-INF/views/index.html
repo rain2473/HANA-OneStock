@@ -1,60 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../resources/style/main.css">
-    <style>
-        .highlight {
-            color: #008485;
-            white-space: nowrap;
-            display: inline-block;
-            margin: 0;
-        }
-
-        h1 {
-            font-size: 50px;
-            font-weight: 900;
-        }
-
-        h3 {
-            font-size: 20px;
-            color: #888888;
-        }
-
-        p {
-            color: #888888;
-        }
-
-        .main {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .btn {
-            display: inline-block;
-            position: relative;
-            text-align: center;
-            background-color: #008485;
-            color: white;
-            border-radius: 20px;
-            font-size: 25px;
-            width: 250px;
-            height: 60px;
-            line-height: 60px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #006363;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../../resources/style/index.css">
 </head>
 <body>
 <header>
@@ -63,9 +13,9 @@
         <div class="justify-content-end">
             <ul class="justify-content-end">
                 <li class="nav-list">
-                    <div class="nav-menu">서비스소개</div>
+                    <a class="nav-menu">서비스소개</a>
                 <li class="nav-list">
-                    <div class="nav-menu">마이페이지</div>
+                    <a class="nav-menu" onclick="openModal()">로그인</a>
             </ul>
         </div>
     </nav>
@@ -86,15 +36,29 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <img src="/static" alt="">
+            <img src="../../resources/img/logo2.png" width="205">
         </div>
         <div class="modal-body">
-            <h3>로그인</h3>
-            <button class="button">로그인 카카오로 계속하기</button>
-            <button class="button">네이버로 계속하기</button>
-            <button class="button">이메일로 로그인</button>
-            <button class="button">이메일로 회원가입</button>
-
+            <div class="form-body">
+                <h2>로그인</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="username">아이디</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">비밀번호</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <input type="submit" class="button" value="로그인">
+                    <button class="button" onclick="redirectToJoin()">회원가입</button>
+                </form>
+                <br>
+                <a href="#" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20"> 카카오로 시작하기</a>
+            </div>
+            <div class="text">
+                <p>소셜 계정으로 로그인 또는 가입 시 <br>개인정보 처리 방침 및 서비스 이용약관에 동의한 것으로 간주합니다.</p>
+            </div>
         </div>
         <span class="close" onclick="closeModal()">&times;</span>
     </div>
@@ -109,11 +73,8 @@
         <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
     </p>
     <br>
-    <div class="footer_btns">
-        <div class="moveTopBtn">맨 위로</div>
-        <div class="moveBottomBtn">맨 아래로</div>
-    </div>
 </footer>
+
 <script>
     // 모달 열기 함수
     function openModal() {
@@ -125,36 +86,11 @@
         document.getElementById("myModal").style.display = "none";
     }
 
-    // footer.html
-    $(document).ready(function() {
-        // 현재 URL을 가져와서 활성화된 링크를 찾음
-        var currentURL = window.location.href;
-
-        $('.nav-link').each(function() {
-            // 각 링크의 href 속성 값을 가져옴
-            var linkURL = $(this).attr('href');
-
-            // 현재 URL과 href 속성 값이 일치하는 경우 "active" 클래스를 추가함
-            if (currentURL.indexOf(linkURL) !== -1) {
-                $(this).addClass('active');
-            }
-        });
-    });
-
-    // 페이지 이동 버튼
-    const $topBtn = document.querySelector(".moveTopBtn");
-
-    // 버튼 클릭 시 맨 위로 이동
-    $topBtn.onclick = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    // 회원가입 페이지 이동
+    function redirectToJoin() {
+        window.location.href = "join.html";
     }
 
-    const $bottomBtn = document.querySelector(".moveBottomBtn");
-
-    // 버튼 클릭 시 맨 아래로 이동
-    $bottomBtn.onclick = () => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    };
 </script>
 </body>
 </html>

@@ -1,10 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="../../resources/style/main.css">
+    <link rel="stylesheet" href="../../resources/style/test.css">
 </head>
 <body>
-$END$
+<header>
+    <nav>
+        <a href="index.html">
+            <img src="../../resources/img/logo.png" height="40">
+        </a>
+        <div>
+            <ul>
+                <li class="nav-list">
+                    <a class="nav-menu">서비스소개</a>
+                <li class="nav-list">
+                    <a class="nav-menu">마이페이지</a>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="test">
+        <h1>투자성향진단이란?</h1>
+        <p>회사가 고객의 투자목적, 재산 및 소득상황, 투자경험, 금융상품에 관한 지식, 위험선호도, 투자예정기간 등을 감안한 적합한 투자 권유를 하기 위하여 제출 받는 서류입니다.</p>
+        <hr>
+        <h1>투자정보</h1>
+        <h2>01 고객님께서 투자하고자 하는 자금의 투자가능기간은 얼마나 되십니까?</h2>
+        <div class="investment-duration">
+            <input type="radio" id="du1" name="duration" value="du1">
+            <label for="du1">6개월 이내</label>
+            <input type="radio" id="du2" name="duration" value="du2">
+            <label for="du2">6개월 이상 1년 이내</label>
+            <input type="radio" id="du3" name="duration" value="du3">
+            <label for="du3">1년 이상</label>
+            <input type="radio" id="du4" name="duration" value="du4">
+            <label for="du4">3년 이상</label>
+        </div>
+        <div class="investment-experience">
+            <h2>02. 다음 중 고객님의 투자경험과 가장 가까운 금융상품은 어느 것입니까? (중복응답 가능)</h2>
+            <label>
+                <input type="radio" id="ex1" name="experience" value="ex1">
+                은행 예.적금, 국채, 지방채, 보증채, MMF, CMA 등
+            </label><br>
+            <label>
+                <input type="radio" id="ex2" name="experience" value="ex2">
+                금융채, 신용도가 높은 회사채, 채권형 펀드, 원금보장형 ELS 등
+            </label>
+            <br>
+            <label>
+                <input type="radio" id="ex3" name="experience" value="ex3">
+                신용도 중간 등급의 회사채, 원금의 일부만 보장되는 ELS, 혼합형 펀드 등
+            </label>
+            <br>
+            <label>
+                <input type="radio" id="ex4" name="experience" value="ex4">
+                신용도가 낮은 회사채, 주식, 원금이 보장되지 않는 ELS, 시장수익율 수준의 수익을 추구하는 주식형펀드 등
+            </label>
+            <br>
+            <label>
+                <input type="radio" id="ex5" name="experience" value="ex5">
+                ELW, 선물옵션, 시장수익율 이상의 수익을 추구하는 주식형펀드, 파생상품펀드, 주식 신용거래 등
+            </label>
+        </div>
+        <div class="investment-level">
+            <h2>03. 고객님께서는 금융상품 투자에 대한 본인의 지식수준이 어느 정도라고 생각하십니까?</h2>
+            <label>
+                <input type="radio" id="le1" name="level" value="le1">
+                매우 낮은 수준 (투자의사결정을 스스로 내려본 경험이 없는 정도)
+            </label>
+            <br>
+            <label>
+                <input type="radio" id="le2" name="level" value="le2">
+                낮은 수준 (주식과 채권의 차이를 구별할 수 있는 정도)
+            </label>
+            <br>
+            <label>
+                <input type="radio" id="le3" name="level" value="le3">
+                높은 수준 (투자할 수 있는 대부분의 금융상품의 차이를 구별할 수 있는 정도)
+            </label>
+            <br>
+            <label>
+                <input type="radio" id="le4" name="level" value="le4">
+                매우 높은 수준 (금융상품을 비롯하여 모든 투자대상 상품의 차이를 이해할 수 있는 정도)
+            </label>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <hr>
+    <p>
+        <span>고객센터 1800-0000</span><br/>
+        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
+        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
+        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
+    </p>
+    <br>
+</footer>
 </body>
 </html>
