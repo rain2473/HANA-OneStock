@@ -3,7 +3,6 @@ package com.hanaonestock.stock.model.dao;
 import com.hanaonestock.stock.model.dto.Fundamental;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,5 +10,9 @@ import java.util.List;
 public interface FundamentalMapper {
 
     List<Fundamental> findAll();
+
+    Fundamental findByIsinAndDate(String isin, String Date);
+
+    void insertData(Fundamental fundamental);
 
 }

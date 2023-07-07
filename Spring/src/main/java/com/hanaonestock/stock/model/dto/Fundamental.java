@@ -2,17 +2,18 @@ package com.hanaonestock.stock.model.dto;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 @Data
 public class Fundamental {
 
     private String isin;
-    private String date;
-    private String per;
-    private String eps;
-    private String bps;
-    private String pbr;
-    private String div;
-    private String dps;
+    private String s_date;
+    private double per;
+    private int eps;
+    private int bps;
+    private double pbr;
+    private int div;
+    private int dps;
 
 }
