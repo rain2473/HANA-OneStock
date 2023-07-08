@@ -8,4 +8,8 @@ import java.util.List;
 public interface MemberMapper {
     List<Member> getAllMember();
     void updateOrSaveUser(Member member);
+    void insertMember(Member member);
+    int selectOneMember(int id);
+    boolean updateMember(int id);
+    boolean deleteMember(int id);
 }

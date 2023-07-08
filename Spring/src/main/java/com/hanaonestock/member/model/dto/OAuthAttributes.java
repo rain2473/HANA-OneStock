@@ -5,7 +5,6 @@ import java.util.function.Function;
 
 public enum OAuthAttributes {
     KAKAO("kakao", (attribute) -> {
-        System.out.println("kakao");
         Map<String, Object> account = (Map)attribute.get("kakao_account");
         Map<String, String> profile = (Map)account.get("profile");
 

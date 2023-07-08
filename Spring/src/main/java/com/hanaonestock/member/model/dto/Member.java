@@ -15,6 +15,7 @@ public class Member {
     private String name; // 사용자 이름
     private String email; // 사용자의 이메일
     private String pw;
+    private String tel;
     public Member() {
 
     }
