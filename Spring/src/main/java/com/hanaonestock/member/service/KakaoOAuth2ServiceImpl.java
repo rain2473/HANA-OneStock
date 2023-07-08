@@ -32,7 +32,6 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
-
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 로그인을 수행한 서비스의 이름
 
         String userNameAttributeName = userRequest
@@ -45,7 +44,7 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
 
         Member userProfile = OAuthAttributes.extract(registrationId, attributes);
 
-
+        //selectMember()
         updateOrSaveUser(userProfile);
 
         Map<String, Object> customAttribute =
@@ -62,7 +61,6 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
                                   Map<String, Object> attributes,
                                   Member member) {
         Map<String, Object> customAttribute = new ConcurrentHashMap<>();
-
         customAttribute.put(userNameAttributeName, attributes.get(userNameAttributeName));
         customAttribute.put("name", member.getName());
         customAttribute.put("email", member.getEmail());
@@ -71,7 +69,7 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
     }
 
 
-    // 회원 정보를 업데이트하거나 저장
+    // 회원 정보를 업데이트하거나 저장ge
     public void updateOrSaveUser(Member userProfile) {
         memberMapper.updateOrSaveUser(userProfile);
     }

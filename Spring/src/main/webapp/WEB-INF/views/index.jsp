@@ -52,10 +52,12 @@
                         <input type="password" id="password" name="password">
                     </div>
                     <input type="submit" class="button" value="로그인">
-                    <button class="button" onclick="redirectToJoin()">회원가입</button>
+
                 </form>
                 <br>
-                <a href="#" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20"> 카카오로 시작하기</a>
+                <a href="/oauth2/authorization/kakao" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20"> 카카오로 시작하기</a>
+                <a href="/oauth/logout" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20">로그아웃</a>
+                <button class="button" onclick="redirectToJoin()">회원가입</button>
             </div>
             <div class="text">
                 <p>소셜 계정으로 로그인 또는 가입 시 <br>개인정보 처리 방침 및 서비스 이용약관에 동의한 것으로 간주합니다.</p>
@@ -89,7 +91,7 @@
 
     // 회원가입 페이지 이동
     function redirectToJoin() {
-        window.location.href = "join.html";
+        window.location.href = "join";
     }
 
 </script>

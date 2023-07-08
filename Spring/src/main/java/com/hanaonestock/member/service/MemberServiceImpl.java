@@ -18,4 +18,43 @@ public class MemberServiceImpl implements MemberService{
     public List<Member> getAllMember(){
         return memberMapper.getAllMember();
     }
+
+    @Override
+    public boolean insertMember(Member member){
+        try {
+            memberMapper.insertMember(member);
+            return true;
+        } catch (Exception e) {
+            // insert 작업 실패
+            return false;
+        }
+    }
+    @Override
+    public int selectOneMember(int id) {
+        try {
+            return memberMapper.selectOneMember(id);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    @Override
+    public boolean updateMember(int id, Member updatedMember) {
+        try {
+            memberMapper.updateMember(id);
+            return true;
+        } catch (Exception e) {
+            // insert 작업 실패
+            return false;
+        }
+    }
+    @Override
+    public boolean deleteMember(int id) {
+        try {
+            memberMapper.deleteMember(id);
+            return true;
+        } catch (Exception e) {
+            // insert 작업 실패
+            return false;
+        }
+    }
 }

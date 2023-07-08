@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,13 @@ public class MemberController {
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+        return mav;
+    }
+
+    @RequestMapping("/join")
+    public ModelAndView join() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("join_1"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
         return mav;
     }
 
@@ -45,5 +53,46 @@ public class MemberController {
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
 
+    @PostMapping("/insertMember")
+    public ResponseEntity<String> insertMember(@ModelAttribute Member member) {
+        // 회원 등록
+        boolean isSuccess = memberService.insertMember(member);
 
+        if (isSuccess) {
+            return ResponseEntity.ok("회원 등록 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 등록 실패");
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value="/idCheck")
+    public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") int id) {
+        // id 중복 체크
+        boolean isExists = memberService.selectOneMember(id) > 0;
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", isExists);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/updateMember/{id}")
+    public ResponseEntity<String> updateMember(@PathVariable("id") int id, @RequestBody Member updatedMember) {
+        // id에 해당하는 회원을 찾아서 업데이트
+        boolean isSuccess = memberService.updateMember(id, updatedMember);
+
+        if (isSuccess) {
+            return ResponseEntity.ok("회원 수정 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 수정 실패");
+        }
+    }
+    @PostMapping("/deleteMember/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable("id") int id) {
+        // id에 해당하는 회원을 삭제
+        boolean isSuccess = memberService.deleteMember(id);
+        if (isSuccess) {
+            return ResponseEntity.ok("회원 삭제 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 삭제 실패");
+        }
+    }
 }
