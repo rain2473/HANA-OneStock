@@ -5,7 +5,9 @@ import com.hanaonestock.member.model.dto.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -30,7 +32,7 @@ public class MemberServiceImpl implements MemberService{
         }
     }
     @Override
-    public int selectOneMember(int id) {
+    public int selectOneMember(String id) {
         try {
             return memberMapper.selectOneMember(id);
         } catch (Exception e) {
@@ -38,7 +40,7 @@ public class MemberServiceImpl implements MemberService{
         }
     }
     @Override
-    public boolean updateMember(int id, Member updatedMember) {
+    public boolean updateMember(String id, Member updatedMember) {
         try {
             memberMapper.updateMember(id);
             return true;
@@ -48,13 +50,31 @@ public class MemberServiceImpl implements MemberService{
         }
     }
     @Override
-    public boolean deleteMember(int id) {
+    public boolean deleteMember(String id) {
         try {
             memberMapper.deleteMember(id);
             return true;
         } catch (Exception e) {
             // insert 작업 실패
             return false;
+        }
+    }
+
+    @Override
+    public int loginMember(HashMap<String, String> loginData) {
+        try {
+            return memberMapper.loginMember(loginData);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public int selectNameAndEmail(HashMap<String, String> kakaoLogin) {
+        try {
+            return memberMapper.selectNameAndEmail(kakaoLogin);
+        } catch (Exception e) {
+            return 0;
         }
     }
 }

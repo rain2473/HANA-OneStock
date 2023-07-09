@@ -9,21 +9,27 @@
         *
         FROM member
     </select>
-    <!-- 회원 등록 테스트 -->
-    <insert id="updateOrSaveUser" parameterType="com.hanaonestock.member.model.dto.Member">
-        INSERT INTO member(id,email,name) VALUES (seq_member.NEXTVAL,#{email},#{name})
-    </insert>
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="com.hanaonestock.member.model.dto.Member">
-        INSERT INTO member(id,email,name,pw) VALUES (#{id},#{email},#{name},#{pw})
+            INSERT INTO member_test(m_id,id,password,name,email,phone) VALUES (M_ID_seq.NEXTVAL,#{id},#{pw},#{name},#{email},#{tel})
     </insert>
     <!-- 회원 아이디 조회 -->
-    <select id="selectOneMember" parameterType="int" resultType="int">
+    <select id="selectOneMember" parameterType="String" resultType="int">
         SELECT
         count(*)
-        FROM member where id=#{id}
+        FROM member_test where id=#{id}
     </select>
-
+    <!-- 로그인 -->
+    <select id="loginMember" parameterType="HashMap" resultType="int">
+        SELECT
+        *
+        FROM member_test where id=#{id} and password=#{pw}
+    </select>
+    <select id="selectNameAndEmail" parameterType="HashMap" resultType="int">
+        SELECT
+        count(*)
+        FROM member_test where email=#{email} and name=#{name}
+    </select>
     <!--    &lt;!&ndash; 회원 수정 &ndash;&gt;-->
     <!--    <update id="updateMember" parameterType="u">-->
     <!--        update member set-->
