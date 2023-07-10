@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,7 @@ public class TransactionServiceImpl implements TransactionService {
     private LocalDate currentDate = LocalDate.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private String now = currentDate.format(formatter);
+
     @Autowired
     public TransactionServiceImpl(TransactionMapper transactionMapper, OhlcvMapper ohlcvMapper, StockMapper stockMapper) {
         this.transactionMapper = transactionMapper;
@@ -32,6 +34,9 @@ public class TransactionServiceImpl implements TransactionService {
         this.stockMapper = stockMapper;
     }
 
+    /**
+     *  매수 기능 : buyDto 활용 transaction 테이블에 매수 내역 기록
+     */
     @Override
     public int buy(BuyDto buyDto) {
         int state = 0;
@@ -45,13 +50,16 @@ public class TransactionServiceImpl implements TransactionService {
 
         try {
             state = transactionMapper.insertBuyTransaction(buyTransaction);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return state;
     }
 
+    /**
+     *  매도 기능 : sellDto 활용 transaction 테이블에 매도 내용 업데이트
+     */
     @Override
     public int sell(SellDto sellDto) {
         int state = 0;
@@ -59,22 +67,24 @@ public class TransactionServiceImpl implements TransactionService {
         sellTransaction.setId(sellDto.getId());
         sellTransaction.setIsin(sellDto.getIsin());
         sellTransaction.setSell(sellDto.getPrice());
-        sellTransaction.setVolume(sellDto.getVolume());
         sellTransaction.setDateSell(now);
         sellTransaction.setDuration("S");
 
         try {
             state = transactionMapper.updateSellTransaction(sellTransaction);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return state;
     }
 
+    /**
+     * 종목 검색 기능 : 종목코드, 종목명 입력시 해당 주식 종목의 모든(10년치) ohlcv 데이터를 반환.
+     */
     @Override
-    public Ohlcv search(String input) {
-        Ohlcv ohlcv = null;
+    public List<Ohlcv> search(String input) {
+        List<Ohlcv> ohlcvList = null;
         Stock stock;
         Optional<Stock> stockOptional;
 
@@ -84,21 +94,19 @@ public class TransactionServiceImpl implements TransactionService {
             // 이름 검색 결과 확인
             if (stockOptional.isPresent()) {
                 stock = stockOptional.get();
-                ohlcv = ohlcvMapper.findByIsin(stock.getIsin()).get();
+                ohlcvList = ohlcvMapper.findByIsin(stock.getIsin());
             } else {
                 // 이름 검색 결과 없음
                 stockOptional = stockMapper.findByIsin(input);
-
                 // isin 검색 결과 확인
                 if (stockOptional.isPresent()) {
-                    stock = stockOptional.get();
-                    ohlcv = ohlcvMapper.findByIsin(stock.getIsin()).get();
+                    ohlcvList = ohlcvMapper.findByIsin(stockOptional.get().getIsin());
                 }
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return ohlcv;
+        return ohlcvList;
     }
 }

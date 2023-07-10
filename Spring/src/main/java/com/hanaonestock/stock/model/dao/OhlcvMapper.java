@@ -15,7 +15,7 @@ public interface OhlcvMapper {
 
     Optional<Ohlcv> findByIsinAndDate(@Param("isin")String isin, @Param("date")String date);
 
-    Optional<Ohlcv> findByIsin(String isin);
+    List<Ohlcv> findByIsin(String isin);
 
     int insertData(Ohlcv ohlcv);
 
