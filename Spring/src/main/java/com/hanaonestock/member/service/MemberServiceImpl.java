@@ -20,17 +20,11 @@ public class MemberServiceImpl implements MemberService{
     public List<Member> getAllMember(){
         return memberMapper.getAllMember();
     }
-
     @Override
-    public boolean insertMember(Member member){
-        try {
-            memberMapper.insertMember(member);
-            return true;
-        } catch (Exception e) {
-            // insert 작업 실패
-            return false;
-        }
+    public void insertMember(Member member) {
+        memberMapper.insertMember(member);
     }
+
     @Override
     public int selectOneMember(String id) {
         try {
@@ -78,3 +72,5 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 }
+
+

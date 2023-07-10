@@ -42,7 +42,7 @@ public class KakaoOAuth2Controller {
             mav.addObject("message", "가입이 필요합니다.");
             mav.addObject("name", name);
             mav.addObject("email", email);
-            mav.setViewName("join_1");
+            mav.setViewName("join");
         }else {
             mav.addObject("msg", "이미 가입된 회원입니다.");
             mav.addObject("loc", "/");
@@ -75,6 +75,5 @@ public class KakaoOAuth2Controller {
         }
         return "redirect:/";
     }
-
 
 }

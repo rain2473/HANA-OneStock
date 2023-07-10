@@ -7,8 +7,6 @@ import com.hanaonestock.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +20,11 @@ import java.util.Map;
 @Controller
 public class MemberController {
     private final MemberService memberService;
+
     @Autowired
-    public MemberController(MemberService memberService) {this.memberService = memberService;}
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @RequestMapping("/")
     public ModelAndView index() {
@@ -35,13 +36,17 @@ public class MemberController {
     @RequestMapping("/join")
     public ModelAndView join() {
         ModelAndView mav = new ModelAndView();
+<<<<<<< HEAD
+        mav.setViewName("join"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+=======
         mav.setViewName("join_1"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+>>>>>>> 06393ca2fa55dbda6b34812b3e690a1d5fcfc5cf
         return mav;
     }
 
     @ResponseBody
-    @GetMapping(value="/api/main")
-    public ResponseEntity<String>  index(Model model) {
+    @GetMapping(value = "/api/main")
+    public ResponseEntity<String> index(Model model) {
         List<Member> memberList = memberService.getAllMember();
         ObjectMapper objectMapper = new ObjectMapper();
         String json;
@@ -50,7 +55,7 @@ public class MemberController {
         } catch (JsonProcessingException e) {
             return new ResponseEntity<>("Error processing JSON", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        model.addAttribute("memberList",memberList);
+        model.addAttribute("memberList", memberList);
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
 
@@ -70,6 +75,17 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value="/idCheck")
     public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") String id) {
+        // id 중복 체크
+        boolean isExists = memberService.selectOneMember(id) > 0;
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", isExists);
+        return ResponseEntity.ok(response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/idCheck")
+    public ResponseEntity<
+            Map<String, Boolean>> idCheck(@RequestParam("id") String id) {
         // id 중복 체크
         boolean isExists = memberService.selectOneMember(id) > 0;
         Map<String, Boolean> response = new HashMap<>();
@@ -108,4 +124,17 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 실패");
         }
     }
+
+    @PostMapping(value = "/insertMember")
+    @ResponseBody
+    public String insertMember(@RequestBody Member member) {
+        System.out.println(member);
+        try {
+            memberService.insertMember(member);
+            return "회원 등록이 완료되었습니다.";
+        } catch (Exception e) {
+            return "회원 등록에 실패했습니다.";
+        }
+    }
+
 }
