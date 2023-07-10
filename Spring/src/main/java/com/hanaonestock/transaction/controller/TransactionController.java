@@ -22,5 +22,4 @@ public class TransactionController {
         mav.setViewName("trading");
         return mav;
     }
-
 }
