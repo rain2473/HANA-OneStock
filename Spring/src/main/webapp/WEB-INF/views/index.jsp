@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../resources/style/main.css">
     <link rel="stylesheet" href="../../resources/style/index.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 <header>
@@ -42,7 +43,7 @@
         <div class="modal-body">
             <div class="form-body">
                 <h2>로그인</h2>
-                <form>
+                <form id="loginForm" method="post">
                     <div class="form-group">
                         <label for="username">아이디</label>
                         <input type="text" id="username" name="username">
@@ -51,11 +52,13 @@
                         <label for="password">비밀번호</label>
                         <input type="password" id="password" name="password">
                     </div>
-                    <input type="submit" class="button" value="로그인">
-                    <button class="button" onclick="redirectToJoin()">회원가입</button>
+                    <input type="button" class="button" value="로그인" onclick="loginFormFunc(); return false;">
+                    <a href="join" class="button">회원가입</a>
                 </form>
                 <br>
-                <a href="#" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20"> 카카오로 시작하기</a>
+                <a href="/oauth2/authorization/kakao" class="kakao_btn"><img src="../../resources/img/kakao.png"
+                                                                             width="20"> 카카오로 시작하기</a>
+                <a href="/oauth/logout" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20">로그아웃</a>
             </div>
             <div class="text">
                 <p>소셜 계정으로 로그인 또는 가입 시 <br>개인정보 처리 방침 및 서비스 이용약관에 동의한 것으로 간주합니다.</p>
@@ -87,9 +90,34 @@
         document.getElementById("myModal").style.display = "none";
     }
 
-    // 회원가입 페이지 이동
-    function redirectToJoin() {
-        window.location.href = "join.html";
+    // 로그인
+    function loginFormFunc() {
+        var formData = $("#loginForm").serialize();
+        var id = $("#username").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/loginMember",
+            data: JSON.stringify({
+                id: id,
+                password: password
+            }),
+            contentType: 'application/json',
+            error: function (xhr, status, error) {
+                alert(error + "error");
+            },
+            success: function (response) {
+                if (response === "로그인 성공") {
+                    alert("로그인 성공");
+                    var link = document.createElement("a");
+                    link.href = "/";
+                    link.click();
+                } else {
+                    console.error("로그인 실패");
+                }
+            }
+        });
     }
 
 </script>

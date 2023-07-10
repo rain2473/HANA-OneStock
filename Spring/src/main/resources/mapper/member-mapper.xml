@@ -3,12 +3,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hanaonestock.member.model.dao.MemberMapper">
-    <select id="getAllMember" parameterType="com.hanaonestock.member.model.dto.Member" resultType="com.hanaonestock.member.model.dto.Member">
-        SELECT
-        *
+    <!-- 회원 전체 조회 -->
+    <select id="getAllMember" parameterType="com.hanaonestock.member.model.dto.Member"
+            resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT *
         FROM member
     </select>
-    <insert id="updateOrSaveUser" parameterType="com.hanaonestock.member.model.dto.Member">
-        INSERT INTO member(id,email,name) VALUES (seq_member.NEXTVAL,#{email},#{name})
+    <!-- 회원 등록 -->
+    <insert id="insertMember" parameterType="com.hanaonestock.member.model.dto.Member">
+        INSERT INTO member_test (m_id, id, password, name, email, phone)
+        VALUES (M_ID_seq.NEXTVAL, #{id}, #{password}, #{name}, #{email}, #{phoneNumber})
     </insert>
+    <!-- 회원 아이디 조회 -->
+    <select id="selectOneMember" parameterType="String" resultType="int">
+        SELECT count(*)
+        FROM member_test
+        where id = #{id}
+    </select>
+    <!-- 로그인 -->
+    <select id="loginMember" parameterType="HashMap" resultType="int">
+        SELECT *
+        FROM member_test
+        where id = #{id}
+          and password = #{password}
+    </select>
+    <select id="selectNameAndEmail" parameterType="HashMap" resultType="int">
+        SELECT count(*)
+        FROM member_test
+        where email = #{email}
+          and name = #{name}
+    </select>
+
 </mapper>

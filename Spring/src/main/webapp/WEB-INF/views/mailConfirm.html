@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Confirmation</title>
 </head>
 <body>
-$END$
+<h1>Mail Confirmation</h1>
+<p>Please check your email for the confirmation code.</p>
+<p>Confirmation Code: <strong th:text="${code}"></strong></p>
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
 </body>
 </html>

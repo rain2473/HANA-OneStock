@@ -45,9 +45,6 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
 
         Member userProfile = OAuthAttributes.extract(registrationId, attributes);
 
-
-        updateOrSaveUser(userProfile);
-
         Map<String, Object> customAttribute =
                 getCustomAttribute(registrationId, userNameAttributeName, attributes, userProfile);
         // 인증된 사용자를 반환
@@ -68,11 +65,5 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
         customAttribute.put("email", member.getEmail());
 
         return customAttribute;
-    }
-
-
-    // 회원 정보를 업데이트하거나 저장
-    public void updateOrSaveUser(Member userProfile) {
-        memberMapper.updateOrSaveUser(userProfile);
     }
 }
