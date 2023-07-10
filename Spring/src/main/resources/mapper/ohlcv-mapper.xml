@@ -14,4 +14,12 @@
             (#{isin}, #{s_date}, #{open}, #{high}, #{low}, #{close}, #{volume}, #{amount}, #{updown})
     </insert>
 
+    <select id="findByIsinAndDate" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        select * from ohlcv where isin = #{isin} and s_date = #{date}
+    </select>
+
+    <select id="findByIsin" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        select * from ohlcv where isin = #{isin}
+    </select>
+
 </mapper>
