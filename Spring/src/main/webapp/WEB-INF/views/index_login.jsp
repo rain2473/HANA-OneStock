@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <br>
-            <h2>박경덕님, 환영합니다.</h2>
+            <h2>${name} 환영합니다.</h2>
             <span class="close" onclick="closeModal()">&times;</span>
         </div>
         <div class="modal-body">

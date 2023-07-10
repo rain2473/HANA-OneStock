@@ -151,7 +151,7 @@
                     if (response === "회원 등록 성공") {
                         alert("회원 등록 성공");
                         var link = document.createElement("a");
-                        link.href = "/"; // index_login
+                        link.href = "/main";
                         link.click();
                     } else {
                         console.error("회원 등록 실패");

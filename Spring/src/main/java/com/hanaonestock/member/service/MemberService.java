@@ -4,7 +4,6 @@ import com.hanaonestock.member.model.dto.Member;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface MemberService {
     public List<Member> getAllMember();
@@ -17,8 +16,10 @@ public interface MemberService {
 
     int loginMember(HashMap<String, String> loginData);
 
-    int selectNameAndEmail(HashMap<String, String> kakaoLogin);
+    int selectNameAndEmailOfMember(HashMap<String, String> kakaoLogin);
 
     void insertMember(Member member);
+
+    Member selectNameOfMember(String id);
 }
 

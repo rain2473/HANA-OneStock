@@ -25,13 +25,18 @@
         SELECT *
         FROM member_test
         where id = #{id}
-          and password = #{password}
+        and password = #{password}
     </select>
-    <select id="selectNameAndEmail" parameterType="HashMap" resultType="int">
+    <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="int">
         SELECT count(*)
         FROM member_test
         where email = #{email}
           and name = #{name}
+    </select>
+    <select id="selectNameOfMember" parameterType="String" resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT *
+        FROM member_test
+        where id = #{id}
     </select>
 
 </mapper>
