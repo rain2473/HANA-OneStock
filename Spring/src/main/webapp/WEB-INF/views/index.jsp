@@ -40,17 +40,18 @@
         <div class="modal-header">
             <img src="../../resources/img/logo2.png" width="205">
         </div>
+
         <div class="modal-body">
             <div class="form-body">
                 <h2>로그인</h2>
                 <form id="loginForm" method="post">
                     <div class="form-group">
                         <label for="username">아이디</label>
-                        <input type="text" id="username" name="username">
+                        <input type="text" id="username" name="id">
                     </div>
                     <div class="form-group">
                         <label for="password">비밀번호</label>
-                        <input type="password" id="password" name="password">
+                        <input type="password" id="password" name="pw">
                     </div>
                     <input type="button" class="button" value="로그인" onclick="loginFormFunc(); return false;">
                     <a href="join" class="button">회원가입</a>
@@ -78,8 +79,8 @@
     </p>
     <br>
 </footer>
-
-<script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript">
     // 모달 열기 함수
     function openModal() {
         document.getElementById("myModal").style.display = "block";
@@ -119,6 +120,7 @@
             }
         });
     }
+
 
 </script>
 </body>

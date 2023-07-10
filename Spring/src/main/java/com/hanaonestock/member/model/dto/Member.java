@@ -18,6 +18,5 @@ public class Member {
     private String password;
     private String phoneNumber;
     public Member() {
-
     }
 }

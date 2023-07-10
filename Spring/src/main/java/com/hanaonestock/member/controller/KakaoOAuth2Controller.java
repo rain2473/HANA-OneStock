@@ -42,7 +42,11 @@ public class KakaoOAuth2Controller {
             mav.addObject("message", "가입이 필요합니다.");
             mav.addObject("name", name);
             mav.addObject("email", email);
+<<<<<<< HEAD
             mav.setViewName("join");
+=======
+            mav.setViewName("join_1");
+>>>>>>> 06393ca2fa55dbda6b34812b3e690a1d5fcfc5cf
         }else {
             mav.addObject("msg", "이미 가입된 회원입니다.");
             mav.addObject("loc", "/");
@@ -50,6 +54,7 @@ public class KakaoOAuth2Controller {
         }
 
         return mav;
+<<<<<<< HEAD
     }
 
     @GetMapping("/logout")
@@ -77,3 +82,33 @@ public class KakaoOAuth2Controller {
     }
 
 }
+=======
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, Authentication authentication) {
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            // OAuth2 인증 토큰인 경우
+            if (authentication instanceof OAuth2AuthenticationToken) {
+                OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+                String provider = oauthToken.getAuthorizedClientRegistrationId();
+                if ("kakao".equals(provider)) {
+                    // 세션 무효화
+                    HttpSession session = request.getSession(false);
+                    if (session != null) {
+                        session.invalidate();
+                    }
+                    // 카카오 계정 로그아웃 URL로 리다이렉트
+                    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=3e04da871b237fb6169d1ec2b50af7fb&logout_redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F";
+
+                }
+            }
+            // 일반적인 로그아웃 처리
+        }
+        return "redirect:/";
+    }
+
+
+}
+>>>>>>> 06393ca2fa55dbda6b34812b3e690a1d5fcfc5cf
