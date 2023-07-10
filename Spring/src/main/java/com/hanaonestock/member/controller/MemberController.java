@@ -36,11 +36,7 @@ public class MemberController {
     @RequestMapping("/join")
     public ModelAndView join() {
         ModelAndView mav = new ModelAndView();
-<<<<<<< HEAD
         mav.setViewName("join"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
-=======
-        mav.setViewName("join_1"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
->>>>>>> 06393ca2fa55dbda6b34812b3e690a1d5fcfc5cf
         return mav;
     }
 
@@ -57,29 +53,6 @@ public class MemberController {
         }
         model.addAttribute("memberList", memberList);
         return new ResponseEntity<>(json, HttpStatus.OK);
-    }
-
-    @PostMapping("/insertMember")
-    public ResponseEntity<String> insertMember(@ModelAttribute Member member) {
-        // 회원 등록
-        boolean isSuccess = memberService.insertMember(member);
-        if (isSuccess) {
-            RedirectView redirectView = new RedirectView("index");
-            redirectView.setStatusCode(HttpStatus.SEE_OTHER);
-            return ResponseEntity.ok("회원 등록 성공");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 등록 실패");
-        }
-    }
-
-    @ResponseBody
-    @RequestMapping(value="/idCheck")
-    public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") String id) {
-        // id 중복 체크
-        boolean isExists = memberService.selectOneMember(id) > 0;
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("exists", isExists);
-        return ResponseEntity.ok(response);
     }
 
     @ResponseBody
