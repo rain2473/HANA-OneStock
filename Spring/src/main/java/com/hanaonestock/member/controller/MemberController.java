@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,16 +58,18 @@ public class MemberController {
     public ResponseEntity<String> insertMember(@ModelAttribute Member member) {
         // 회원 등록
         boolean isSuccess = memberService.insertMember(member);
-
         if (isSuccess) {
+            RedirectView redirectView = new RedirectView("index");
+            redirectView.setStatusCode(HttpStatus.SEE_OTHER);
             return ResponseEntity.ok("회원 등록 성공");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 등록 실패");
         }
     }
+
     @ResponseBody
     @RequestMapping(value="/idCheck")
-    public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") int id) {
+    public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") String id) {
         // id 중복 체크
         boolean isExists = memberService.selectOneMember(id) > 0;
         Map<String, Boolean> response = new HashMap<>();
@@ -75,7 +78,7 @@ public class MemberController {
     }
 
     @PostMapping("/updateMember/{id}")
-    public ResponseEntity<String> updateMember(@PathVariable("id") int id, @RequestBody Member updatedMember) {
+    public ResponseEntity<String> updateMember(@PathVariable("id") String id, @RequestBody Member updatedMember) {
         // id에 해당하는 회원을 찾아서 업데이트
         boolean isSuccess = memberService.updateMember(id, updatedMember);
 
@@ -86,13 +89,23 @@ public class MemberController {
         }
     }
     @PostMapping("/deleteMember/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable("id") int id) {
+    public ResponseEntity<String> deleteMember(@PathVariable("id") String id) {
         // id에 해당하는 회원을 삭제
         boolean isSuccess = memberService.deleteMember(id);
         if (isSuccess) {
             return ResponseEntity.ok("회원 삭제 성공");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 삭제 실패");
+        }
+    }
+
+    @PostMapping("/loginMember")
+    public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData) {
+        boolean isSuccess = memberService.loginMember(loginData) > 0;
+        if (isSuccess) {
+            return ResponseEntity.ok("로그인 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 실패");
         }
     }
 }

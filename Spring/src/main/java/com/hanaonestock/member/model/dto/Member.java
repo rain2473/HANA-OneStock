@@ -11,18 +11,16 @@ import org.springframework.security.core.userdetails.User;
 @Getter
 @Setter
 public class Member {
-    private int id;
+    public Member() {
+    }
+    public Member(String id, String pw) {
+        this.id=id;
+        this.pw=pw;
+    }
+    private int m_id;
+    private String id;
     private String name; // 사용자 이름
     private String email; // 사용자의 이메일
     private String pw;
     private String tel;
-    public Member() {
-
-    }
-    public Member updateMember(String name, String email) {
-        this.name = name;
-        this.email = email;
-
-        return this;
-    }
 }

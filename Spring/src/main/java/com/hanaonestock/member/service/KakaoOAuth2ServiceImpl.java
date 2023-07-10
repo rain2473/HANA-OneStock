@@ -22,10 +22,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-// Lombok 어노테이션으로 생성자를 자동으로 생성
 @RequiredArgsConstructor
 public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-
     private final MemberMapper memberMapper;
     // OAuth2 로그인 후에 호출
     @Override
@@ -44,8 +42,6 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
 
         Member userProfile = OAuthAttributes.extract(registrationId, attributes);
 
-        //selectMember()
-        updateOrSaveUser(userProfile);
 
         Map<String, Object> customAttribute =
                 getCustomAttribute(registrationId, userNameAttributeName, attributes, userProfile);
@@ -55,7 +51,6 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
                 customAttribute,
                 userNameAttributeName);
     }
-    // 사용자의 PK, 이름, 이메일을 포함한 맵을 반환
     public Map getCustomAttribute(String registrationId,
                                   String userNameAttributeName,
                                   Map<String, Object> attributes,
@@ -64,13 +59,7 @@ public class KakaoOAuth2ServiceImpl implements OAuth2UserService<OAuth2UserReque
         customAttribute.put(userNameAttributeName, attributes.get(userNameAttributeName));
         customAttribute.put("name", member.getName());
         customAttribute.put("email", member.getEmail());
-
         return customAttribute;
     }
 
-
-    // 회원 정보를 업데이트하거나 저장ge
-    public void updateOrSaveUser(Member userProfile) {
-        memberMapper.updateOrSaveUser(userProfile);
-    }
 }

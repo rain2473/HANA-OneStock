@@ -39,20 +39,20 @@
         <div class="modal-header">
             <img src="../../resources/img/logo2.png" width="205">
         </div>
+
         <div class="modal-body">
             <div class="form-body">
                 <h2>로그인</h2>
-                <form>
+                 <form id="loginForm" method="post">
                     <div class="form-group">
                         <label for="username">아이디</label>
-                        <input type="text" id="username" name="username">
+                        <input type="text" id="username" name="id">
                     </div>
                     <div class="form-group">
                         <label for="password">비밀번호</label>
-                        <input type="password" id="password" name="password">
+                        <input type="password" id="password" name="pw">
                     </div>
-                    <input type="submit" class="button" value="로그인">
-
+                    <input type="button" value="가입하기" onclick="loginFormFunc(); return false;">
                 </form>
                 <br>
                 <a href="/oauth2/authorization/kakao" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20"> 카카오로 시작하기</a>
@@ -77,8 +77,8 @@
     </p>
     <br>
 </footer>
-
-<script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript">
     // 모달 열기 함수
     function openModal() {
         document.getElementById("myModal").style.display = "block";
@@ -93,6 +93,36 @@
     function redirectToJoin() {
         window.location.href = "join";
     }
+
+    function loginFormFunc() {
+        var formData = $("#loginForm").serialize();
+        var id = $("#username").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/loginMember",
+            data: JSON.stringify({
+                id: id,
+                pw: password
+            }),
+            contentType: 'application/json',
+            error: function(xhr, status, error) {
+                alert(error + "error");
+            },
+            success: function(response) {
+                if (response === "로그인 성공") {
+                    alert("로그인 성공");
+                    var link = document.createElement("a");
+                    link.href = "/";
+                    link.click();
+                } else {
+                    console.error("로그인 실패");
+                }
+            }
+        });
+    }
+
 
 </script>
 </body>

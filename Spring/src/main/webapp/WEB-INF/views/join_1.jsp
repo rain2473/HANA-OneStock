@@ -44,16 +44,16 @@
         </div>
         <div class="field">
             <b>이름</b>
-            <input type="text" name="name">
+            <input type="text" name="name" value="${name}">
         </div>
 
         <!-- 5. 이메일_전화번호 -->
         <div class="field email">
             <b>본인 확인 이메일</b>
             <div>
-                <input type="email">
-                <input type="button" value="인증메일 받기">
-                <input type="number" placeholder="인증번호를 입력하세요" name="email">
+                <input type="email" value="${email}" name="email">
+                <input type="button" value="인증메일 받기" >
+                <input type="number" placeholder="인증번호를 입력하세요">
             </div>
         </div>
 
@@ -81,36 +81,45 @@
 <script type="text/javascript">
     function joinFormFunc(){
 		var formData = $("#joinform").serialize();
-        alert(formData);
 		$.ajax({
 			type : 'post',
             url : '/insertMember',
 			data : formData,
-    		error: function(xhr, status, error){
-				alert(error);
+    		error: function(error){
+				alert(error+"error");
 			},
-			success : function(json){
-				alert(json)
+			success : function(response){
+                if (response === "회원 등록 성공") {
+                    alert("회원 등록 성공");
+                    var link = document.createElement("a");
+                    link.href = "/";
+                    link.click();
+                } else {
+                    console.error("회원 등록 실패");
+                }
 			}
 		});
 	}
-	$('[name=id]').focusout(function() {
+	var timer; // 타이머 변수
+
+    $('[name=id]').on('input', function() {
+        clearTimeout(timer);
         var id = $(this).val();
-        $.ajax({
-            url : "/idCheck",
-            data : {
-                id : id
-            },
-            type : "post",
-            success : function(response) {
-               if (response.exists) {
-                    $("#idChk").html("이미 사용중인 아이디 입니다.");
-               } else {
-                    $("#idChk").html("사용가능한 아이디 입니다.");
-               }
-            }
-        })
-    });
+        timer = setTimeout(function() {
+            $.ajax({
+                url: "/idCheck",
+                data: { id: id },
+                type: "post",
+                success: function(response) {
+                    if (response.exists) {
+                        $("#idChk").html("이미 사용중인 아이디 입니다.");
+                    } else {
+                        $("#idChk").html("사용가능한 아이디 입니다.");
+                    }
+                }
+            });
+        }, 300);
+    })
 
     $('[name=pw]').on('keyup',function(event) {
         if (/(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/g.test($('[name=pw]').val())) {
