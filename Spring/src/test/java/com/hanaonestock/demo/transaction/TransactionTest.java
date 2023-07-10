@@ -1,6 +1,7 @@
 package com.hanaonestock.demo.transaction;
 
 import com.hanaonestock.AutoAppConfig;
+import com.hanaonestock.EmailConfig;
 import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.transaction.model.dto.BuyDto;
 import com.hanaonestock.transaction.model.dto.SellDto;
@@ -10,9 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +29,11 @@ public class TransactionTest {
 
     @Autowired
     private TransactionService transactionService;
+    @MockBean
+    private JavaMailSender javaMailSender;
+    @MockBean
+    private HttpSession httpSession;
+
 
     @Test
     @DisplayName("매수, 매도 테스트")
