@@ -54,7 +54,9 @@
                             resultHtml += '<div>' + data[i].name + '</div>'; // Assuming 'name' is a property of Stock
                         }
                         $('.search-result').html(resultHtml).show();
-                    }
+                    },
+                    error: function (data) {
+                    },
                 });
             });
 
