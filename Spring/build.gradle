@@ -42,12 +42,8 @@ dependencies {
 	// Gson, jackson 라이브러리 추가
 	implementation 'com.google.code.gson:gson:2.8.8'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-<<<<<<< HEAD
 
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.0'
-
-=======
->>>>>>> 06393ca2fa55dbda6b34812b3e690a1d5fcfc5cf
 }
 
 tasks.named('test') {
