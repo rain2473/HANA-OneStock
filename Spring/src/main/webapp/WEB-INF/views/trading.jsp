@@ -263,13 +263,6 @@
                         open: item.open,
                         time: new Date(item.s_date).toISOString().split('T')[0],
                     }));
-                    const lineData = ohlcvList.map((item) => ({
-                        close: item.close,
-                        high: item.high,
-                        low: item.low,
-                        open: item.open,
-                        time: new Date(item.s_date).toISOString().split('T')[0],
-                    }));
                     candlestickSeries.setData(candleData);
                 },
                 error: function () {
