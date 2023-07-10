@@ -8,5 +8,4 @@ public class SellDto {
     private String isin; // 종목명
     private String id; // 사용자 아이디
     private int price; // 매도가
-    private int volume; // 수량
 }

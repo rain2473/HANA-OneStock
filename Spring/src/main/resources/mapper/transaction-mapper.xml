@@ -4,12 +4,13 @@
 
 <mapper namespace="com.hanaonestock.transaction.model.dao.TransactionMapper">
     <insert id="insertBuyTransaction" parameterType="com.hanaonestock.transaction.model.dto.Transaction">
-        INSERT INTO transaction (T_ID, ID, BUY, VOLUME, ISIN, DATE_BUY, DURATION)
+        INSERT INTO TRANSACTION (T_ID, ID, BUY, VOLUME, ISIN, DATE_BUY, DURATION)
         VALUES (T_ID_seq.NEXTVAL, #{id}, #{buy}, #{volume}, #{isin}, #{dateBuy}, #{duration})
     </insert>
 
     <update id="updateSellTransaction" parameterType="com.hanaonestock.transaction.model.dto.Transaction">
-
+        UPDATE TRANSACTION
+        SET SELL = #{sell}, DATE_SELL = #{dateSell}
+        WHERE ID = #{id} and ISIN = #{isin}
     </update>
-
 </mapper>
