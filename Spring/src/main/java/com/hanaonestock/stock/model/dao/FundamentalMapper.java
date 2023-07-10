@@ -5,14 +5,15 @@ import com.hanaonestock.stock.model.dto.Fundamental;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface FundamentalMapper {
 
     List<Fundamental> findAll();
 
-    Fundamental findByIsinAndDate(String isin, String Date);
+    Optional<Fundamental> findByIsinAndDate(String isin, String Date);
 
-    void insertData(Fundamental fundamental);
+    int insertData(Fundamental fundamental);
 
 }
