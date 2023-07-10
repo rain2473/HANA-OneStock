@@ -110,6 +110,7 @@
             },
             success: function (response) {
                 if (response === "로그인 성공") {
+                    // index_login.jsp로 이동
                     alert("로그인 성공");
                     var link = document.createElement("a");
                     link.href = "/";
