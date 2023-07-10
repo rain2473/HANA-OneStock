@@ -48,6 +48,7 @@
                     <h4>목표 수익률을 입력하고,<br>
                         추천 주식을 확인하세요 !</h4>
                     <input type="text" id="goal" name="goal"><br><br>
+<%--                    main.jsp로 이동--%>
                     <input type="submit" class="button" value="추천 주식 확인하기">
                 </div>
             </form>
