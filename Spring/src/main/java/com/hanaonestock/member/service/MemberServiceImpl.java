@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -23,6 +22,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void insertMember(Member member) {
         memberMapper.insertMember(member);
+    }
+
+    @Override
+    public Member selectNameOfMember(String id) {
+        return memberMapper.selectNameOfMember(id);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int selectNameAndEmail(HashMap<String, String> kakaoLogin) {
+    public int selectNameAndEmailOfMember(HashMap<String, String> kakaoLogin) {
         try {
             return memberMapper.selectNameAndEmail(kakaoLogin);
         } catch (Exception e) {

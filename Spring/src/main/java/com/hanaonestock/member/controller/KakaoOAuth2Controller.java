@@ -26,19 +26,20 @@ public class KakaoOAuth2Controller {
 
     @GetMapping("/loginInfo")
     //현재 사용자의 인증 정보를 나타내며, 주로 사용자가 인증되었는지 확인하거나 사용자의 권한을 확인하는 데 사용
-    public ModelAndView getJson(Authentication authentication) {
+    public ModelAndView getJson(Authentication authentication, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         //현재 인증된 사용자의 주요 정보를 반환
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = oAuth2User.getAttributes();
         HashMap<String, String> kakaoLogin = new HashMap<>();
+        HttpSession session = request.getSession();
 
         String name = attributes.get("name").toString();
         String email = attributes.get("email").toString();
         kakaoLogin.put("name",name);
         kakaoLogin.put("email",email);
 
-        if(memberService.selectNameAndEmail(kakaoLogin)==0){
+        if(memberService.selectNameAndEmailOfMember(kakaoLogin)==0){
             mav.addObject("message", "가입이 필요합니다.");
             mav.addObject("name", name);
             mav.addObject("email", email);
@@ -49,6 +50,7 @@ public class KakaoOAuth2Controller {
             mav.setViewName("/common/message");
         }
 
+        session.setAttribute("name", name);
         return mav;
     }
 

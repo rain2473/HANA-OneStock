@@ -14,4 +14,5 @@ public interface MemberMapper {
     int deleteMember(String id);
     int loginMember(HashMap<String, String> loginData);
     int selectNameAndEmail(HashMap<String, String> kakaoLogin);
+    Member selectNameOfMember(String id);
 }

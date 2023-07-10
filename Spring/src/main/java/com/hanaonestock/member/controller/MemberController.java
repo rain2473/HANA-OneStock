@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +31,21 @@ public class MemberController {
     @RequestMapping("/")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("index"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+        mav.setViewName("index");
         return mav;
     }
 
     @RequestMapping("/join")
     public ModelAndView join() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("join"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+        mav.setViewName("join");
+        return mav;
+    }
+
+    @RequestMapping("/main")
+    public ModelAndView main() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index_login");
         return mav;
     }
 
@@ -89,9 +98,13 @@ public class MemberController {
     }
 
     @PostMapping("/loginMember")
-    public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData) {
+    public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData, HttpServletRequest request) {
         boolean isSuccess = memberService.loginMember(loginData) > 0;
+        HttpSession session = request.getSession();
+
         if (isSuccess) {
+            Member m = memberService.selectNameOfMember(loginData.get("id"));
+            session.setAttribute("name",m.getName());
             return ResponseEntity.ok("로그인 성공");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 실패");
@@ -104,9 +117,9 @@ public class MemberController {
         System.out.println(member);
         try {
             memberService.insertMember(member);
-            return "회원 등록이 완료되었습니다.";
+            return "회원 등록 성공";
         } catch (Exception e) {
-            return "회원 등록에 실패했습니다.";
+            return "회원 등록 실패";
         }
     }
 
