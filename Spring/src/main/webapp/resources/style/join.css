@@ -99,11 +99,11 @@ a{
 .placehold-text:before{
     content : "4자리 이상의 영문 및 숫자 조합으로 입력해주세요.";
     position:absolute; /*before은 inline 요소이기 때문에 span으로 감싸줌 */
-    right : 20px;
+    left : 20px;
     color: #888888;
     font-size: 13px;
     top:13px;
-    pointer-events: none; /*자체가 가지고 있는 pointer event 를 없애준다 */
+    pointer-events: none;
 }
 
 .userpw{

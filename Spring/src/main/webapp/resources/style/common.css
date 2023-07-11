@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Pretendard-Regular';
+}
+
+body {
+    background-image: url("../img/background.png");
+    background-size: cover;
+    height: 700px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+footer {
+    color: #888888;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+}
+
+/* CSS 스타일링 */
+header {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    background-color: rgba(255, 255, 255, 1.0);
+    height: 40px;
+    text-align: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+nav ul {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1.0);
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    margin: 0 0 0 600px;
+    /*추후수정*/
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.nav-list {
+    position: relative;
+}
+
+.nav-menu {
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-menu:hover {
+    background-color: #008485;
+    color: white;
+    height: 20px;
+    border-radius: 10px;
+}

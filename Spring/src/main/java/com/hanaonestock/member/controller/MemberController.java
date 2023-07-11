@@ -7,14 +7,14 @@ import com.hanaonestock.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,26 +22,54 @@ import java.util.Map;
 @Controller
 public class MemberController {
     private final MemberService memberService;
+
     @Autowired
-    public MemberController(MemberService memberService) {this.memberService = memberService;}
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @RequestMapping("/")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("index"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+        mav.setViewName("index");
         return mav;
     }
 
     @RequestMapping("/join")
     public ModelAndView join() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("join_1"); //jsp(html)로 갈때는 setViewName // class로 갈때는 setView
+        mav.setViewName("join");
+        return mav;
+    }
+
+    @RequestMapping("/index_login")
+    public ModelAndView index_login(@RequestParam("id") String id) {
+        ModelAndView mav = new ModelAndView();
+        Member m = memberService.selectNameOfMember(id);
+        mav.addObject("provider",m.getProvider());
+        mav.addObject("id",id);
+        mav.setViewName("index_login");
+        return mav;
+    }
+
+    @RequestMapping("/main")
+    public ModelAndView main(@RequestParam("goal") String goal) {
+        System.out.println(goal);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("main");
+        return mav;
+    }
+
+    @RequestMapping("/dashboard")
+    public ModelAndView dashboard() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("dashboard");
         return mav;
     }
 
     @ResponseBody
-    @GetMapping(value="/api/main")
-    public ResponseEntity<String>  index(Model model) {
+    @GetMapping(value = "/api/main")
+    public ResponseEntity<String> index(Model model) {
         List<Member> memberList = memberService.getAllMember();
         ObjectMapper objectMapper = new ObjectMapper();
         String json;
@@ -50,26 +78,14 @@ public class MemberController {
         } catch (JsonProcessingException e) {
             return new ResponseEntity<>("Error processing JSON", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        model.addAttribute("memberList",memberList);
+        model.addAttribute("memberList", memberList);
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
 
-    @PostMapping("/insertMember")
-    public ResponseEntity<String> insertMember(@ModelAttribute Member member) {
-        // 회원 등록
-        boolean isSuccess = memberService.insertMember(member);
-        if (isSuccess) {
-            RedirectView redirectView = new RedirectView("index");
-            redirectView.setStatusCode(HttpStatus.SEE_OTHER);
-            return ResponseEntity.ok("회원 등록 성공");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 등록 실패");
-        }
-    }
-
     @ResponseBody
-    @RequestMapping(value="/idCheck")
-    public ResponseEntity<Map<String, Boolean>> idCheck(@RequestParam("id") String id) {
+    @RequestMapping(value = "/idCheck")
+    public ResponseEntity<
+            Map<String, Boolean>> idCheck(@RequestParam("id") String id) {
         // id 중복 체크
         boolean isExists = memberService.selectOneMember(id) > 0;
         Map<String, Boolean> response = new HashMap<>();
@@ -88,24 +104,50 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 수정 실패");
         }
     }
-    @PostMapping("/deleteMember/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable("id") String id) {
-        // id에 해당하는 회원을 삭제
-        boolean isSuccess = memberService.deleteMember(id);
-        if (isSuccess) {
-            return ResponseEntity.ok("회원 삭제 성공");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 삭제 실패");
-        }
-    }
 
     @PostMapping("/loginMember")
-    public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData) {
+    public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData, HttpServletRequest request) {
         boolean isSuccess = memberService.loginMember(loginData) > 0;
+        HttpSession session = request.getSession();
+
         if (isSuccess) {
+            Member m = memberService.selectNameOfMember(loginData.get("id"));
+            session.setAttribute("name",m.getName());
+            session.setAttribute("id",m.getId());
             return ResponseEntity.ok("로그인 성공");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 실패");
         }
+    }
+
+    @PostMapping(value = "/insertMember")
+    @ResponseBody
+    public String insertMember(@RequestBody Member member) {
+
+        try {
+            memberService.insertMember(member);
+            return "회원 등록 성공";
+        } catch (Exception e) {
+            return "회원 등록 실패";
+        }
+    }
+
+    @RequestMapping(value="/logoutMember")
+    public ModelAndView deleteMember(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        ModelAndView mav = new ModelAndView();
+        session.invalidate();
+//        int isSuccess = memberService.deleteMember(id);
+//        if(isSuccess!=-1) {
+//            session.invalidate();
+//            mav.addObject("msg", "로그아웃 성공");
+//        }else {
+//            mav.addObject("msg", "로그아웃 실패");
+//
+//        }
+        mav.addObject("msg", "로그아웃 성공");
+        mav.addObject("loc","/");
+        mav.setViewName("/common/message");
+        return mav;
     }
 }

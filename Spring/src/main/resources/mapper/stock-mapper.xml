@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.stock.model.dao.StockMapper">
+    <select id="findByName" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+        select * from stock where name = #{name}
+    </select>
+
+    <select id="findByIsin" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+        select * from stock where isin = #{isin}
+    </select>
+
+    <select id="stockListFindByName" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+    <![CDATA[
+        select *
+        from (select * from stock where name like CONCAT(#{name}, '%') ORDER BY name ASC)
+        where ROWNUM <= 10
+        ]]>
+    </select>
+
+    <select id="stockListFindByIsin" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+    <![CDATA[
+        select *
+        from (select * from stock where isin like CONCAT(#{isin}, '%') order by isin asc)
+        where ROWNUM <= 10
+        ]]>
+    </select>
+</mapper>

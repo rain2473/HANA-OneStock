@@ -1,83 +1,111 @@
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-* {
-    font-family: 'Pretendard-Regular';
+.stock_list h3,
+.stock_list h5,
+.stock_list p {
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-image: url("../img/background.png");
-    background-size: cover;
-    height: 700px;
+    background-image: url("../img/background2.png");
 }
 
-footer {
-    margin-left: 150px;
-    margin-right: 150px;
-    color: #888888;
+h3 {
+    color: black;
 }
 
 .content {
-    margin-left: 200px;
-    margin-right: 200px;
+    justify-content: center;
+    align-content: center;
+}
+
+.chart_div {
     display: flex;
+}
+
+.chart {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    justify-content: space-around;
-}
-
-/* CSS 스타일링 */
-header {
-    margin-left: 200px;
-    margin-right: 200px;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    display: flex;
-    align-items: center;
-}
-
-nav {
-    display: flex;
-    background-color: rgba(255, 255, 255, 1.0);
-    height: 40px;
-    text-align: center;
-    width: 100%;
-    justify-content: space-between;
-}
-
-nav ul {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 1.0);
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    margin: 0 0 0 600px;
-    /*추후수정*/
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.nav-list {
-    position: relative;
-}
-
-.nav-menu {
+    background-color: white;
+    opacity: 0.7;
+    border-radius: 20px;
+    margin: 10px 12px 10px 12px;
+    width: 500px;
+    height: 400px;
     color: black;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
 }
 
-.nav-menu:hover {
+.stock_list_div {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #DDF1ED;
+    border-radius: 20px;
+    width: 1400px;
+    height: 600px;
+}
+
+.list_div {
+    display: flex;
+}
+
+.stock_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    opacity: 0.7;
+    border-radius: 20px;
+    margin: 10px 10px 10px 10px;
+    width: 240px;
+    height: 110px;
+    color: black;
+}
+
+.small_text {
+    font-size: small;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.red_text {
+    color: indianred;
+}
+.blue_text {
+    color: cornflowerblue;
+}
+
+.button-container {
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    justify-content: center;
+    align-content: center;
+}
+
+.button {
+    display: inline-block;
+    text-align: center;
     background-color: #008485;
+    border: none;
     color: white;
-    height: 20px;
-    border-radius: 10px;
+    width: 140px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.button:hover {
+    background-color: #006363;
 }

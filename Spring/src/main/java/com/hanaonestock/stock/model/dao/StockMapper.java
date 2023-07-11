@@ -1,8 +1,17 @@
 package com.hanaonestock.stock.model.dao;
 
+import com.hanaonestock.stock.model.dto.Stock;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+import java.util.Optional;
+
+@Mapper
 public interface StockMapper {
 
-    // 스케줄링
-
+    Optional<Stock> findByName(String name);
+    Optional<Stock> findByIsin(String isin);
+    List<Stock> stockListFindByName(String name);
+    List<Stock> stockListFindByIsin(String isin);
 
 }

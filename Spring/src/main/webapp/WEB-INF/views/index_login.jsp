@@ -1,23 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="../../resources/style/main.css">
+    <link rel="stylesheet" href="../../resources/style/common.css">
     <link rel="stylesheet" href="../../resources/style/index_login.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 <header>
     <nav>
-        <a href="index.html">
+         <a href="/index_login?id=<%= session.getId() %>">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
             <ul>
                 <li class="nav-list">
-                    <a class="nav-menu">서비스소개</a>
+                    <a href="" class="nav-menu">서비스소개</a>
                 <li class="nav-list">
-                    <a class="nav-menu">마이페이지</a>
+                    <a href="" class="nav-menu">마이페이지</a>
+                 <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
+                 <c:if test="${provider eq 'kakao'}">
+                     <li class="nav-list">
+                         <a href="/oauth/logout" class="nav-menu">로그아웃</a>
+                     </li>
+                 </c:if>
+
+                 <%-- provider 데이터가 "kakao"가 아닐 경우 일반 로그아웃 버튼을 표시 --%>
+                 <c:if test="${empty provider}">
+                     <li class="nav-list">
+                         <a href="/logoutMember" class="nav-menu">로그아웃</a>
+                     </li>
+                 </c:if>
             </ul>
         </div>
     </nav>
@@ -39,7 +55,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <br>
-            <h2>박경덕님, 환영합니다.</h2>
+            <h2>${name} 환영합니다.</h2>
             <span class="close" onclick="closeModal()">&times;</span>
         </div>
         <div class="modal-body">
@@ -48,7 +64,8 @@
                     <h4>목표 수익률을 입력하고,<br>
                         추천 주식을 확인하세요 !</h4>
                     <input type="text" id="goal" name="goal"><br><br>
-                    <input type="submit" class="button" value="추천 주식 확인하기">
+<%--                    main.jsp로 이동--%>
+                    <input type="button" class="button" value="추천 주식 확인하기" onclick="goToMain()">
                 </div>
             </form>
         </div>
@@ -76,12 +93,12 @@
         document.getElementById("myModal").style.display = "none";
     }
 
-    // 회원가입 페이지 이동
-    function goToSignUp() {
-        var signUpUrl = "회원가입 페이지 URL";
-        window.location.href = signUpUrl;
+    function goToMain() {
+        const goal = $('[name="goal"]').val();
+        var link = document.createElement("a");
+        link.href = "/main?goal="+goal;
+        link.click();
     }
-
 </script>
 </body>
 </html>
