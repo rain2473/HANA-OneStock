@@ -34,11 +34,10 @@ public class TransactionController {
         return mav;
     }
 
-    @RequestMapping(value = "/trading", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> getStockChartData(@RequestBody Map<String, String> requestMap) {
-        String isin = requestMap.get("isin");
-        List<Ohlcv> ohlcvList = transactionService.search(isin);
+    @GetMapping(value = "/get-chart")
+    public ResponseEntity<String> getStockChartData(@RequestParam("input") String input) {
+        List<Ohlcv> ohlcvList = transactionService.search(input);
         ObjectMapper objectMapper = new ObjectMapper();
         String json;
         try {
