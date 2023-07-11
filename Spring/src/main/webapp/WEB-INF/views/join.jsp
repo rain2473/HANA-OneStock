@@ -31,6 +31,7 @@
 
     <div class="member">
         <form id="signupForm">
+            <input type="hidden" value="${provider}" name="provider">
             <h1>회원가입</h1>
             <br>
             <div class="field">
@@ -133,14 +134,16 @@
             const name = $('#signupForm input[name="name"]').val();
             const email = $('#signupForm input[name="email"]').val();
             const phoneNumber = $('#signupForm input[name="phone"]').val();
+            const provider = $('[name="provider"]').val(); // 수정된 부분
 
-            // 서버로 전달할 데이터 생성
+
             const data = {
                 id: id,
                 password: password,
                 name: name,
                 email: email,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                provider : provider
             };
 
             // Ajax 요청 보내기
@@ -153,7 +156,7 @@
                     if (response === "회원 등록 성공") {
                         alert("회원 등록 성공");
                         var link = document.createElement("a");
-                        link.href = "/index_join";
+                        link.href = "/index_join?id="+id;
                         link.click();
                     } else {
                         console.error("회원 등록 실패");

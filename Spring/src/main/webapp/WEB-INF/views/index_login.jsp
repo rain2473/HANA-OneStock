@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +17,22 @@
         <div>
             <ul>
                 <li class="nav-list">
-                    <a class="nav-menu">서비스소개</a>
+                    <a href="" class="nav-menu">서비스소개</a>
                 <li class="nav-list">
-                    <a class="nav-menu">마이페이지</a>
-                <li class="nav-list">
-                    <a class="nav-menu">로그아웃</a>
+                    <a href="" class="nav-menu">마이페이지</a>
+                 <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
+                 <c:if test="${provider eq 'kakao'}">
+                     <li class="nav-list">
+                         <a href="/oauth/logout" class="nav-menu">로그아웃</a>
+                     </li>
+                 </c:if>
+
+                 <%-- provider 데이터가 "kakao"가 아닐 경우 일반 로그아웃 버튼을 표시 --%>
+                 <c:if test="${empty provider}">
+                     <li class="nav-list">
+                         <a href="/logoutMember" class="nav-menu">로그아웃</a>
+                     </li>
+                 </c:if>
             </ul>
         </div>
     </nav>
@@ -33,7 +45,7 @@
         </div>
         <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
         <div onclick="openModal()">
-            <a href="#" class="btn">시작하기</a>
+            <a href="/start" class="btn">시작하기</a>
         </div>
     </div>
 </div>

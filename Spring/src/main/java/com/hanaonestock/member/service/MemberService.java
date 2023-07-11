@@ -12,7 +12,7 @@ public interface MemberService {
 
     boolean updateMember(String id, Member updatedMember);
 
-    boolean deleteMember(String id);
+    int deleteMember(String id);
 
     int loginMember(HashMap<String, String> loginData);
 

@@ -50,8 +50,10 @@ public class MemberController {
     }
 
     @RequestMapping("/main")
-    public ModelAndView main() {
+    public ModelAndView main(@RequestParam("id") String id) {
         ModelAndView mav = new ModelAndView();
+        Member m = memberService.selectNameOfMember(id);
+        mav.addObject("provider",m.getProvider());
         mav.setViewName("main");
         return mav;
     }
@@ -94,16 +96,6 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 수정 실패");
         }
     }
-    @PostMapping("/deleteMember/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable("id") String id) {
-        // id에 해당하는 회원을 삭제
-        boolean isSuccess = memberService.deleteMember(id);
-        if (isSuccess) {
-            return ResponseEntity.ok("회원 삭제 성공");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 삭제 실패");
-        }
-    }
 
     @PostMapping("/loginMember")
     public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData, HttpServletRequest request) {
@@ -113,6 +105,7 @@ public class MemberController {
         if (isSuccess) {
             Member m = memberService.selectNameOfMember(loginData.get("id"));
             session.setAttribute("name",m.getName());
+            session.setAttribute("id",m.getId());
             return ResponseEntity.ok("로그인 성공");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 실패");
@@ -122,7 +115,7 @@ public class MemberController {
     @PostMapping(value = "/insertMember")
     @ResponseBody
     public String insertMember(@RequestBody Member member) {
-        System.out.println(member);
+
         try {
             memberService.insertMember(member);
             return "회원 등록 성공";
@@ -131,4 +124,22 @@ public class MemberController {
         }
     }
 
+    @RequestMapping(value="/logoutMember")
+    public ModelAndView deleteMember(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        ModelAndView mav = new ModelAndView();
+        session.invalidate();
+//        int isSuccess = memberService.deleteMember(id);
+//        if(isSuccess!=-1) {
+//            session.invalidate();
+//            mav.addObject("msg", "로그아웃 성공");
+//        }else {
+//            mav.addObject("msg", "로그아웃 실패");
+//
+//        }
+        mav.addObject("msg", "로그아웃 성공");
+        mav.addObject("loc","/");
+        mav.setViewName("/common/message");
+        return mav;
+    }
 }
