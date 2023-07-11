@@ -11,7 +11,7 @@
 <body>
 <header>
   <nav>
-    <a href="/">
+    <a href="/">1
       <img src="../../resources/img/logo.png" height="40">
     </a>
     <div>
