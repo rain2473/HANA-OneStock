@@ -59,7 +59,7 @@
                 <br>
                 <a href="/oauth2/authorization/kakao" class="kakao_btn"><img src="../../resources/img/kakao.png"
                                                                              width="20"> 카카오로 시작하기</a>
-                <a href="/oauth/logout" class="kakao_btn"><img src="../../resources/img/kakao.png" width="20">로그아웃</a>
+
             </div>
             <div class="text">
                 <p>소셜 계정으로 로그인 또는 가입 시 <br>개인정보 처리 방침 및 서비스 이용약관에 동의한 것으로 간주합니다.</p>
@@ -113,7 +113,7 @@
                     // index_login.jsp로 이동
                     alert("로그인 성공");
                     var link = document.createElement("a");
-                    link.href = "/main";
+                    link.href = "/main?id="+id;
                     link.click();
                 } else {
                     console.error("로그인 실패");

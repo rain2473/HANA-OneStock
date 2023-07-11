@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
 <body>
 <header>
     <nav>
-        <a href="index.html">
+        <a href="index_login">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
@@ -19,41 +20,48 @@
                     <a class="nav-menu">서비스소개</a>
                 <li class="nav-list">
                     <a class="nav-menu">마이페이지</a>
+                <li class="nav-list">
+                    <a class="nav-menu">로그아웃</a>
             </ul>
         </div>
     </nav>
 </header>
-
 <div class="content">
-    <div class="hanamoney_chart_div">
-        <div class="chart_box_div">
-            <h3>LG 에너지솔루션</h3>
-            <p class="small_text"><span class="pink_text">Total</span><br>
-                1,814,240원</p>
-            <h5>569,000</h5>
+    <div class="stock_list_div">
+        <div class="chart_div">
+            <div class="chart">
+                <h3>증시현황</h3>
+            </div>
+            <div class="chart">
+                <h3>특징종목</h3>
+            </div>
         </div>
-        <div class="chart_box_div">
-            <h3>삼성전자</h3>
-            <p class="small_text"><span class="pink_text">Total</span><br>
-                1,814,240원</p>
-            <h5>73,100</h5>
-        </div>
-        <div class="chart_box_div">
-            <h3>셀트리온</h3>
-            <p class="small_text"><span class="pink_text">Total</span><br>
-                1,814,240원</p>
-            <h5>150,500</h5>
-        </div>
-        <div class="chart_box_div">
-            <h3>하나금융지주</h3>
-            <p class="small_text"><span class="pink_text">Total</span><br>
-                1,814,240원</p>
-            <h5>39,550</h5>
+        <div class="list_div">
+            <div class="stock_list">
+                <h3>LG 에너지솔루션</h3>
+                <span class="small_text blue_text">  -0.87 ▼4,000</span>
+                <h3>569,000</h3>
+            </div>
+            <div class="stock_list">
+                <h3>삼성전자</h3>
+                <span class="small_text red_text">  +0.14% ▲100 </span>
+                <h3>73,100</h3>
+            </div>
+            <div class="stock_list">
+                <h3>셀트리온</h3>
+                <span class="small_text blue_text">  -0.73% ▼1,000</span>
+                <h5>150,500</h5>
+            </div>
+            <div class="stock_list">
+                <h3>하나금융지주</h3>
+                <span class="small_text blue_text">-1.49% ▼600</span>
+                <h5>39,550</h5>
+            </div>
         </div>
     </div>
 </div>
 <div class="button-container">
-    <input type="button" class="button" value="거래소 둘러보기" onclick="loginFormFunc(); return false;">
+    <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
     <a href="join" class="button">수익률 확인하기</a>
 </div>
 <footer>
@@ -66,5 +74,13 @@
     </p>
     <br>
 </footer>
+<script>
+    function goToDashboard() {
+        alert("페이지 이동");
+        var link = document.createElement("a");
+        link.href = "/dashboard";
+        link.click();
+    }
+</script>
 </body>
 </html>

@@ -11,32 +11,34 @@
     </select>
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="com.hanaonestock.member.model.dto.Member">
-        INSERT INTO member_test (m_id, id, password, name, email, phone)
-        VALUES (M_ID_seq.NEXTVAL, #{id}, #{password}, #{name}, #{email}, #{phoneNumber})
+        INSERT INTO member_test2 (m_id, id, password, name, email, phone,provider)
+        VALUES (Member_test2_seq.NEXTVAL, #{id}, #{password}, #{name}, #{email}, #{phoneNumber},#{provider})
     </insert>
     <!-- 회원 아이디 조회 -->
     <select id="selectOneMember" parameterType="String" resultType="int">
         SELECT count(*)
-        FROM member_test
+        FROM member_test2
         where id = #{id}
     </select>
     <!-- 로그인 -->
     <select id="loginMember" parameterType="HashMap" resultType="int">
         SELECT *
-        FROM member_test
+        FROM member_test2
         where id = #{id}
         and password = #{password}
     </select>
     <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="int">
         SELECT count(*)
-        FROM member_test
+        FROM member_test2
         where email = #{email}
           and name = #{name}
     </select>
     <select id="selectNameOfMember" parameterType="String" resultType="com.hanaonestock.member.model.dto.Member">
         SELECT *
-        FROM member_test
+        FROM member_test2
         where id = #{id}
     </select>
-
+    <delete id="deleteMember" parameterType="string">
+        delete from member_test2 where id=#{id}
+    </delete>
 </mapper>

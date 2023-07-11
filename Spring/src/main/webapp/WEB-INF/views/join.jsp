@@ -29,6 +29,7 @@
 
     <div class="member">
         <form id="signupForm">
+            <input type="hidden" value="${provider}" name="provider">
             <h1>회원가입</h1>
             <br>
             <div class="field">
@@ -48,13 +49,13 @@
             </div>
             <div class="field">
                 <b>이름</b>
-                <input type="text" name="name">
+                <input type="text" name="name" value="${name}">
             </div>
 
             <div class="field email">
                 <b>본인 확인 이메일</b>
                 <div>
-                    <input type="email" name="email">
+                    <input type="email" value="${email}" name="email">
                     <input type="button" value="인증메일 받기" onclick="sendVerificationEmail()">
                     <input type="text" placeholder="인증번호를 입력하세요" name="ePw">
                     <input type="button" value="인증하기" onclick="verifyEmail()">
@@ -131,14 +132,16 @@
             const name = $('#signupForm input[name="name"]').val();
             const email = $('#signupForm input[name="email"]').val();
             const phoneNumber = $('#signupForm input[name="phone"]').val();
+            const provider = $('[name="provider"]').val(); // 수정된 부분
 
-            // 서버로 전달할 데이터 생성
+
             const data = {
                 id: id,
                 password: password,
                 name: name,
                 email: email,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                provider : provider
             };
 
             // Ajax 요청 보내기
@@ -151,7 +154,7 @@
                     if (response === "회원 등록 성공") {
                         alert("회원 등록 성공");
                         var link = document.createElement("a");
-                        link.href = "/main";
+                        link.href = "/main?id="+id;
                         link.click();
                     } else {
                         console.error("회원 등록 실패");

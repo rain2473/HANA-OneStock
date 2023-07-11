@@ -32,8 +32,8 @@ footer {
 
 /* CSS 스타일링 */
 header {
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 150px;
+    margin-right: 150px;
     background-color: rgba(255, 255, 255, 0.5);
     padding: 20px;
     display: flex;

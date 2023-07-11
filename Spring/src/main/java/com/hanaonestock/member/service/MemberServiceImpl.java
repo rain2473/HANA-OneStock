@@ -48,14 +48,8 @@ public class MemberServiceImpl implements MemberService{
         }
     }
     @Override
-    public boolean deleteMember(String id) {
-        try {
-            memberMapper.deleteMember(id);
-            return true;
-        } catch (Exception e) {
-            // insert 작업 실패
-            return false;
-        }
+    public int deleteMember(String id) {
+        return memberMapper.deleteMember(id);
     }
 
     @Override
