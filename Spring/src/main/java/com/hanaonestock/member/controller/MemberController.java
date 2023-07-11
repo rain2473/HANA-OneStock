@@ -43,21 +43,27 @@ public class MemberController {
     }
 
     @RequestMapping("/index_login")
-    public ModelAndView index_login() {
+    public ModelAndView main(@RequestParam("id") String id) {
         ModelAndView mav = new ModelAndView();
+        Member m = memberService.selectNameOfMember(id);
+        mav.addObject("provider",m.getProvider());
         mav.setViewName("index_login");
         return mav;
     }
 
     @RequestMapping("/main")
-    public ModelAndView main(@RequestParam("id") String id) {
+    public ModelAndView main() {
         ModelAndView mav = new ModelAndView();
-        Member m = memberService.selectNameOfMember(id);
-        mav.addObject("provider",m.getProvider());
         mav.setViewName("main");
         return mav;
     }
 
+    @RequestMapping("/dashboard")
+    public ModelAndView dashboard() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("dashboard");
+        return mav;
+    }
 
     @ResponseBody
     @GetMapping(value = "/api/main")
