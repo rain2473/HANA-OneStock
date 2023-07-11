@@ -43,16 +43,18 @@ public class MemberController {
     }
 
     @RequestMapping("/index_login")
-    public ModelAndView main(@RequestParam("id") String id) {
+    public ModelAndView index_login(@RequestParam("id") String id) {
         ModelAndView mav = new ModelAndView();
         Member m = memberService.selectNameOfMember(id);
         mav.addObject("provider",m.getProvider());
+        mav.addObject("id",id);
         mav.setViewName("index_login");
         return mav;
     }
 
     @RequestMapping("/main")
-    public ModelAndView main() {
+    public ModelAndView main(@RequestParam("goal") String goal) {
+        System.out.println(goal);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("main");
         return mav;

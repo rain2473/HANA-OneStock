@@ -47,7 +47,6 @@ public class KakaoOAuth2Controller {
             mav.addObject("name", name);
             mav.addObject("email", email);
             mav.addObject("provider",provider);
-
             mav.setViewName("join");
         }else {
             mav.addObject("msg", "이미 가입된 회원입니다.");
