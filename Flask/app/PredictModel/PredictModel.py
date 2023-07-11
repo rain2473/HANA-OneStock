@@ -2,10 +2,10 @@ import pandas as pd
 from pykrx import stock as st
 import pickle
 
-close_model = pickle.load(open('predict_close_model.sav', 'rb'))
-updown_model = pickle.load(open('predict_updown_model.sav', 'rb'))
-date_label = pickle.load(open('date_label.sav', 'rb'))
-stock_label = pickle.load(open('stock_label.sav', 'rb'))
+close_model = pickle.load(open('PredictModel/predict_close_model_new.sav', 'rb'))
+updown_model = pickle.load(open('PredictModel/predict_updown_model_new.sav', 'rb'))
+date_label = pickle.load(open('PredictModel/date_label.sav', 'rb'))
+stock_label = pickle.load(open('PredictModel/stock_label.sav', 'rb'))
 
 # 1. 날짜 라벨인코더 업데이트 -> pickle로 저장하기 clear
 def updateLabelEncoder(today):
