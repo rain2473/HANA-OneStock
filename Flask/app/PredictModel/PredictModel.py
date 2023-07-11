@@ -53,16 +53,16 @@ def preprocessingNewData(today):
 # 3. 예측 결과 테이블 작성 및 json 반환
 def predictToday(today):
     [_, r_price, r_updown, new_data] = preprocessingNewData(today)
-    e_price = pd.DataFrame(close_model.predict(new_data), columns=['e_price'])
+    p_price = pd.DataFrame(close_model.predict(new_data), columns=['p_price'])
     e_updown = pd.DataFrame(updown_model.predict(new_data), columns=['e_updown'])
 
-    result = pd.concat([new_data, e_price, e_updown], axis=1)
-    result['e_price'] = round(result['e_price']).astype(int)
+    result = pd.concat([new_data, p_price, e_updown], axis=1)
+    result['p_price'] = round(result['p_price']).astype(int)
     result['e_updown'] = (round(result['e_updown'], 1) + 0.5).astype(int)
-    result['e_rate'] = round((result['e_price'] - result['close']) / result['close'] * 100, 2)
-    result['tmp_updown'] = (result['e_rate'] > 0).astype(int)
-    result['h_updown'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
-    result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', "tmp_updown"], axis =1, inplace=True)
+    result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
+    result['tmp_updown'] = (result['p_rate'] > 0).astype(int)
+    result['predict'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
+    result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', "tmp_updown", 'e_updown'], axis =1, inplace=True)
     result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
     result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
     return result
@@ -70,20 +70,19 @@ def predictToday(today):
 # 4. 예측 평가 테이블 작성 및 json 반환
 def scoreYesterday(today):
     [new_data, r_price, r_updown, _] = preprocessingNewData(today)
-    e_price = pd.DataFrame(close_model.predict(new_data), columns=['e_price'])
+    p_price = pd.DataFrame(close_model.predict(new_data), columns=['p_price'])
     e_updown = pd.DataFrame(updown_model.predict(new_data), columns=['e_updown'])
 
-    result = pd.concat([new_data, e_price, r_price , e_updown, r_updown], axis=1)
-    result['e_price'] = round(result['e_price']).astype(int)
+    result = pd.concat([new_data, p_price, r_price , e_updown, r_updown], axis=1)
+    result['p_price'] = round(result['p_price']).astype(int)
     result['e_updown'] = round(result['e_updown']).astype(int)
-    result['e_rate'] = round((result['e_price'] - result['close']) / result['close'] * 100, 2)
+    result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
     result['r_rate'] = round((result['r_price'] - result['close']) / result['close'] * 100, 2)
-    result['s_correct'] = (result['e_updown']==result['r_updown']).astype(int)
-    result['tmp_correct'] = ((result['e_rate'] * result['r_rate']) / abs(result['e_rate'] * result['r_rate']) + 1) * 0.5
-    result['tmp_correct'] = result['tmp_correct'].fillna(0).astype(int)
-    result['h_correct'] = ((result['s_correct'] == 1) & (result['tmp_correct'] == 1)).astype(int)
-    result['error'] = round((abs((result['e_price'] - result['r_price']) / result['r_price']) * 100), 2)
-    result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', "e_updown","r_updown", "tmp_correct"], axis =1, inplace=True)
+    result['tmp_updown'] = (result['p_rate'] > 0).astype(int)
+    result['predict'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
+    result['correct'] = (result['predict']==result['r_updown']).astype(int)
+    result['error'] = round((abs((result['p_price'] - result['r_price']) / result['r_price']) * 100), 2)
+    result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', 'tmp_updown', "e_updown","r_updown"], axis =1, inplace=True)
     result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
     result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
     return result
