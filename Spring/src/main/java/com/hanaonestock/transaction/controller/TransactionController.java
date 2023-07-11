@@ -47,5 +47,4 @@ public class TransactionController {
         }
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
-
 }

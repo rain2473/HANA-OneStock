@@ -22,4 +22,36 @@
         select * from ohlcv where isin = #{isin}
     </select>
 
+    <select id="findRisingTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        select *
+        from (select * from ohlcv where s_date = #{date} ORDER BY UPDOWN DESC)
+        where ROWNUM <= 5
+        ]]>
+    </select>
+
+    <select id="findFallingTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        select *
+        from (select * from ohlcv where s_date = #{date} ORDER BY UPDOWN ASC)
+        where ROWNUM <= 5
+        ]]>
+    </select>
+
+    <select id="findVolumeTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        select *
+        from (select * from ohlcv where s_date = #{date} ORDER BY VOLUME DESC)
+        where ROWNUM <= 5
+        ]]>
+    </select>
+
+    <select id="findAmountTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        select *
+        from (select * from ohlcv where s_date = #{date} ORDER BY AMOUNT DESC)
+        where ROWNUM <= 5
+        ]]>
+    </select>
+
 </mapper>
