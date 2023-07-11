@@ -25,6 +25,7 @@ public class StockController {
     @GetMapping(value = "/stock-searching")
     public ResponseEntity<List<Stock>> stockSearching(@RequestParam("input") String input) {
         List<Stock> stockList = stockService.searching(input);
+        System.out.println(input);
         if (stockList != null && !stockList.isEmpty()) {
             System.out.println(ResponseEntity.ok(stockList));
             return ResponseEntity.ok(stockList);

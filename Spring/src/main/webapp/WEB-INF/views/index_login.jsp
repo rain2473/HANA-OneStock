@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../resources/style/common.css">
     <link rel="stylesheet" href="../../resources/style/index_login.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 <header>
     <nav>
-        <a href="index_login">
+         <a href="/index_login?id=<%= session.getId() %>">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
@@ -93,12 +94,11 @@
     }
 
     function goToMain() {
-        alert("페이지 이동");
+        const goal = $('[name="goal"]').val();
         var link = document.createElement("a");
-        link.href = "/main";
+        link.href = "/main?goal="+goal;
         link.click();
     }
-
 </script>
 </body>
 </html>
