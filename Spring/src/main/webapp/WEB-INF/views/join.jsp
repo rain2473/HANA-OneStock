@@ -156,7 +156,7 @@
                     if (response === "회원 등록 성공") {
                         alert("회원 등록 성공");
                         var link = document.createElement("a");
-                        link.href = "/index_join?id="+id;
+                        link.href = "/";
                         link.click();
                     } else {
                         console.error("회원 등록 실패");
