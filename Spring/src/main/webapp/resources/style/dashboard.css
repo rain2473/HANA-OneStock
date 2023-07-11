@@ -8,6 +8,15 @@ h3 {
     color: black;
 }
 
+.content {
+    flex-direction: column;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -23,7 +32,9 @@ h3 {
     width: 1050px; height: 35px;
     padding: 10px 0px 10px 0px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background-color: #f1f1f1;
     border-radius: 20px;
 }
@@ -34,7 +45,6 @@ h3 {
     font-size: 14px;
     padding: 4px 0 4px 14px;
     border-radius: 50px;
-    margin-left: 80px;
 }
 
 .search-button {
