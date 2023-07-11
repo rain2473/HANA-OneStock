@@ -45,7 +45,7 @@
         </div>
         <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
         <div onclick="openModal()">
-            <a href="/start" class="btn">시작하기</a>
+            <a href="#" class="btn">시작하기</a>
         </div>
     </div>
 </div>
