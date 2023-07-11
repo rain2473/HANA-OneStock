@@ -8,6 +8,27 @@ h3 {
     color: black;
 }
 
+.a {
+    position: relative;
+}
+
+.search-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-left: 80px;
+}
+
+.content {
+    flex-direction: column;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -23,9 +44,11 @@ h3 {
     width: 1050px; height: 35px;
     padding: 10px 0px 10px 0px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     background-color: #f1f1f1;
     border-radius: 20px;
+    align-items: center;
 }
 
 .search-box {
