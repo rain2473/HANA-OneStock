@@ -42,12 +42,20 @@ public class MemberController {
         return mav;
     }
 
-    @RequestMapping("/main")
-    public ModelAndView main() {
+    @RequestMapping("/index_login")
+    public ModelAndView index_login() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index_login");
         return mav;
     }
+
+    @RequestMapping("/main")
+    public ModelAndView main() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("main");
+        return mav;
+    }
+
 
     @ResponseBody
     @GetMapping(value = "/api/main")
