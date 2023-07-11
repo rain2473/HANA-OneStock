@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../resources/style/common.css">
     <link rel="stylesheet" href="../../resources/style/index_login.css">
@@ -11,7 +11,7 @@
 <body>
 <header>
     <nav>
-        <a href="index.html">
+        <a href="index_login">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
@@ -64,7 +64,7 @@
                         추천 주식을 확인하세요 !</h4>
                     <input type="text" id="goal" name="goal"><br><br>
 <%--                    main.jsp로 이동--%>
-                    <input type="submit" class="button" value="추천 주식 확인하기">
+                    <input type="button" class="button" value="추천 주식 확인하기" onclick="goToMain()">
                 </div>
             </form>
         </div>
@@ -92,10 +92,11 @@
         document.getElementById("myModal").style.display = "none";
     }
 
-    // 회원가입 페이지 이동
-    function goToSignUp() {
-        var signUpUrl = "회원가입 페이지 URL";
-        window.location.href = signUpUrl;
+    function goToMain() {
+        alert("페이지 이동");
+        var link = document.createElement("a");
+        link.href = "/main";
+        link.click();
     }
 
 </script>

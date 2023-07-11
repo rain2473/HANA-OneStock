@@ -1,9 +1,8 @@
-package com.hanaonestock.demo.scheduler;
+package com.hanaonestock.demo.stock;
 
 import com.hanaonestock.AutoAppConfig;
-import com.hanaonestock.EmailConfig;
-import com.hanaonestock.scheduler.Scheduler;
-import org.assertj.core.api.Assertions;
+import com.hanaonestock.stock.model.dto.Stock;
+import com.hanaonestock.stock.service.StockService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -16,33 +15,35 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 
-import static com.hanaonestock.scheduler.Scheduler.fundamentalStr;
-import static com.hanaonestock.scheduler.Scheduler.ohlcvStr;
+import java.util.List;
 
-// @SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(AutoAppConfig.class)
 @Transactional
-public class SchedulerTest {
-
-    @Autowired
-    private Scheduler scheduler;
+public class StockTest {
     @MockBean
     private JavaMailSender javaMailSender;
     @MockBean
     private HttpSession httpSession;
-
+    @Autowired
+    private StockService stockService;
 
     @Test
-    @DisplayName("스케줄링 - restful get 요청 테스트")
-    void restfulTest() {
-//        System.out.println(scheduler.getResquestJson(ohlcvStr));
-//        System.out.println(scheduler.getResquestJson(fundamentalStr));
-        try {
-            scheduler.runAt4PMGet();
-        } catch (Exception e) {
-            Assertions.fail("트랜잭션 실패");
-        }
+    @DisplayName("최종 종목 검색 테스트")
+    void searchTest() {
+        Stock stock1 = stockService.search("삼성전자");
+        Stock stock2 = stockService.search("005930");
+        assertThat(stock1).isEqualTo(stock2);
+    }
+
+    @Test
+    @DisplayName("종목 검색 중 연관 검색 결과 테스트")
+    void searchingTest() {
+        List<Stock> stockList1 = stockService.searching("삼성전자");
+        List<Stock> stockList2 = stockService.searching("005930");
+        assertThat(stockList1.get(0)).isEqualTo(stockList2.get(0));
     }
 }

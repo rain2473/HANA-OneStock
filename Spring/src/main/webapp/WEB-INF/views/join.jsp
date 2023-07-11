@@ -15,7 +15,9 @@
     <body>
     <header>
         <nav>
+            <a href="/">
             <img src="../../resources/img/logo.png" height="40">
+            </a>
             <div class="justify-content-end">
                 <ul class="justify-content-end">
                     <li class="nav-list">
@@ -55,7 +57,7 @@
             <div class="field email">
                 <b>본인 확인 이메일</b>
                 <div>
-                    <input type="email" value="${email}" name="email">
+                    <input type="email" name="email" value="${email}">
                     <input type="button" value="인증메일 받기" onclick="sendVerificationEmail()">
                     <input type="text" placeholder="인증번호를 입력하세요" name="ePw">
                     <input type="button" value="인증하기" onclick="verifyEmail()">
@@ -154,7 +156,7 @@
                     if (response === "회원 등록 성공") {
                         alert("회원 등록 성공");
                         var link = document.createElement("a");
-                        link.href = "/main?id="+id;
+                        link.href = "/index_join?id="+id;
                         link.click();
                     } else {
                         console.error("회원 등록 실패");

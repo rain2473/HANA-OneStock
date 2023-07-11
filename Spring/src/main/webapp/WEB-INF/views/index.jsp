@@ -11,7 +11,9 @@
 <body>
 <header>
     <nav>
+        <a href="/">
         <img src="../../resources/img/logo.png" height="40">
+        </a>
         <div class="justify-content-end">
             <ul class="justify-content-end">
                 <li class="nav-list">
@@ -113,7 +115,7 @@
                     // index_login.jsp로 이동
                     alert("로그인 성공");
                     var link = document.createElement("a");
-                    link.href = "/main?id="+id;
+                    link.href = "/index_login?id="+id;
                     link.click();
                 } else {
                     console.error("로그인 실패");
