@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
 <body>
 <header>
     <nav>
-        <a href="/">
+        <a href="index_login">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
@@ -60,7 +61,7 @@
     </div>
 </div>
 <div class="button-container">
-    <input type="button" class="button" value="거래소 둘러보기" onclick="loginFormFunc(); return false;">
+    <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
     <a href="join" class="button">수익률 확인하기</a>
 </div>
 <footer>
@@ -73,5 +74,13 @@
     </p>
     <br>
 </footer>
+<script>
+    function goToDashboard() {
+        alert("페이지 이동");
+        var link = document.createElement("a");
+        link.href = "/dashboard";
+        link.click();
+    }
+</script>
 </body>
 </html>
