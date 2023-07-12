@@ -15,4 +15,5 @@ public interface MemberMapper {
     int loginMember(HashMap<String, String> loginData);
     int selectNameAndEmail(HashMap<String, String> kakaoLogin);
     Member selectNameOfMember(String id);
+    void insertInvestInfo(Member member);
 }

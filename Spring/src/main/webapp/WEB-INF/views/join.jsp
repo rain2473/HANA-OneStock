@@ -67,6 +67,10 @@
                 <b>전화번호</b>
                 <input type="tel" placeholder="전화번호 입력" name="phone">
             </div>
+            <div class="field">
+                <b>목표수익률</b>
+                <input type="text" placeholder="목표수익률 입력" name="goal">
+            </div>
             <input type="submit" value="가입하기"></button>
         </form>
     </div>
@@ -134,7 +138,8 @@
             const name = $('#signupForm input[name="name"]').val();
             const email = $('#signupForm input[name="email"]').val();
             const phoneNumber = $('#signupForm input[name="phone"]').val();
-            const provider = $('[name="provider"]').val(); // 수정된 부분
+            const provider = $('[name="provider"]').val();
+            const goal = $('[name="goal"]').val();
 
 
             const data = {
@@ -143,7 +148,8 @@
                 name: name,
                 email: email,
                 phoneNumber: phoneNumber,
-                provider : provider
+                provider : provider,
+                goal:goal
             };
 
             // Ajax 요청 보내기

@@ -11,8 +11,12 @@
     </select>
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="com.hanaonestock.member.model.dto.Member">
-        INSERT INTO member_test2 (m_id, id, password, name, email, phone,provider)
-        VALUES (Member_test2_seq.NEXTVAL, #{id}, #{password}, #{name}, #{email}, #{phoneNumber},#{provider})
+        INSERT INTO member (id, email, name, pw, m_id, phone, provider)
+        VALUES (#{id}, #{email}, #{name}, #{password}, SEQ_MEMBER.nextval, #{phoneNumber}, #{provider})
+    </insert>
+    <insert id="insertInvestInfo" parameterType="com.hanaonestock.member.model.dto.Member">
+        INSERT INTO invest_info (id, goal)
+        VALUES (#{id}, #{goal})
     </insert>
     <!-- 회원 아이디 조회 -->
     <select id="selectOneMember" parameterType="String" resultType="int">
