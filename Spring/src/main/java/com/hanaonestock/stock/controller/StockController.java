@@ -8,9 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +55,49 @@ public class StockController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @RequestMapping("/main")
+    public ModelAndView main(@RequestParam("goal") String goal) {
+        try {
+            String requestUrl = "http://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd?basDd=20200414";
+
+            // HTTP 연결 설정
+            URL url = new URL(requestUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // AUTH_KEY 추가
+            connection.setRequestProperty("AUTH_KEY", "1CF0397443A047CD97A13094FB0698E116C1A36A");
+
+            // API 응답 코드 확인
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // API 응답 읽기
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // API 응답 데이터 출력
+                String jsonResponse = response.toString();
+                System.out.println("API 응답:");
+                System.out.println(jsonResponse);
+            } else {
+                System.out.println("API 연결 실패. 응답 코드: " + responseCode);
+            }
+
+            // 연결 종료
+            connection.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("main");
+        return mav;
     }
 
     @ResponseBody

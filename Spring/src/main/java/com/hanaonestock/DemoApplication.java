@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,33 +44,6 @@ public class DemoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-		makeGetRequest();
 	}
-
-
-	// Make a GET request using the REST API service
-	public static String makeGetRequest() {
-		String baseUrl = "http://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd";
-		String authKey = "1CF0397443A047CD97A13094FB0698E116C1A36A";
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("AUTH_KEY", authKey);
-
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl).queryParam("BAS_DD", "20200414");
-
-		ResponseEntity<String> response = restTemplate.exchange(
-				builder.toUriString(),
-				HttpMethod.GET,
-				null,
-				String.class
-		);
-
-		if (response.getStatusCode().is2xxSuccessful()) {
-			return response.getBody();
-		} else {
-			throw new RuntimeException("요청이 실패했습니다. 응답 코드: " + response.getStatusCodeValue());
-		}
-	}
-
 
 }

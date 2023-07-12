@@ -83,13 +83,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int loginMember(HashMap<String, String> loginData) {
-        try {
-            return memberMapper.loginMember(loginData);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
+    public Member loginMember(HashMap<String, String> loginData){return memberMapper.loginMember(loginData);}
 
     @Override
     public int selectNameAndEmailOfMember(HashMap<String, String> kakaoLogin) {

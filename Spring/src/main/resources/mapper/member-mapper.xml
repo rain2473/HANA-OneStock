@@ -21,29 +21,29 @@
     <!-- 회원 아이디 조회 -->
     <select id="selectOneMember" parameterType="String" resultType="int">
         SELECT count(*)
-        FROM member_test2
+        FROM member
         where id = #{id}
     </select>
     <!-- 로그인 -->
-    <select id="loginMember" parameterType="HashMap" resultType="int">
+    <select id="loginMember" parameterType="HashMap" resultType="com.hanaonestock.member.model.dto.Member">
         SELECT *
-        FROM member_test2
+        FROM member
         where id = #{id}
-        and password = #{password}
+        and pw = #{password}
     </select>
     <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="int">
         SELECT count(*)
-        FROM member_test2
+        FROM member
         where email = #{email}
           and name = #{name}
     </select>
     <select id="selectNameOfMember" parameterType="String" resultType="com.hanaonestock.member.model.dto.Member">
         SELECT *
-        FROM member_test2
+        FROM member
         where id = #{id}
     </select>
     <delete id="deleteMember" parameterType="string">
-        delete from member_test2 where id=#{id}
+        delete from member where id=#{id}
     </delete>
     <select id="findInvestInfoById" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
         SELECT *
