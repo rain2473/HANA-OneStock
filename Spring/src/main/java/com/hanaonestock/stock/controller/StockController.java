@@ -5,6 +5,7 @@ import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.stock.service.OhlcvService;
 import com.hanaonestock.stock.service.StockService;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.json.JSONObject;
+
 import java.util.Map;
 
 @Controller

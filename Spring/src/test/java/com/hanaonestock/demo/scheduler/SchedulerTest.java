@@ -13,11 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpSession;
-
-import static com.hanaonestock.scheduler.Scheduler.fundamentalStr;
-import static com.hanaonestock.scheduler.Scheduler.ohlcvStr;
 
 // @SpringBootTest
 @MybatisTest
@@ -37,8 +33,6 @@ public class SchedulerTest {
     @Test
     @DisplayName("스케줄링 - restful get 요청 테스트")
     void restfulTest() {
-//        System.out.println(scheduler.getResquestJson(ohlcvStr));
-//        System.out.println(scheduler.getResquestJson(fundamentalStr));
         try {
             scheduler.runAt4PMGet();
         } catch (Exception e) {
