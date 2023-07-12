@@ -13,7 +13,6 @@
     </script>
 </head>
 <body>
-<%=session.getAttribute("id")%>
 <header>
     <nav>
         <a href="/">

@@ -64,21 +64,44 @@ public class TransactionController {
 
     @PostMapping("/buy-transaction")
     public ResponseEntity<?> processBuyTransaction(@RequestBody BuyDto buyDto) {
+        int cash = memberService.findUserCash(buyDto.getId());
         int state = transactionService.buy(buyDto);
-        if (state != 1) {
+        if (state != 1 || buyDto.getVolume() == 0) {
+            System.out.println("매수 트젝 실패");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        // 모든 것이 정상적으로 처리되면, HTTP 상태 코드 200(OK)을 반환합니다.
+        if (cash - (buyDto.getPrice() * buyDto.getVolume()) < 0){
+            System.out.println("시드보다 큰 매수");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        int state2 = memberService.updateInvestInfoCashById(buyDto.getId(), cash - (buyDto.getPrice() * buyDto.getVolume()));
+        if (state2 != 1) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+//        System.out.println(state2);
+//        System.out.println(buyDto.getId());
+//        System.out.println(cash - (buyDto.getPrice() * buyDto.getVolume()));
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/sell-transaction")
     public ResponseEntity<?> processSellTransaction(@RequestBody SellDto sellDto) {
-        System.out.println(sellDto.toString());
+        System.out.println("sellDto.getIsin() = " + sellDto.getIsin());
+        System.out.println("sellDto.getId() = " + sellDto.getId());
+        int volume = transactionService.sumHasVolume(sellDto.getId(), sellDto.getIsin());
         int state = transactionService.sell(sellDto);
         if (state < 0) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        int cash = memberService.findUserCash(sellDto.getId());
+        int newCash = cash + (volume * sellDto.getPrice());
+        int state2 = memberService.updateInvestInfoCashById(sellDto.getId(), newCash);
+        if (state2 != 1) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        System.out.println(newCash);
+        System.out.println(sellDto.getPrice());
+        System.out.println(volume);
         // 모든 것이 정상적으로 처리되면, HTTP 상태 코드 200(OK)을 반환합니다.
         return ResponseEntity.ok().build();
     }

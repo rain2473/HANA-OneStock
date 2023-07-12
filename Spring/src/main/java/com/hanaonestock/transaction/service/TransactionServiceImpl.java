@@ -11,9 +11,12 @@ import com.hanaonestock.transaction.model.dto.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -108,5 +111,24 @@ public class TransactionServiceImpl implements TransactionService {
             e.printStackTrace();
         }
         return ohlcvList;
+    }
+
+    @Override
+    public int sumHasVolume(String id, String isin) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("isin", isin);
+        try{
+            Optional<Integer> optionalInteger = transactionMapper.sumHasVolumeByIdIsin(map);
+            if(optionalInteger.isPresent()){
+                return optionalInteger.get().intValue();
+            } else {
+                System.out.println("null임");
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

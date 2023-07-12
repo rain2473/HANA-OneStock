@@ -50,8 +50,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public int updateInvestInfoCashById(String id, int cash) {
-        Map<Integer, String> map = new HashMap<>();
-        map.put(cash, id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("cash", cash);
+        map.put("id", id);
         try{
             return memberMapper.updateInvestInfoCashById(map);
         } catch (Exception e) {
