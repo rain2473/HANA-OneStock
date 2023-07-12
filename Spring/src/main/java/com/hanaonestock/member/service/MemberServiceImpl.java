@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -43,6 +45,26 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void updateInvest(Member m) {
         memberMapper.updateInvest(m);
+    }
+    public int findUserCash(String id) {
+        Optional<InvestInfo> optionalInvestInfo = memberMapper.findInvestInfoById(id);
+        int UserCash = 0;
+        if (optionalInvestInfo.isPresent()) {
+            InvestInfo investInfo = optionalInvestInfo.get();
+            UserCash = investInfo.getCash();
+        }
+        return UserCash;
+    }
+
+    @Override
+    public int updateInvestInfoCashById(String id, int cash) {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(cash, id);
+        try{
+            return memberMapper.updateInvestInfoCashById(map);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

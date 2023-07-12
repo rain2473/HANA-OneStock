@@ -66,4 +66,12 @@
         goal = #{goal}
         where id = #{id}
     </update>
+    <select id="findInvestInfoById" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
+        SELECT *
+        FROM INVEST_INFO
+        WHERE ID = #{id}
+    </select>
+    <update id="updateInvestInfoCashById" parameterType="java.util.Map">
+        UPDATE INVEST_INFO SET CASH = #{cash} WHERE ID = #{id}
+    </update>
 </mapper>

@@ -5,6 +5,7 @@ import com.hanaonestock.member.model.dto.Member;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberService {
     public List<Member> getAllMember();
@@ -22,5 +23,7 @@ public interface MemberService {
     InvestInfo selectInvestInfo(String id);
 
     void updateInvest(Member m);
+    int findUserCash(String id);
+    int updateInvestInfoCashById(String id, int cash);
 }
 
