@@ -20,14 +20,25 @@
                     <a class="nav-menu">서비스소개</a>
                 <li class="nav-list">
                     <a class="nav-menu">마이페이지</a>
+                <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
+                <c:if test="${provider eq 'kakao'}">
                 <li class="nav-list">
-                    <a class="nav-menu">로그아웃</a>
+                    <a href="/oauth/logout" class="nav-menu">로그아웃</a>
+                </li>
+                </c:if>
+
+                <%-- provider 데이터가 "kakao"가 아닐 경우 일반 로그아웃 버튼을 표시 --%>
+                <c:if test="${empty provider}">
+                    <li class="nav-list">
+                        <a href="/logoutMember" class="nav-menu">로그아웃</a>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </nav>
 </header>
 <div class="content">
-    <div class="stock_list_div">
+    <div class="memberinfo_div">
         <div class="chart_div">
             <div class="chart">
                 <h3>증시현황</h3>

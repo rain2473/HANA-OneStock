@@ -1,12 +1,15 @@
 package com.hanaonestock.member.service;
 
 import com.hanaonestock.member.model.dao.MemberMapper;
+import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -30,6 +33,41 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public void insertInvestInfo(Member member) {
+        memberMapper.insertInvestInfo(member);
+    }
+
+    @Override
+    public InvestInfo selectInvestInfo(String id) {
+        return memberMapper.selectInvestInfo(id);
+    }
+
+    @Override
+    public void updateInvest(Member m) {
+        memberMapper.updateInvest(m);
+    }
+    public int findUserCash(String id) {
+        Optional<InvestInfo> optionalInvestInfo = memberMapper.findInvestInfoById(id);
+        int UserCash = 0;
+        if (optionalInvestInfo.isPresent()) {
+            InvestInfo investInfo = optionalInvestInfo.get();
+            UserCash = investInfo.getCash();
+        }
+        return UserCash;
+    }
+
+    @Override
+    public int updateInvestInfoCashById(String id, int cash) {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(cash, id);
+        try{
+            return memberMapper.updateInvestInfoCashById(map);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
     public int selectOneMember(String id) {
         try {
             return memberMapper.selectOneMember(id);
@@ -38,9 +76,9 @@ public class MemberServiceImpl implements MemberService{
         }
     }
     @Override
-    public boolean updateMember(String id, Member updatedMember) {
+    public boolean updateMember(Member m) {
         try {
-            memberMapper.updateMember(id);
+            memberMapper.updateMember(m);
             return true;
         } catch (Exception e) {
             // insert 작업 실패
@@ -53,13 +91,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int loginMember(HashMap<String, String> loginData) {
-        try {
-            return memberMapper.loginMember(loginData);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
+    public Member loginMember(HashMap<String, String> loginData){return memberMapper.loginMember(loginData);}
 
     @Override
     public int selectNameAndEmailOfMember(HashMap<String, String> kakaoLogin) {

@@ -18,6 +18,7 @@ public class Member {
     private String password;
     private String phoneNumber;
     private String provider;
+    private int goal;
     public Member() {
     }
 }

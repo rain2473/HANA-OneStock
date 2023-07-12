@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanaonestock.stock.model.dao.FundamentalMapper;
 import com.hanaonestock.stock.model.dao.OhlcvMapper;
+import com.hanaonestock.stock.model.dao.PredictMapper;
 import com.hanaonestock.stock.model.dto.Fundamental;
 import com.hanaonestock.stock.model.dto.Ohlcv;
+import com.hanaonestock.stock.model.dto.Predict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,8 @@ public class Scheduler {
     OhlcvMapper ohlcvMapper;
     @Autowired
     FundamentalMapper fundamentalMapper;
+    @Autowired
+    PredictMapper predictMapper;
 
     @Value("${flask.server.url}")
     private String flaskServerUrl;
@@ -35,6 +39,8 @@ public class Scheduler {
     private static final ObjectMapper mapper = new ObjectMapper();
     public static final String ohlcvStr = "ohlcv";
     public static final String fundamentalStr = "fundamental";
+    public static final String predictStr = "predict";
+    public static final String scoreStr = "score";
 
     /**
      * flask api에 주가 정보 데이터를 요청하고 json 형식의 String을 리턴
@@ -42,8 +48,8 @@ public class Scheduler {
     private String getResquestJson(String str) {
         today = LocalDate.now();
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> fundamentalResponse = restTemplate.getForEntity(flaskServerUrl + "/stock_info/" + str + "/" + today.format(formatter), String.class);
-        return fundamentalResponse.getBody().replaceAll("^\"|\"$", "").replaceAll("\\\\", "").toLowerCase();
+        ResponseEntity<String> flaskResponse = restTemplate.getForEntity(flaskServerUrl + "/stock_info/" + str + "/" + today.format(formatter), String.class);
+        return flaskResponse.getBody().replaceAll("^\"|\"$", "").replaceAll("\\\\", "").toLowerCase();
     }
 
     /**
@@ -82,6 +88,23 @@ public class Scheduler {
     }
 
     /**
+     * Predict json 데이터를 Predict List로 변환하여 리턴
+     */
+    public List<Predict> createPredictsFromJson(String json) {
+
+        try {
+//            // Remove the starting and ending double quotes from the JSON string
+//            json = json.substring(1, json.length() - 1);
+            List<Predict> Predict = mapper.readValue(json, new TypeReference<List<Predict>>() {});
+            return Predict;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * 16시에 실행되는 스프링 스케줄러
      */
     @Scheduled(cron = "0 0 16 * * ?")
@@ -89,12 +112,18 @@ public class Scheduler {
 
         String fundamentalJson = getResquestJson(fundamentalStr);
         String ohlcvJson = getResquestJson(ohlcvStr);
+        String predictJson = getResquestJson(predictStr);
+        String scoreJson = getResquestJson(scoreStr);
 
         List<Fundamental> fundamentals = createFundamentalsFromJson(fundamentalJson);
         List<Ohlcv> ohlcvs = createOhlcvsFromJson(ohlcvJson);
+        List<Predict> predict = createPredictsFromJson(predictJson);
+        List<Predict> score = createPredictsFromJson(scoreJson);
 
         saveOhlcv(ohlcvs);
         saveFundamental(fundamentals);
+        savePredict(predict);
+        saveScore(score);
     }
 
     /**
@@ -127,6 +156,44 @@ public class Scheduler {
                 ohlcv.setIsin(ohlcv.getIsin().toUpperCase());
                 tmp = ohlcv;
                 state = ohlcvMapper.insertData(ohlcv);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(tmp.toString());
+        }
+        return state;
+    }
+
+    /**
+     * Predict List를 각각 DB에 저장 (mybatis 활용)
+     */
+    private int savePredict(List<Predict> predicts) {
+        Predict tmp = null;
+        int state = 0;
+        try {
+            for (Predict predict : predicts) {
+                predict.setIsin(predict.getIsin().toUpperCase());
+                tmp = predict;
+                state = predictMapper.insertData(predict);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(tmp.toString());
+        }
+        return state;
+    }
+
+    /**
+     * Score List를 각각 DB에 저장 (mybatis 활용)
+     */
+    private int saveScore(List<Predict> scores) {
+        Predict tmp = null;
+        int state = 0;
+        try {
+            for (Predict score : scores) {
+                score.setIsin(score.getIsin().toUpperCase());
+                tmp = score;
+                state = predictMapper.updateData(score);
             }
         } catch (Exception e) {
             e.printStackTrace();

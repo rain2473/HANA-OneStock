@@ -1,17 +1,70 @@
 body {
     background-image: url("../img/background2.png");
+    margin-left: 200px;
+    margin-right: 200px;
 }
 
 h3 {
     color: black;
 }
 
+.a {
+    position: relative;
+}
+
+.search-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-left: 80px;
+}
+
+.content {
+    flex-direction: column;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
 .container {
     display: flex;
-    margin: 20px 200px 30px 200px;
-    width: 1000px; height: 600px;
+    justify-content: center;
+    align-content: center;
+    margin: 20px 0px 30px 0px;
+    width: 1050px; height: 700px;
     background-color: #DDF1ED;
     border-radius: 20px;
+}
+
+/*검색 메뉴*/
+.search-menu {
+    width: 1050px; height: 35px;
+    padding: 10px 0px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    align-items: center;
+}
+
+.search-box {
+    width: 500px;
+    border: 2px solid #797979;
+    font-size: 14px;
+    padding: 4px 0 4px 14px;
+    border-radius: 50px;
+}
+
+.search-button {
+    margin-left: 5px;
+    width: 50px;
+    border-radius: 20px;
+    background-color: #888888;
 }
 
 /* 사이드 메뉴 */
@@ -29,15 +82,6 @@ h3 {
     box-shadow: 0 0px 24px 0 rgb(0 0 0 / 6%), 0 1px 0px 0 rgb(0 0 0 / 2%);
     color: black;
     overflow-y: auto;
-}
-
-input[type="search"] {
-    width: 180px;
-    margin: 0px 0px 0px 9px;
-    border: 2px solid #797979;
-    font-size: 14px;
-    padding: 4px 0 4px 14px;
-    border-radius: 50px;
 }
 
 .left_sub_menu>.sub_menu li:hover {
@@ -100,6 +144,8 @@ ul {
     width: 100%;
 }
 
+
+
 .chart_div {
     display: flex;
     flex-direction: column;
@@ -111,7 +157,7 @@ ul {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #888888;
+    background-color: white;
     opacity: 0.7;
     border-radius: 20px;
     margin: 20px 10px 10px 40px;
@@ -121,14 +167,86 @@ ul {
 }
 
 .trade_div {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: #888888;
+    background-color: white;
     opacity: 0.7;
     border-radius: 20px;
-    margin: 10px 12px 20px 40px;
-    width: 760px;
-    height: 200px;
+    margin: 12px 12px 20px 40px;
+    padding: 20px;
     color: black;
+    display: flex;
+    justify-content: center
+}
+
+.left-column,
+.right-column,
+.last-column {
+    display: flex;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.form-group {
+    margin: 0px 15px 15px 20px;
+}
+
+.left-column label,
+.right-column label,
+.last-column label{
+    margin-bottom: 20px;
+}
+
+.percent-buttons {
+    display: flex;
+    align-items: center;
+    width: 250px;
+}
+
+.percent-buttons button {
+    flex: 1;
+    margin-right: 5px;
+}
+
+.form-group input[type="text"],
+.percent-buttons button {
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.form-group:last-child {
+    margin-top: auto;
+}
+
+input[type="submit"] {
+    display: block;
+    margin: 18px 10px 10px 20px;
+    width: 250px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: #008485;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #006c6c;
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    background-color: #008485;
+    opacity: 0.9;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #006c6c;
 }

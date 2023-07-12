@@ -1,0 +1,106 @@
+body {
+    background-image: url("../img/background2.png");
+}
+
+.piechart {
+    width: 450px;
+    height: 500px;
+}
+
+.money {
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    color: black;
+    font-size: 25px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.content {
+    justify-content: center;
+    align-content: center;
+}
+
+.chart_div {
+    display: flex;
+}
+
+.member_info_div {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #DDF1ED;
+    border-radius: 20px;
+    width: 1400px;
+    height: 650px;
+}
+
+.button-container {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+    align-content: center;
+}
+
+.small-btn {
+    display: inline-block;
+    text-align: center;
+    background-color: #008485;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 35px;
+    margin-right: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.small-btn:hover {
+    background-color: #006363;
+}
+
+.button {
+    display: inline-block;
+    text-align: center;
+    background-color: #008485;
+    border: none;
+    color: white;
+    width: 140px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.button:hover {
+    background-color: #006363;
+}
+
+.chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 20px;
+    margin: 10px 12px 10px 12px;
+    width: 550px;
+    height: 600px;
+    color: black;
+}

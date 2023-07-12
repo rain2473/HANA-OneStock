@@ -19,4 +19,9 @@ public interface OhlcvMapper {
 
     int insertData(Ohlcv ohlcv);
 
+    List<Ohlcv> findRisingTop5ByDate(@Param("date")String date);
+    List<Ohlcv> findFallingTop5ByDate(@Param("date")String date);
+    List<Ohlcv> findVolumeTop5ByDate(@Param("date")String date);
+    List<Ohlcv> findAmountTop5ByDate(@Param("date")String date);
+
 }
