@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="../../resources/style/common.css">
+    <link rel="stylesheet" href="../../resources/style/mypage.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="index_login">
+            <img src="../../resources/img/logo.png" height="40">
+        </a>
+        <div>
+            <ul>
+                <li class="nav-list">
+                    <a class="nav-menu">서비스소개</a>
+                <li class="nav-list">
+                    <a class="nav-menu">마이페이지</a>
+                <li class="nav-list">
+                    <a class="nav-menu">로그아웃</a>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="content">
+    <div class="member_info_div">
+        <div class="chart_div">
+            <div class="chart">
+                <h3>지갑</h3>
+            </div>
+            <div class="chart">
+                <h3>박경덕님의 보유 자산입니다.</h3>
+                <script>
+                    fetch("../../resources/json/data.json")
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // 결제내역 데이터 가져오기
+                            const assetData = data.assetData;
+
+                            // 차트 데이터 설정
+                            const chartData = {
+                                datasets: [{
+                                    backgroundColor: ['rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)'],
+                                    data: assetData.map(item => item.amount)
+                                }],
+                                labels: assetData.map(item => item.category)
+                            };
+
+                            // 차트 생성
+                            var ctx1 = document.getElementById("myPieChart");
+                            var myPieChart = new Chart(ctx1, {
+                                type: 'pie',
+                                data: chartData,
+                                options: {
+                                    legend: {
+                                        position: 'bottom',
+                                        align: 'start',
+                                        labels: {
+                                            usePointStyle: true
+                                        }
+                                    },
+                                    plugins: {
+                                        datalabels: {
+                                            color: 'black',
+                                            anchor: 'start',
+                                            align: 'start',
+                                            offset: 10,
+                                            font: {
+                                                size: 12
+                                            },
+                                            formatter: function(value, context) {
+                                                return context.chart.data.labels[context.dataIndex] + ': ' + value + '원';
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        })
+                        .catch((error) => {
+                            console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
+                        });
+                </script>
+                <canvas id="myPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="button-container">
+    <a href="join" class="button">회원정보 수정</a>
+</div>
+<footer>
+    <hr>
+    <p>
+        <span>고객센터 1800-0000</span><br/>
+        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
+        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
+        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
+    </p>
+    <br>
+</footer>
+</body>
+</html>
