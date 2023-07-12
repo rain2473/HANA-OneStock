@@ -2,6 +2,7 @@ package com.hanaonestock.member.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 import com.hanaonestock.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,20 @@ public class MemberController {
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index");
+        return mav;
+    }
+
+    @RequestMapping("/mypage")
+    public ModelAndView mypage(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("id");
+        ModelAndView mav = new ModelAndView();
+        Member memberInfo = memberService.selectNameOfMember(id);
+        InvestInfo investInfo = memberService.selectInvestInfo(id);
+
+        mav.addObject("member",memberInfo);
+        mav.addObject("invest",investInfo);
+        mav.setViewName("mypage2");
         return mav;
     }
 
@@ -86,14 +101,19 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/updateMember/{id}")
-    public ResponseEntity<String> updateMember(@PathVariable("id") String id, @RequestBody Member updatedMember) {
-        // id에 해당하는 회원을 찾아서 업데이트
-        boolean isSuccess = memberService.updateMember(id, updatedMember);
+    @PostMapping("/updateMember")
+    public ResponseEntity<String> updateMember(@RequestBody Member member) {
 
-        if (isSuccess) {
+        try {
+            Member updateM = memberService.selectNameOfMember(member.getId());
+            updateM.setPassword(member.getPassword());
+            updateM.setPhoneNumber(member.getPhoneNumber());
+            updateM.setGoal(member.getGoal());
+
+            memberService.updateMember(updateM);
+            memberService.updateInvest(updateM);
             return ResponseEntity.ok("회원 수정 성공");
-        } else {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 수정 실패");
         }
     }
@@ -102,9 +122,7 @@ public class MemberController {
     public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData, HttpServletRequest request) {
         Member loginMember = memberService.loginMember(loginData);
         HttpSession session = request.getSession();
-
         if (loginMember!=null) {
-            //Member m = memberService.selectNameOfMember(loginData.get("id"));
             session.setAttribute("name",loginMember.getName());
             session.setAttribute("id",loginMember.getId());
             return ResponseEntity.ok("로그인 성공");
@@ -116,7 +134,6 @@ public class MemberController {
     @PostMapping(value = "/insertMember")
     @ResponseBody
     public String insertMember(@RequestBody Member member) {
-        System.out.println(member);
         try {
             memberService.insertMember(member);
             memberService.insertInvestInfo(member);

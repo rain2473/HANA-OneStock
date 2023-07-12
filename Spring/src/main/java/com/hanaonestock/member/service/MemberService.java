@@ -1,5 +1,6 @@
 package com.hanaonestock.member.service;
 
+import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 
 import java.util.HashMap;
@@ -10,12 +11,16 @@ public interface MemberService {
 
     int selectOneMember(String id);
 
-    boolean updateMember(String id, Member updatedMember);
+    boolean updateMember(Member m);
     int deleteMember(String id);
     Member loginMember(HashMap<String, String> loginData);
     int selectNameAndEmailOfMember(HashMap<String, String> kakaoLogin);
     void insertMember(Member member);
     Member selectNameOfMember(String id);
     void insertInvestInfo(Member member);
+
+    InvestInfo selectInvestInfo(String id);
+
+    void updateInvest(Member m);
 }
 
