@@ -1,4 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.hanaonestock.stock.model.dto.RecommendedStock" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,6 @@
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
-<%=session.getAttribute("id")%>
 <header>
     <nav>
         <a href="/">
@@ -54,6 +56,24 @@
         <div class="left_sub_menu">
             <div class="sub_menu">
                 <h2>추천종목</h2>
+                <c:forEach var="stock" items="${sessionScope.stockList}">
+                    <ul class="stock_name">
+                        <li><c:out value="${stock.name}" /><i class="arrow fas fa-angle-right"></i></li>
+                        <ul class="small_menu">
+                            <li>종목번호 <c:out value="${stock.isin}" /></li>
+                            <li><c:out value="${stock.close}" /> <c:choose>
+                                <c:when test="${stock.updown >= 0}">
+                                    <span class="blue_text">+<c:out value="${stock.updown}" />%</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="red_text"><c:out value="${stock.updown}" />%</span>
+                                </c:otherwise>
+                            </c:choose>
+                            </li>
+                        </ul>
+                    </ul>
+                </c:forEach>
+                <!--
                 <ul class="stock_name">
                     <li>삼성전자<i class="arrow fas fa-angle-right"></i></li>
                     <ul class="small_menu">
@@ -68,6 +88,7 @@
                         <li>49,850 <span> 0.00%</span></li>
                     </ul>
                 </ul>
+                -->
                 <!-- 종목 추가 누르면 현재 종목 즐겨찾기 추가 -->
                 <h2>종목추가➕</h2>
                 <div class="add_stock"></div>

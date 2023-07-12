@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,26 +51,27 @@
             </div>
         </div>
         <div class="list_div">
-            <div class="stock_list">
-                <h3>LG 에너지솔루션</h3>
-                <span class="small_text blue_text">  -0.87 ▼4,000</span>
-                <h3>569,000</h3>
-            </div>
-            <div class="stock_list">
-                <h3>삼성전자</h3>
-                <span class="small_text red_text">  +0.14% ▲100 </span>
-                <h3>73,100</h3>
-            </div>
-            <div class="stock_list">
-                <h3>셀트리온</h3>
-                <span class="small_text blue_text">  -0.73% ▼1,000</span>
-                <h5>150,500</h5>
-            </div>
-            <div class="stock_list">
-                <h3>하나금융지주</h3>
-                <span class="small_text blue_text">-1.49% ▼600</span>
-                <h5>39,550</h5>
-            </div>
+            <c:forEach var="stock" items="${stockList}" varStatus="status">
+                <div class="stock_list">
+                    <fmt:formatNumber value="${stock.close}" pattern="#,##0" var="formattedClose" />
+                    <h3><c:out value="${stock.name}" /></h3>
+                    <c:choose>
+                        <c:when test="${stock.updown >= 0}">
+                            <span class="small_text red_text">
+                                <c:out value="${stock.updown}" />%
+                                ▲<c:out value="${stock.gap}" />
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="small_text blue_text">
+                                <c:out value="${stock.updown}" />%
+                                ▼<c:out value="${stock.gap}" />
+                            </span>
+                        </c:otherwise>
+                    </c:choose>
+                    <h3><c:out value="${formattedClose}" /></h3>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </div>

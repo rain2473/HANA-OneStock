@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -67,16 +68,11 @@ public class StockController {
     }
 
     @RequestMapping("/main")
-    public ModelAndView main() {
+    public ModelAndView main(HttpSession session) {
         ModelAndView mav = new ModelAndView();
-
         List<RecommendedStock> stockList = stockService.recommendedStock();
-        for(RecommendedStock rs : stockList) {
-            System.out.println(rs.toString());
-        }
+        session.setAttribute("stockList", stockList);
         mav.addObject("stockList", stockList);
-        //model.addAttribute("stockList", stockList);
-        //return new ResponseEntity<>(json, HttpStatus.OK);
         mav.setViewName("main");
         return mav;
     }
