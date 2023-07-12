@@ -1,13 +1,20 @@
 package com.hanaonestock.stock.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanaonestock.stock.model.dto.Ohlcv;
+import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -43,4 +50,28 @@ public class StockController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @RequestMapping("/main")
+    public ModelAndView main() {
+        ModelAndView mav = new ModelAndView();
+
+        List<RecommendedStock> stockList = stockService.recommendedStock();
+        for(RecommendedStock rs : stockList) {
+            System.out.println(rs.toString());
+        }
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String json;
+//        try {
+//            json = objectMapper.writeValueAsString(stockList);
+//        } catch (JsonProcessingException e) {
+//            return new ResponseEntity<>("Error processing JSON", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+        mav.addObject("stockList", stockList);
+        //model.addAttribute("stockList", stockList);
+       // return new ResponseEntity<>(json, HttpStatus.OK);
+
+        mav.setViewName("main");
+        return mav;
+    }
+
 }

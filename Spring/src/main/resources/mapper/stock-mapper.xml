@@ -26,4 +26,19 @@
         where ROWNUM <= 10
         ]]>
     </select>
+
+    <select id="recommendedStock" resultType="com.hanaonestock.stock.model.dto.RecommendedStock">
+    <![CDATA[
+        SELECT O1.ISIN, S_DATE, NAME, UPDOWN, CLOSE, CLOSE - Y_PRICE AS GAP
+        FROM
+            (SELECT ISIN FROM (SELECT * FROM PREDICT WHERE S_DATE = TRUNC(SYSDATE) AND PREDICT = 1 order by p_rate desc) where rownum < 5) O1
+            INNER JOIN
+            (SELECT ISIN, S_DATE, UPDOWN, CLOSE, ROUND(close / (1 + (updown/100))) AS Y_PRICE  FROM OHLCV WHERE S_DATE = TRUNC(SYSDATE)) O2
+        ON
+            O1.ISIN = O2.ISIN
+            INNER JOIN
+            STOCK S
+            ON O1.ISIN = S.ISIN;
+        ]]>
+    </select>
 </mapper>

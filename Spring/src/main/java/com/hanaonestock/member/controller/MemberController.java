@@ -51,13 +51,6 @@ public class MemberController {
         return mav;
     }
 
-    @RequestMapping("/main")
-    public ModelAndView main() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("main");
-        return mav;
-    }
-
     @RequestMapping("/dashboard")
     public ModelAndView dashboard() {
         ModelAndView mav = new ModelAndView();
