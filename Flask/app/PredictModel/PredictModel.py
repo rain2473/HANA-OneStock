@@ -75,7 +75,7 @@ def scoreYesterday(today):
 
     result = pd.concat([new_data, p_price, r_price , e_updown, r_updown], axis=1)
     result['p_price'] = round(result['p_price']).astype(int)
-    result['e_updown'] = round(result['e_updown']).astype(int)
+    result['e_updown'] = (round(result['e_updown'], 1) + 0.5).astype(int)
     result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
     result['r_rate'] = round((result['r_price'] - result['close']) / result['close'] * 100, 2)
     result['tmp_updown'] = (result['p_rate'] > 0).astype(int)

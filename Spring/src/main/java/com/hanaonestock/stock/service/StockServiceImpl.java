@@ -1,6 +1,7 @@
 package com.hanaonestock.stock.service;
 
 import com.hanaonestock.stock.model.dao.StockMapper;
+import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,4 +65,17 @@ public class StockServiceImpl implements StockService {
 
         return stockList;
     }
+
+    //오늘의 추천 주식 받아오기
+    @Override
+    public List<RecommendedStock> recommendedStock() {
+        List<RecommendedStock> stockList = null;
+        try {
+            stockList = stockMapper.recommendedStock();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stockList;
+    }
+
 }

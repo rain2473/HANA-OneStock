@@ -26,7 +26,8 @@
     </select>
     <!-- 로그인 -->
     <select id="loginMember" parameterType="HashMap" resultType="com.hanaonestock.member.model.dto.Member">
-        SELECT *
+        SELECT
+        *
         FROM member
         where id = #{id}
         and pw = #{password}
@@ -38,13 +39,33 @@
           and name = #{name}
     </select>
     <select id="selectNameOfMember" parameterType="String" resultType="com.hanaonestock.member.model.dto.Member">
-        SELECT *
+        SELECT
+        id as id,
+        pw as password,
+        name as name,
+        email as email,
+        phone as phoneNumber,
+        provider as provider
         FROM member
         where id = #{id}
     </select>
     <delete id="deleteMember" parameterType="string">
         delete from member where id=#{id}
     </delete>
+    <select id="selectInvestInfo" parameterType="String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
+        select * from invest_info where id = #{id}
+    </select>
+    <update id="updateMember" parameterType="com.hanaonestock.member.model.dto.Member">
+        update member set
+        pw=#{password},
+        phone=#{phoneNumber}
+        where id = #{id}
+    </update>
+    <update id="updateInvest" parameterType="com.hanaonestock.member.model.dto.InvestInfo">
+        update invest_info set
+        goal = #{goal}
+        where id = #{id}
+    </update>
     <select id="findInvestInfoById" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
         SELECT *
         FROM INVEST_INFO
