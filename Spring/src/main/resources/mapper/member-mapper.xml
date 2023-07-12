@@ -45,4 +45,12 @@
     <delete id="deleteMember" parameterType="string">
         delete from member_test2 where id=#{id}
     </delete>
+    <select id="findInvestInfoById" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
+        SELECT *
+        FROM INVEST_INFO
+        WHERE ID = #{id}
+    </select>
+    <update id="updateInvestInfoCashById" parameterType="java.util.Map">
+        UPDATE INVEST_INFO SET CASH = #{cash} WHERE ID = #{id}
+    </update>
 </mapper>

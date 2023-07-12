@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
+<%=session.getAttribute("id")%>
 <header>
     <nav>
         <a href="/">
@@ -57,7 +58,7 @@
                     </ul>
                 </ul>
                 <!-- 종목 추가 누르면 현재 종목 즐겨찾기 추가 -->
-                <h2>종목추가</h2>
+                <h2>종목추가➕</h2>
                 <div class="add_stock"></div>
             </div>
         </div>
@@ -328,7 +329,7 @@
 
             // 이미 추가된 종목인지 확인
             var isAlreadyAdded = false;
-            $('.stock_name > li').each(function() {
+            $('.stock_name > li').each(function () {
                 if ($(this).text().indexOf(stockInfo) >= 0) { // 종목 이름과 번호가 포함되어 있는지 확인
                     isAlreadyAdded = true;
                     return false; // each loop 탈출

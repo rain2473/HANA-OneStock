@@ -1,12 +1,15 @@
 package com.hanaonestock.member.service;
 
 import com.hanaonestock.member.model.dao.MemberMapper;
+import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -32,6 +35,28 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void insertInvestInfo(Member member) {
         memberMapper.insertInvestInfo(member);
+    }
+
+    @Override
+    public int findUserCash(String id) {
+        Optional<InvestInfo> optionalInvestInfo = memberMapper.findInvestInfoById(id);
+        int UserCash = 0;
+        if (optionalInvestInfo.isPresent()) {
+            InvestInfo investInfo = optionalInvestInfo.get();
+            UserCash = investInfo.getCash();
+        }
+        return UserCash;
+    }
+
+    @Override
+    public int updateInvestInfoCashById(String id, int cash) {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(cash, id);
+        try{
+            return memberMapper.updateInvestInfoCashById(map);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
