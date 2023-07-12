@@ -38,7 +38,7 @@
             O1.ISIN = O2.ISIN
             INNER JOIN
             STOCK S
-            ON O1.ISIN = S.ISIN;
+            ON O1.ISIN = S.ISIN
         ]]>
     </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.hanaonestock.member.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 import com.hanaonestock.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
