@@ -30,6 +30,11 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public void insertInvestInfo(Member member) {
+        memberMapper.insertInvestInfo(member);
+    }
+
+    @Override
     public int selectOneMember(String id) {
         try {
             return memberMapper.selectOneMember(id);

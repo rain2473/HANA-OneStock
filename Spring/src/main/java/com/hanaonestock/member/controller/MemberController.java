@@ -123,9 +123,10 @@ public class MemberController {
     @PostMapping(value = "/insertMember")
     @ResponseBody
     public String insertMember(@RequestBody Member member) {
-
+        System.out.println(member);
         try {
             memberService.insertMember(member);
+            memberService.insertInvestInfo(member);
             return "회원 등록 성공";
         } catch (Exception e) {
             return "회원 등록 실패";
