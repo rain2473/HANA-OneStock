@@ -52,13 +52,6 @@ public class MemberController {
         return mav;
     }
 
-    @RequestMapping("/main")
-    public ModelAndView main(@RequestParam("goal") String goal) {
-        System.out.println(goal);
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("main");
-        return mav;
-    }
 
     @RequestMapping("/dashboard")
     public ModelAndView dashboard() {
@@ -107,13 +100,13 @@ public class MemberController {
 
     @PostMapping("/loginMember")
     public ResponseEntity<String> loginMember(@RequestBody HashMap<String, String> loginData, HttpServletRequest request) {
-        boolean isSuccess = memberService.loginMember(loginData) > 0;
+        Member loginMember = memberService.loginMember(loginData);
         HttpSession session = request.getSession();
 
-        if (isSuccess) {
-            Member m = memberService.selectNameOfMember(loginData.get("id"));
-            session.setAttribute("name",m.getName());
-            session.setAttribute("id",m.getId());
+        if (loginMember!=null) {
+            //Member m = memberService.selectNameOfMember(loginData.get("id"));
+            session.setAttribute("name",loginMember.getName());
+            session.setAttribute("id",loginMember.getId());
             return ResponseEntity.ok("로그인 성공");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 실패");
