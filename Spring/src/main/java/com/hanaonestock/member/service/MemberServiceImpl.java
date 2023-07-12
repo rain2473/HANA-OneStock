@@ -38,6 +38,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public InvestInfo selectInvestInfo(String id) {
+        return memberMapper.selectInvestInfo(id);
+    }
+
+    @Override
+    public void updateInvest(Member m) {
+        memberMapper.updateInvest(m);
+    }
     public int findUserCash(String id) {
         Optional<InvestInfo> optionalInvestInfo = memberMapper.findInvestInfoById(id);
         int UserCash = 0;
@@ -68,9 +76,9 @@ public class MemberServiceImpl implements MemberService{
         }
     }
     @Override
-    public boolean updateMember(String id, Member updatedMember) {
+    public boolean updateMember(Member m) {
         try {
-            memberMapper.updateMember(id);
+            memberMapper.updateMember(m);
             return true;
         } catch (Exception e) {
             // insert 작업 실패

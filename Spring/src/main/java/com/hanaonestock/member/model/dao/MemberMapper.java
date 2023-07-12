@@ -15,7 +15,7 @@ public interface MemberMapper {
     List<Member> getAllMember();
     void insertMember(Member member);
     int selectOneMember(String id);
-    boolean updateMember(String id);
+    boolean updateMember(Member m);
     int deleteMember(String id);
     Member loginMember(HashMap<String, String> loginData);
     int selectNameAndEmail(HashMap<String, String> kakaoLogin);
@@ -23,4 +23,6 @@ public interface MemberMapper {
     void insertInvestInfo(Member member);
     Optional<InvestInfo> findInvestInfoById(String id);
     int updateInvestInfoCashById(Map<Integer, String> idAndNewCash);
+    InvestInfo selectInvestInfo(String id);
+    void updateInvest(Member m);
 }
