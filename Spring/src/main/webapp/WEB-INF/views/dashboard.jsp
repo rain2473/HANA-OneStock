@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="../../resources/style/dashboard.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script>
+        var cash;
+    </script>
 </head>
 <body>
 <header>
@@ -140,14 +143,16 @@
             <div class="trade_div">
                 <button type="button" id="toggleButton">매수/매도</button>
                 <form id="tradeForm">
+                    <input type="hidden" id="isin" name="isin" value="">
+                    <input type="hidden" id="id" name="id" value="<%=session.getAttribute("id")%>">
                     <div class="left-column">
                         <div class="form-group">
                             <label for="availableFunds">주문 가능</label>
                             <input type="text" id="availableFunds" name="availableFunds" value="0 KRW" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="buyPrice">매수 가격</label>
-                            <input type="text" id="buyPrice" name="buyPrice" placeholder="1000 KRW">
+                            <label for="price">매수 가격</label>
+                            <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
                         </div>
                     </div>
                     <div class="right-column">
@@ -170,7 +175,7 @@
                             <label for="totalOrder">주문 총액</label>
                             <input type="text" id="totalOrder" name="totalOrder" readonly>
                         </div>
-                        <input type="submit" value="매수하기">
+                        <input type="button" id="buyButton" value="매수하기">
                     </div>
                 </form>
             </div>
@@ -242,11 +247,13 @@
                 'input': input
             },
             success: function (stock) {
-                $('.stock').text(stock.name + '(' + stock.isin + ')');
+                getUserCash("<%=session.getAttribute("id")%>");
                 getChartData(stock.isin);
+                $('.stock').text(stock.name + '(' + stock.isin + ')');
+                document.getElementById('isin').value = stock.isin;
             },
             error: function () {
-                alert("Error occurred.");
+                console.log("Error occurred.");
             },
         });
     }
@@ -259,7 +266,7 @@
             data: {
                 'input': isin
             },
-            success: function (data) {
+            success: function(data) {
                 const ohlcvList = JSON.parse(data);
                 const candleData = ohlcvList.map((item) => ({
                     close: item.close,
@@ -268,7 +275,29 @@
                     open: item.open,
                     time: new Date(item.s_date).toISOString().split('T')[0],
                 }));
+                // 차트를 그림
                 candlestickSeries.setData(candleData);
+
+                // 매수/매도 가격 폼에 종가 적용
+                const PriceInput = document.getElementById('price');
+                if (candleData.length > 0) {
+                    const latestClose = Math.floor(candleData[candleData.length - 1].close); // 소수점 제거
+                    PriceInput.value = latestClose.toString(); // 정수로 변환하여 문자열로 표시
+                } else {
+                    PriceInput.value = ''; // 데이터가 없을 경우 빈 값으로 설정
+                }
+
+                // 주문 가능 폼에 사용자 시드를 고려한 최대 주문 가능 액수 적용
+                const buyMaxPrice = document.getElementById('availableFunds');
+                if (cash < PriceInput.value) {
+                    buyMaxPrice.value = 0;
+                } else {
+                    buyMaxPrice.value = Math.floor(cash / PriceInput.value) * PriceInput.value;
+                }
+
+                // 매도의 경우, 최대 주문 수량을 보유하고 있는 주식 수 설정
+
+                //
             },
             error: function () {
                 alert("Error occurred.");
@@ -276,17 +305,189 @@
         });
     }
 
-    // 매수/매도
+    /**
+     *  사용자 잔고 받아오기
+     */
+    function getUserCash(id) {
+        $.ajax({
+            url: '/get-user-cash',
+            type: 'GET',
+            data: {
+                id: id // 대체할 사용자 식별자
+            },
+            success: function(data) {
+                // 요청이 성공했을 때의 처리
+                cash = data;
+                console.log('Received cash:', data);
+                // data 변수에 서버에서 받아온 cash 값이 들어 있습니다.
+                // 이를 원하는 방식으로 처리하십시오.
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때의 처리
+                console.error('Error:', error);
+            }
+        });
+    }
+
+
+    function bindEventListeners() {
+        document.getElementById('orderQuantity').addEventListener('input', function() {
+            const orderQuantity = document.getElementById('orderQuantity').value;
+            const price = document.getElementById('price').value;
+
+            if(orderQuantity && price && orderQuantity * price > 0) {
+                const totalOrder = orderQuantity * price;
+                document.getElementById('totalOrder').value = totalOrder;
+            } else {
+                document.getElementById('totalOrder').value = '0 KRW';
+            }
+        });
+
+        ['10', '25', '50', '100'].forEach(function(percent) {
+            document.getElementById(percent + 'percent').addEventListener('click', function() {
+                const availableFunds = Number(document.getElementById('availableFunds').value.replace(' KRW', ''));
+                const price = Number(document.getElementById('price').value.replace(' KRW', ''));
+
+                if(price) {
+                    const orderQuantity = (availableFunds * (percent / 100)) / price;
+                    const orderQuantityInput = document.getElementById('orderQuantity');
+
+                    orderQuantityInput.value = Math.floor(orderQuantity);
+                    orderQuantityInput.dispatchEvent(new Event('input'));
+                }
+            });
+        });
+
+        handleSearch();
+
+        /**
+         *  매수 트랜잭션
+         */
+        $(document).ready(function() {
+            $("#buyButton").click(function(event) {
+                event.preventDefault();
+
+                var availableFunds = parseInt($("#availableFunds").val());
+                var totalOrder = parseInt($("#totalOrder").val());
+
+                if (isNaN(availableFunds) || isNaN(totalOrder)) {
+                    alert("주문 가능한 금액이나 주문 총액이 유효한 숫자가 아닙니다.");
+                    return;
+                }
+
+                if (totalOrder <= availableFunds) {
+                    var buyDto = {
+                        isin: $('#isin').val(),  // 종목명을 폼에서 가져옵니다.
+                        id: $('#id').val(),  // 사용자 아이디를 폼에서 가져옵니다.
+                        price: parseInt($('#price').val()),  // 매수가를 폼에서 가져옵니다.
+                        volume: parseInt($('#orderQuantity').val()),  // 수량을 폼에서 가져옵니다.
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/buy-transaction',
+                        data: JSON.stringify(buyDto),
+                        contentType: 'application/json',
+                        success: function() {
+                            alert('Transaction success!');
+                            location.reload();
+                        },
+                        error: function() {
+                            alert('Transaction failed!');
+                            location.reload();
+                        },
+                    });
+                } else {
+                    alert("주문 가능한 금액보다 주문 총액이 더 큽니다.");
+                }
+            });
+        });
+
+        /**
+         * 매도 트랜잭션
+         */
+        $(document).ready(function() {
+            $("#sellButton").click(function(event) {
+                event.preventDefault();
+
+                var sellDto = {
+                    isin: $('#isin').val(),  // 종목명을 폼에서 가져옵니다.
+                    id: $('#id').val(),  // 사용자 아이디를 폼에서 가져옵니다.
+                    price: parseInt($('#price').val()),  // 매도가를 폼에서 가져옵니다.
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/sell-transaction',  // 매도 요청을 처리하는 서버의 URL입니다.
+                    data: JSON.stringify(sellDto),
+                    contentType: 'application/json',
+                    success: function() {
+                        alert('Transaction success!');
+                        location.reload();
+                    },
+                    error: function() {
+                        console.log($('#isin').val());
+                        console.log($('#id').val());
+                        console.log(parseInt($('#price').val()));
+                        alert('Transaction failed!');
+                        //location.reload();
+                    },
+                });
+            });
+        });
+
+    }
+
+    // 매수/매도 폼 변경
     var toggleButton = document.getElementById("toggleButton");
     var tradeForm = document.getElementById("tradeForm");
     var isBuyForm = true;
     toggleButton.addEventListener("click", function () {
         if (isBuyForm) {
             tradeForm.innerHTML = `
+                    <input type="hidden" id="isin" name="isin" value="">
+                    <input type="hidden" id="id" name="id" value="<%=session.getAttribute("id")%>">
                     <div class="left-column">
                         <div class="form-group">
-                            <label for="sellPrice">매도 가격</label>
-                            <input type="text" id="sellPrice" name="sellPrice" placeholder="1000 KRW">
+                            <label for="price">매도 가격</label>
+                            <input type="text" id="price" name="price" placeholder="1000 KRW">
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <div class="form-group">
+                            <label for="orderQuantity" hidden>주문 수량</label>
+                            <input type="text" id="orderQuantity" name="orderQuantity" placeholder="0" hidden>
+                        </div>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label for="quantityPercent" hidden>주문 비율</label>
+                        <div class="percent-buttons" hidden>
+                            <button type="button" id="10percent" hidden>10%</button>
+                            <button type="button" id="25percent" hidden>25%</button>
+                            <button type="button" id="50percent" hidden>50%</button>
+                            <button type="button" id="100percent" hidden>100%</button>
+                        </div>
+                    </div>
+                    <div class="last-column">
+                        <div class="form-group" hidden>
+                            <label for="totalOrder" hidden>주문 총액</label>
+                            <input type="text" id="totalOrder" name="totalOrder" readonly hidden>
+                        </div>
+                        <input type="button" id="sellButton" value="매도하기">
+                    </div>
+                `;
+            toggleButton.innerText = "매수하기";
+        } else {
+            tradeForm.innerHTML = `
+                    <input type="hidden" id="isin" name="isin" value="">
+                    <input type="hidden" id="id" name="id" value="<%=session.getAttribute("id")%>">
+                    <div class="left-column">
+                        <div class="form-group">
+                            <label for="availableFunds">주문 가능</label>
+                            <input type="text" id="availableFunds" name="availableFunds" value="0 KRW" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">매수 가격</label>
+                            <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
                         </div>
                     </div>
                     <div class="right-column">
@@ -309,48 +510,13 @@
                             <label for="totalOrder">주문 총액</label>
                             <input type="text" id="totalOrder" name="totalOrder" readonly>
                         </div>
-                        <input type="submit" value="매도하기">
+                        <input type="button" id="buyButton" value="매수하기">
                     </div>
-                `;
-            toggleButton.innerText = "매수하기";
-        } else {
-            tradeForm.innerHTML = `
-                <div class="left-column">
-                    <div class="form-group">
-                        <label for="availableFunds">주문 가능</label>
-                        <input type="text" id="availableFunds" name="availableFunds" value="0 KRW" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="buyPrice">매수 가격</label>
-                        <input type="text" id="buyPrice" name="buyPrice" placeholder="1000 KRW">
-                    </div>
-                </div>
-                <div class="right-column">
-                    <div class="form-group">
-                        <label for="orderQuantity">주문 수량</label>
-                        <input type="text" id="orderQuantity" name="orderQuantity" placeholder="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="quantityPercent">주문 비율</label>
-                        <div class="percent-buttons">
-                            <button type="button" id="10percent">10%</button>
-                            <button type="button" id="25percent">25%</button>
-                            <button type="button" id="50percent">50%</button>
-                            <button type="button" id="100percent">100%</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="last-column">
-                    <div class="form-group">
-                        <label for="totalOrder">주문 총액</label>
-                        <input type="text" id="totalOrder" name="totalOrder" readonly>
-                    </div>
-                    <input type="submit" value="매수하기">
-                </div>
                 `;
             toggleButton.innerText = "매도하기";
         }
         isBuyForm = !isBuyForm;
+        bindEventListeners();
     });
 
     $(document).ready(function () {
@@ -398,7 +564,7 @@
             });
         });
     });
-
+    bindEventListeners();
 </script>
 </body>
 </html>

@@ -3,6 +3,9 @@ package com.hanaonestock.transaction.model.dao;
 import com.hanaonestock.transaction.model.dto.Transaction;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+import java.util.Optional;
+
 @Mapper
 public interface TransactionMapper {
     // 매수
@@ -11,6 +14,7 @@ public interface TransactionMapper {
     // 매도
     int updateSellTransaction(Transaction transaction);
 
-
+    // 보유 해당 주식 수
+    Optional<Integer> sumHasVolumeByIdIsin(Map<String, Object> idAndIsin);
 
 }

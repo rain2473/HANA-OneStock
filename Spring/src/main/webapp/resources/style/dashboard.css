@@ -220,7 +220,7 @@ ul {
     margin-top: auto;
 }
 
-input[type="submit"] {
+#sellButton, #buyButton {
     display: block;
     margin: 18px 10px 10px 20px;
     width: 250px;
@@ -234,7 +234,7 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-input[type="submit"]:hover {
+#sellButton:hover, #buyButton:hover {
     background-color: #006c6c;
 }
 

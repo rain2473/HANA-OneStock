@@ -13,4 +13,11 @@
         SET SELL = #{sell}, DATE_SELL = #{dateSell}
         WHERE ID = #{id} and ISIN = #{isin}
     </update>
+
+    <select id="sumHasVolumeByIdIsin" resultType="int" parameterType="java.util.Map">
+        select sum(volume)
+        from transaction
+        where id = #{id} and isin = #{isin} and date_sell is null
+    </select>
+
 </mapper>
