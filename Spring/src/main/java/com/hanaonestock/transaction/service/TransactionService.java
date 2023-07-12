@@ -5,6 +5,7 @@ import com.hanaonestock.transaction.model.dto.BuyDto;
 import com.hanaonestock.transaction.model.dto.SellDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TransactionService {
     // 매수
@@ -15,5 +16,8 @@ public interface TransactionService {
 
     // 종목 검색
     List<Ohlcv> search(String stockName);
+
+    // 보유 해당 주식 수
+    int sumHasVolume(String id, String isin);
 
 }

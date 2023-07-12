@@ -152,4 +152,6 @@ public class StockController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }
