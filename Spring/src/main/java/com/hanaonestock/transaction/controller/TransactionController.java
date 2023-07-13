@@ -71,7 +71,6 @@ public class TransactionController {
 
         ModelAndView modelAndView = new ModelAndView("dashboard2");
         modelAndView.addObject("resultList", resultList);
-        System.out.println(resultList);
         return modelAndView;
     }
 
