@@ -6,6 +6,7 @@ from flask import Flask  # 서버 구현을 위한 Flask 객체 import
 from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
 from pykrx import stock
 from PredictModel import PredictModel
+from KospiData import KospiData
 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
@@ -72,7 +73,7 @@ class FundamentalInfo(Resource):
         else:
             return pd.DataFrame([]).to_json(orient="records")
 
-@api.route("/stock_predict/<string:date>")
+@api.route("/stock_info/predict/<string:date>")
 class Predict(Resource):
     def get(self, date):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         try:
@@ -80,13 +81,21 @@ class Predict(Resource):
         except:
             return pd.DataFrame([]).to_json(orient="records")
         
-@api.route("/stock_score/<string:date>")
+@api.route("/stock_info/score/<string:date>")
 class Score(Resource):
     def get(self, date):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         try:
             return PredictModel.scoreYesterday(date).to_json(orient="records")
         except:
             return pd.DataFrame([]).to_json(orient="records")
+        
+@api.route("/stock_info/kospi/<string:date>")
+class Kospi(Resource):
+    def get(self, date):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        try:
+            return KospiData.getKospiData(date).to_json(orient="records")
+        except:
+            return pd.DataFrame([{"망":"함"}]).to_json(orient="records")
         
 if __name__ == "__main__":
     app.debug = True
