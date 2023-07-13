@@ -57,12 +57,29 @@
 </div>
 </body>
 <script>
-    $(document).ready(function() {
-         $.ajax({
+    $(document).ready(function () {
+        $.ajax({
             url: '/selectDayOfTransaction',
             type: 'GET',
+            data: {
+                id: '<%=session.getAttribute("id")%>'
+            },
             success: function (data) {
                 $('#profit').text(data+"%");
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    $(document).ready(function() {
+         $.ajax({
+            url: '/selectAssetsById',
+            type: 'GET',
+            success: function (json) {
+                 const data = JSON.parse(json);
+                 // 차트 그리는 코드
+                 drawChart(data);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -191,7 +208,7 @@
                         labels: {
                             usePointStyle: true,
                             fontSize: 14,
-                            padding: 20,
+                            padding: 25,
                             fontColor: "black",
                         },
                     },
@@ -228,8 +245,8 @@
                         title: {
                             display: true,
                             text: "보유 자산",
-                        },
-                    },
+                        }
+                    }
                 }
             });
             // 차트 제목 업데이트
