@@ -82,12 +82,6 @@ public class MemberController {
         return mav;
     }
 
-    @RequestMapping("/dashboard2")
-    public ModelAndView dashboard2() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("dashboard2");
-        return mav;
-    }
 
     @ResponseBody
     @GetMapping(value = "/api/main")
