@@ -7,6 +7,7 @@ import com.hanaonestock.member.service.MemberService;
 import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.transaction.model.dto.BuyDto;
+import com.hanaonestock.transaction.model.dto.DailyPerformance;
 import com.hanaonestock.transaction.model.dto.Result;
 import com.hanaonestock.transaction.model.dto.SellDto;
 import com.hanaonestock.transaction.service.TransactionService;
@@ -16,16 +17,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.util.ResourceUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
+import javax.servlet.ServletContext;
 
 @Controller
 public class TransactionController {
 
     private final TransactionService transactionService;
     private final MemberService memberService;
+    @Autowired
+    private ServletContext servletContext;
+
     @Autowired
     public TransactionController(TransactionService transactionService, MemberService memberService) {
         this.transactionService = transactionService;
@@ -39,19 +45,32 @@ public class TransactionController {
         return mav;
     }
 
-    @RequestMapping("/result")
+    @ResponseBody
+    @GetMapping("/result")
     public ResponseEntity<List<Result>> result(HttpSession session) {
         String id = (String) session.getAttribute("id");
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
         List<Result> resultList = transactionService.transactionsByMember(id);
         if (resultList == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return ResponseEntity.ok(resultList);
+    }
+
+    @ResponseBody
+    @GetMapping("/result2")
+    public ResponseEntity<List<DailyPerformance>> result2(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        List<DailyPerformance> dailyPerformanceList = transactionService.dailyPerformanceByMember(id);
+        if (dailyPerformanceList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(dailyPerformanceList);
     }
 
 

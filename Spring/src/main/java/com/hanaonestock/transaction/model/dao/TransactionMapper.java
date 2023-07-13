@@ -1,5 +1,6 @@
 package com.hanaonestock.transaction.model.dao;
 
+import com.hanaonestock.transaction.model.dto.DailyPerformance;
 import com.hanaonestock.transaction.model.dto.Transaction;
 import org.apache.ibatis.annotations.Mapper;
 import com.hanaonestock.transaction.model.dto.Result;
@@ -19,4 +20,7 @@ public interface TransactionMapper {
     Optional<Integer> sumHasVolumeByIdIsin(Map<String, Object> idAndIsin);
 
     List<Result> findTransactionsById(String id);
+
+    List<DailyPerformance> dailyPerfomanceById(String id);
+
 }
