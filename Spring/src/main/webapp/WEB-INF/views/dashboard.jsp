@@ -16,130 +16,130 @@
     </script>
 </head>
 <body>
-<div class="container">
-<%@ include file="include/header.jsp" %>
-<div class="main">
-    <div class="search-menu">
-        <div class="a">
-            <input class="search-box" type="text" placeholder="🔍 SEARCH">
-            <button class="search-button" onclick="handleSearch()">검색</button>
-            <div class="search-result"></div>
+<body style="background-image: url("../img/background2.png")">
+    <%@ include file="include/header.jsp" %>
+    <div class="main">
+        <div class="search-menu">
+            <div class="a">
+                <input class="search-box" type="text" placeholder="🔍 SEARCH">
+                <button class="search-button" onclick="handleSearch()">검색</button>
+                <div class="search-result"></div>
+            </div>
         </div>
     </div>
-</div>
-<div class="content">
-    <div class="content-container">
-        <!-- 왼쪽 서브 메뉴 -->
-        <div class="left_sub_menu">
-            <div class="sub_menu">
-                <h2>📊 추천종목</h2>
-                <c:forEach var="stock" items="${sessionScope.stockList}">
-                    <ul class="stock_name">
-                        <li><c:out value="${stock.name}" /><i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu">
-                            <li>종목번호 <c:out value="${stock.isin}" /></li>
-                            <li><c:out value="${stock.close}" /> <c:choose>
-                                <c:when test="${stock.updown >= 0}">
-                                    <span class="blue_text">+<c:out value="${stock.updown}" />%</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="red_text"><c:out value="${stock.updown}" />%</span>
-                                </c:otherwise>
-                            </c:choose>
-                            </li>
+    <div class="content">
+        <div class="content-container">
+            <!-- 왼쪽 서브 메뉴 -->
+            <div class="left_sub_menu">
+                <div class="sub_menu">
+                    <h2>📊 추천종목</h2>
+                    <c:forEach var="stock" items="${sessionScope.stockList}">
+                        <ul class="stock_name">
+                            <li><c:out value="${stock.name}" /><i class="arrow fas fa-angle-right"></i></li>
+                            <ul class="small_menu">
+                                <li>종목번호 <c:out value="${stock.isin}" /></li>
+                                <li><c:out value="${stock.close}" /> <c:choose>
+                                    <c:when test="${stock.updown >= 0}">
+                                        <span class="blue_text">+<c:out value="${stock.updown}" />%</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="red_text"><c:out value="${stock.updown}" />%</span>
+                                    </c:otherwise>
+                                </c:choose>
+                                </li>
+                            </ul>
                         </ul>
-                    </ul>
-                </c:forEach>
-                <!-- 종목 추가 누르면 현재 종목 즐겨찾기 추가 -->
-                <h2>✅ 종목추가</h2>
-                <div class="add_stock"></div>
+                    </c:forEach>
+                    <!-- 종목 추가 누르면 현재 종목 즐겨찾기 추가 -->
+                    <h2>✅ 종목추가</h2>
+                    <div class="add_stock"></div>
+                </div>
             </div>
-        </div>
-        <div class="chart_div">
-            <div class="stock" style="margin-top: 15px;">
-                종목이름(종목코드)
-            </div>
-            <div class="chart">
-                <script>
-                    var chart = LightweightCharts.createChart(document.querySelector('.chart'), {
-                        width: 750,
-                        height: 350,
-                        rightPriceScale: {
-                            visible: true,
-                            borderColor: 'rgba(197, 203, 206, 1)',
-                        },
-                        leftPriceScale: {
-                            visible: true,
-                            borderColor: 'rgba(197, 203, 206, 1)',
-                        },
-                        layout: {
-                            backgroundColor: '#ffffff',
-                            textColor: 'rgba(33, 56, 77, 1)',
-                        },
-                        grid: {
-                            horzLines: {
-                                color: '#F0F3FA',
+            <div class="chart_div">
+                <div class="stock" style="margin-top: 15px;">
+                    종목이름(종목코드)
+                </div>
+                <div class="chart">
+                    <script>
+                        var chart = LightweightCharts.createChart(document.querySelector('.chart'), {
+                            width: 750,
+                            height: 350,
+                            rightPriceScale: {
+                                visible: true,
+                                borderColor: 'rgba(197, 203, 206, 1)',
                             },
-                            vertLines: {
-                                color: '#F0F3FA',
+                            leftPriceScale: {
+                                visible: true,
+                                borderColor: 'rgba(197, 203, 206, 1)',
                             },
-                        },
-                        crosshair: {
-                            mode: LightweightCharts.CrosshairMode.Normal,
-                        },
-                        timeScale: {
-                            borderColor: 'rgba(197, 203, 206, 1)',
-                        },
-                        handleScroll: {
-                            vertTouchDrag: false,
-                        },
-                    });
+                            layout: {
+                                backgroundColor: '#ffffff',
+                                textColor: 'rgba(33, 56, 77, 1)',
+                            },
+                            grid: {
+                                horzLines: {
+                                    color: '#F0F3FA',
+                                },
+                                vertLines: {
+                                    color: '#F0F3FA',
+                                },
+                            },
+                            crosshair: {
+                                mode: LightweightCharts.CrosshairMode.Normal,
+                            },
+                            timeScale: {
+                                borderColor: 'rgba(197, 203, 206, 1)',
+                            },
+                            handleScroll: {
+                                vertTouchDrag: false,
+                            },
+                        });
 
-                    const candlestickSeries = chart.addCandlestickSeries({priceScaleId: 'left'});
-                </script>
-            </div>
-            <div class="trade_div">
-                <button type="button" id="toggleButton">매수/매도</button>
-                <form id="tradeForm">
-                    <input type="hidden" id="isin" name="isin" value="">
-                    <input type="hidden" id="id" name="id" value="<%=session.getAttribute("id")%>">
-                    <div class="left-column">
-                        <div class="form-group">
-                            <label for="availableFunds">주문 가능</label>
-                            <input type="text" id="availableFunds" name="availableFunds" value="0 KRW" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">매수 가격</label>
-                            <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
-                        </div>
-                    </div>
-                    <div class="right-column">
-                        <div class="form-group">
-                            <label for="orderQuantity">주문 수량</label>
-                            <input type="text" id="orderQuantity" name="orderQuantity" placeholder="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="quantityPercent">주문 비율</label>
-                            <div class="percent-buttons">
-                                <button type="button" id="10percent">10%</button>
-                                <button type="button" id="25percent">25%</button>
-                                <button type="button" id="50percent">50%</button>
-                                <button type="button" id="100percent">100%</button>
+                        const candlestickSeries = chart.addCandlestickSeries({priceScaleId: 'left'});
+                    </script>
+                </div>
+                <div class="trade_div">
+                    <button type="button" id="toggleButton">매수/매도</button>
+                    <form id="tradeForm">
+                        <input type="hidden" id="isin" name="isin" value="">
+                        <input type="hidden" id="id" name="id" value="<%=session.getAttribute("id")%>">
+                        <div class="left-column">
+                            <div class="form-group">
+                                <label for="availableFunds">주문 가능</label>
+                                <input type="text" id="availableFunds" name="availableFunds" value="0 KRW" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">매수 가격</label>
+                                <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
                             </div>
                         </div>
-                    </div>
-                    <div class="last-column">
-                        <div class="form-group">
-                            <label for="totalOrder">주문 총액</label>
-                            <input type="text" id="totalOrder" name="totalOrder" readonly>
+                        <div class="right-column">
+                            <div class="form-group">
+                                <label for="orderQuantity">주문 수량</label>
+                                <input type="text" id="orderQuantity" name="orderQuantity" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="quantityPercent">주문 비율</label>
+                                <div class="percent-buttons">
+                                    <button type="button" id="10percent">10%</button>
+                                    <button type="button" id="25percent">25%</button>
+                                    <button type="button" id="50percent">50%</button>
+                                    <button type="button" id="100percent">100%</button>
+                                </div>
+                            </div>
                         </div>
-                        <input type="button" id="buyButton" value="매수하기">
-                    </div>
-                </form>
+                        <div class="last-column">
+                            <div class="form-group">
+                                <label for="totalOrder">주문 총액</label>
+                                <input type="text" id="totalOrder" name="totalOrder" readonly>
+                            </div>
+                            <input type="button" id="buyButton" value="매수하기">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <%@ include file="include/footer.jsp" %>
 </div>
 </body>
@@ -219,13 +219,18 @@
                 // 차트를 그림
                 candlestickSeries.setData(candleData);
 
+                // isin 폼 값 대입
+                document.getElementById('isin').value = isin;
+
                 // 매수/매도 가격 폼에 종가 적용
                 const PriceInput = document.getElementById('price');
                 if (candleData.length > 0) {
                     const latestClose = Math.floor(candleData[candleData.length - 1].close); // 소수점 제거
                     PriceInput.value = latestClose.toString(); // 정수로 변환하여 문자열로 표시
+                    price = PriceInput.value;
                 } else {
                     PriceInput.value = ''; // 데이터가 없을 경우 빈 값으로 설정
+                    price = '';
                 }
 
                 // 주문 가능 폼에 사용자 시드를 고려한 최대 주문 가능 액수 적용
@@ -267,7 +272,6 @@
             }
         });
     }
-
 
     function bindEventListeners() {
         document.getElementById('orderQuantity').addEventListener('input', function() {
@@ -331,7 +335,7 @@
                         },
                         error: function() {
                             alert('Transaction failed!');
-                            location.reload();
+                            // location.reload();
                         },
                     });
                 } else {
@@ -369,7 +373,6 @@
                 });
             });
         });
-
     }
 
     // 매수/매도 폼 변경
@@ -377,6 +380,10 @@
     var tradeForm = document.getElementById("tradeForm");
     var isBuyForm = true;
     toggleButton.addEventListener("click", function () {
+        const isin = document.getElementById("isin").value;
+        const priceInput = document.getElementById("price").value;
+        console.log(isin);
+        console.log(priceInput);
         if (isBuyForm) {
             tradeForm.innerHTML = `
                     <input type="hidden" id="isin" name="isin" value="">
@@ -384,7 +391,7 @@
                     <div class="left-column">
                         <div class="form-group">
                             <label for="price">매도 가격</label>
-                            <input type="text" id="price" name="price" placeholder="1000 KRW">
+                            <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
                         </div>
                     </div>
                     <div class="right-column">
@@ -451,6 +458,8 @@
             toggleButton.innerText = "매도하기";
         }
         isBuyForm = !isBuyForm;
+        document.getElementById("isin").value = isin;
+        document.getElementById("price").value = priceInput;
         bindEventListeners();
     });
 

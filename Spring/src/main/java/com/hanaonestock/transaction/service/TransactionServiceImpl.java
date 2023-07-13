@@ -144,6 +144,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public double selectDayOfTransaction() {
+        return transactionMapper.selectDayOfTransaction();
+    }
+
+    @Override
     public List<DailyPerformance> dailyPerformanceByMember(String id) {
         List<DailyPerformance> results = null;
         try {

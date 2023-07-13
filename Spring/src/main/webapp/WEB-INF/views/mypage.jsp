@@ -44,67 +44,6 @@
                 <div class="chart">
                     <div class="piechart">
                         <h3 id="chartTitle"></h3>
-                        <script>
-                            fetch("../../resources/json/data.json")
-                                .then((response) => response.json())
-                                .then((data) => {
-                                    // 결제내역 데이터 가져오기
-                                    const assetData = data.assetData;
-
-                                    // 차트 데이터 설정
-                                    const chartData = {
-                                        datasets: [{
-                                            backgroundColor: ['rgba(255, 99, 132, 0.5)',
-                                                'rgba(54, 162, 235, 0.5)',
-                                                'rgba(255, 206, 86, 0.5)',
-                                                'rgba(75, 192, 192, 0.5)',
-                                                'rgba(153, 102, 255, 0.5)'],
-                                            data: assetData.map(item => item.amount)
-                                        }],
-                                        labels: assetData.map(item => `${item.category} : ${item.amount}`)
-                                    };
-
-                                    // 차트 생성
-                                    var ctx1 = document.getElementById("myPieChart");
-                                    var myPieChart = new Chart(ctx1, {
-                                        type: 'pie',
-                                        data: chartData,
-                                        options: {
-                                            layout: {
-                                                padding: {
-                                                    top: 0, // 위쪽 패딩 조정
-                                                    bottom: 80, // 아래쪽 패딩 조정
-                                                    left: 90, // 왼쪽 패딩 조정
-                                                    right: 90 // 오른쪽 패딩 조정
-                                                }
-                                            },
-                                            cutoutPercentage: 30,
-                                            maintainAspectRatio: false,
-                                            legend: {
-                                                position: 'bottom',
-                                                align: 'start',
-                                                labels: {
-                                                    usePointStyle: true,
-                                                    fontSize: 14,
-                                                    padding: 20,
-                                                    fontColor: "black",
-                                                },
-                                            },
-                                            plugins: {
-                                                title: {
-                                                    display: true,
-                                                    text: "보유 자산",
-                                                },
-                                            },
-                                        }
-                                    });
-                                    // 차트 제목 업데이트
-                                    document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
-                                })
-                                .catch((error) => {
-                                    console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
-                                });
-                        </script>
                         <canvas id="myPieChart"></canvas>
                     </div>
                 </div>
@@ -117,6 +56,20 @@
     <%@ include file="include/footer.jsp" %>
 </div>
 </body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/selectDayOfTransaction',
+            type: 'GET',
+            success: function (data) {
+                $('#profit').text(data + "%");
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
 <script>
     getUserCash("<%=session.getAttribute("id")%>");
     getUserGoal("<%=session.getAttribute("id")%>");
@@ -132,15 +85,10 @@
                 id: id // 대체할 사용자 식별자
             },
             success: function (data) {
-                // 요청이 성공했을 때의 처리
-                console.log('Received cash:', data);
                 const currentCash = document.getElementById("cash");
                 currentCash.innerText = data + " 원";
-                // data 변수에 서버에서 받아온 cash 값이 들어 있습니다.
-                // 이를 원하는 방식으로 처리하십시오.
             },
             error: function (xhr, status, error) {
-                // 요청이 실패했을 때의 처리
                 console.error('Error:', error);
             }
         });
@@ -157,13 +105,10 @@
                 id: id // 대체할 사용자 식별자
             },
             success: function (data) {
-                // 요청이 성공했을 때의 처리
-                console.log('Received goal:', data);
                 const currentCash = document.getElementById("goal");
                 currentCash.innerText = data + "%";
             },
             error: function (xhr, status, error) {
-                // 요청이 실패했을 때의 처리
                 console.error('Error:', error);
             }
         });
@@ -189,11 +134,87 @@
                 alert("100만원 입금되었습니다.");
             },
             error: function (xhr, status, error) {
-                // 요청이 실패했을 때의 처리
                 console.error('Error:', error);
             }
         });
     }
 
+    // 파이 차트 그리기
+    fetch("../../resources/json/data.json")
+        .then((response) => response.json())
+        .then((data) => {
+            // 결제내역 데이터 가져오기
+            const assetData = data.assetData;
+
+            // 라벨 데이터 설정
+            const labels = assetData.map(item => [item.category, item.amount])
+
+            // 차트 데이터 설정
+            const chartData = {
+                datasets: [{
+                    backgroundColor: ['rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)'],
+                    data: assetData.map(item => item.amount)
+                }],
+                labels: labels
+            };
+
+            // 차트 생성
+            var ctx1 = document.getElementById("myPieChart");
+            var myPieChart = new Chart(ctx1, {
+                type: 'pie',
+                data: chartData,
+                options: {
+                    layout: {
+                        padding: {
+                            top: 0,
+                            bottom: 80,
+                            left: 90,
+                            right: 90
+                        }
+                    },
+                    cutoutPercentage: 30,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom',
+                        align: 'start',
+                        labels: {
+                            usePointStyle: true,
+                            fontSize: 14,
+                            padding: 25,
+                            fontColor: "black",
+                        },
+                    },
+                    tooltips: {
+                        callbacks: {
+                            title: (tooltipItem, data) => {
+                                const index = tooltipItem[0].index;
+                                const category = data.labels[index];
+                                return category;
+                            },
+                            label: (tooltipItem, data) => {
+                                const dataset = data.datasets[tooltipItem.datasetIndex];
+                                const amount = dataset.data[tooltipItem.index];
+                                return `Amount: ${amount}`;
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "보유 자산",
+                        }
+                    }
+                }
+            });
+            // 차트 제목 업데이트
+            document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
+        })
+        .catch((error) => {
+            console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
+        });
 </script>
 </html>

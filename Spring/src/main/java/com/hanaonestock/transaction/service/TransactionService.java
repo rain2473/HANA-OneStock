@@ -23,6 +23,7 @@ public interface TransactionService {
     // 회원의 거래내역 조회
     List<Result> transactionsByMember(String id);
 
+    double selectDayOfTransaction();
     // 회원의 일자별 수익률 조회
     List<DailyPerformance> dailyPerformanceByMember(String id);
 

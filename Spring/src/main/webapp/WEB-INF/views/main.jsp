@@ -82,6 +82,10 @@
                 </div>
             </div>
             <div class="list_div">
+                <div class="stock_title">
+                    <span>추천 주식</span>
+                </div>
+                <div style="display: flex; flex-direction: row">
                 <c:forEach var="stock" items="${stockList}" varStatus="status">
                     <div class="stock_list">
                         <fmt:formatNumber value="${stock.close}" pattern="#,##0" var="formattedClose"/>
@@ -103,12 +107,13 @@
                         <h3><c:out value="${formattedClose}"/></h3>
                     </div>
                 </c:forEach>
+                </div>
             </div>
         </div>
     </div>
     <div class="button-container">
         <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
-        <input type="button" class="button" value="수익률 확인하기" onclick="goToResult();">
+        <input type="button" class="button" value="수익률 확인하기" onclick="goToDashboard2();">
     </div>
     <%@ include file="include/footer.jsp" %>
 </div>
@@ -121,10 +126,10 @@
         link.click();
     }
 
-    function goToResult() {
+    function goToDashboard2() {
         alert("페이지 이동");
         var link = document.createElement("a");
-        link.href = "/result";
+        link.href = "/dashboard2";
         link.click();
     }
 
