@@ -35,7 +35,7 @@
                     <h3><%=session.getAttribute("name")%>님의 현재 수익률입니다.</h3>
                     <div style="font-weight: 900; font-size: 32px;">
                         <p>목표수익률: <span id="goal">%</span></p>
-                        <p>당일수익률: <span id="profit">%</span></p>
+                        <p>당일수익률: <span id="profit"></span></p>
                     </div>
                     <div style="display: flex; align-items: center; margin: 10px 0px 30px 0px">
                         <input type="button" class="small-btn" value="변경하기">
@@ -61,8 +61,39 @@
         $.ajax({
             url: '/selectDayOfTransaction',
             type: 'GET',
+            data: {
+                id: '<%=session.getAttribute("id")%>'
+            },
             success: function (data) {
-                $('#profit').text(data + "%");
+                $('#profit').text(data+"%");
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    $(document).ready(function() {
+         $.ajax({
+            url: '/selectAssetsById',
+            type: 'GET',
+            success: function (json) {
+                 const data = JSON.parse(json);
+                 // 차트 그리는 코드
+                 drawChart(data);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    $(document).ready(function() {
+         $.ajax({
+            url: '/selectAssetsById',
+            type: 'GET',
+            success: function (json) {
+                 const data = JSON.parse(json);
+                 // 차트 그리는 코드
+                 drawChart(data);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -138,16 +169,9 @@
             }
         });
     }
-
-    // 파이 차트 그리기
-    fetch("../../resources/json/data.json")
-        .then((response) => response.json())
-        .then((data) => {
+        function drawChart(data) {
             // 결제내역 데이터 가져오기
-            const assetData = data.assetData;
-
-            // 라벨 데이터 설정
-            const labels = assetData.map(item => [item.category, item.amount])
+            const assetData = data;
 
             // 차트 데이터 설정
             const chartData = {
@@ -157,9 +181,9 @@
                         'rgba(255, 206, 86, 0.5)',
                         'rgba(75, 192, 192, 0.5)',
                         'rgba(153, 102, 255, 0.5)'],
-                    data: assetData.map(item => item.amount)
+                    data: assetData.map(item => item.totalPrice)
                 }],
-                labels: labels
+                labels: assetData.map(item => [item.name, item.totalPrice])
             };
 
             // 차트 생성
@@ -202,6 +226,21 @@
                             }
                         }
                     },
+                    tooltips: {
+                        callbacks: {
+                            title: (tooltipItem, data) => {
+                                const index = tooltipItem[0].index;
+                                const category = data.labels[index];
+                                return category;
+                            },
+                            label: (tooltipItem, data) => {
+                                const index = tooltipItem.index;
+                                const category = data.labels[index];
+                                const amount = data.datasets[0].data[index];
+                                return `${category} : ${amount}`;
+                            }
+                        }
+                    },
                     plugins: {
                         title: {
                             display: true,
@@ -212,9 +251,6 @@
             });
             // 차트 제목 업데이트
             document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
-        })
-        .catch((error) => {
-            console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
-        });
+        }
 </script>
 </html>

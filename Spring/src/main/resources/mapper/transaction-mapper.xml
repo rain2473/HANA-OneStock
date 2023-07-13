@@ -25,9 +25,9 @@
         FROM (SELECT TRANSACTION.*, STOCK.NAME FROM TRANSACTION, STOCK WHERE TRANSACTION.ISIN = STOCK.ISIN)
         where ID = #{id} and SELL is NOT null
     </select>
-    <select id="selectDayOfTransaction" resultType="double">
+    <select id="selectDayOfTransaction" resultType="double" parameterType="String">
         select round((sum(sell * volume)-sum(buy * volume))/sum(buy * volume)*100, 1) as 당일실현수익률
-        from transaction where (DATE_BUY = trunc(sysdate - 1 + 3/8)) and (date_sell = trunc(sysdate + 3/8))
+        from transaction where id = #{id} and (DATE_BUY = trunc(sysdate - 1 + 3/8)) and (date_sell = trunc(sysdate + 3/8))
     </select>
 
     <select id="dailyPerfomanceById" resultType="com.hanaonestock.transaction.model.dto.DailyPerformance" parameterType="String">

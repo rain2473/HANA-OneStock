@@ -52,4 +52,13 @@
     <update id="updateGoalOfInvestInfoById" parameterType="HashMap">
         UPDATE INVEST_INFO SET goal = #{goal} WHERE ID = #{id}
     </update>
+    <select id="selectAssetsById" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+        select
+        name,
+        isin,
+        buy * sum(volume) as totalPrice
+        from (select t.id, s.name, t.isin, t.buy, t.volume, t.sell from stock s inner join transaction t on s.isin = t.isin)
+        where sell is null and id = #{id}
+        group by isin, buy, id, name
+    </select>
 </mapper>

@@ -29,6 +29,7 @@ public class TransactionController {
 
     private final TransactionService transactionService;
     private final MemberService memberService;
+
     @Autowired
     private ServletContext servletContext;
 
@@ -106,7 +107,7 @@ public class TransactionController {
             System.out.println("매수 트젝 실패");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (cash - (buyDto.getPrice() * buyDto.getVolume()) < 0){
+        if (cash - (buyDto.getPrice() * buyDto.getVolume()) < 0) {
             System.out.println("시드보다 큰 매수");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -169,12 +170,27 @@ public class TransactionController {
 
     @ResponseBody
     @GetMapping(value = "/selectDayOfTransaction")
-    public ResponseEntity<Double> selectDayOfTransaction() {
-    try{
-        double dayProfit = transactionService.selectDayOfTransaction();
-        return ResponseEntity.ok(dayProfit);
-    } catch (Exception e) {
-        return (ResponseEntity<Double>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Double> selectDayOfTransaction(@RequestParam("id") String id) {
+        try {
+            double dayProfit = transactionService.selectDayOfTransaction(id);
+            return ResponseEntity.ok(dayProfit);
+        } catch (Exception e) {
+            return (ResponseEntity<Double>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
+    @ResponseBody
+    @GetMapping(value = "/sumHasVolume")
+    public ResponseEntity<Integer> selectDayOfTransaction(@RequestParam("id") String id, @RequestParam("isin") String isin) {
+        int volume = 0;
+        try {
+            volume = transactionService.sumHasVolume(id, isin);
+            System.out.println(id + isin);
+            System.out.println(volume);
+            return ResponseEntity.ok(volume);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return (ResponseEntity<Integer>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

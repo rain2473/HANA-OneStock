@@ -18,4 +18,6 @@ public interface StockService {
     List<RecommendedStock> recommendedStock();
 
     void updateGoalOfInvestInfoById(HashMap<String, String> stockData);
+
+    List<Stock> selectAssetsById(String id);
 }
