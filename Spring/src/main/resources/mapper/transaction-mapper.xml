@@ -31,7 +31,7 @@
     </select>
 
     <select id="dailyPerfomanceById" resultType="com.hanaonestock.transaction.model.dto.DailyPerformance" parameterType="String">
-        select TMP.DATE_BUY , round(((sell * volume)-(buy * volume))/(buy * volume)*100, 1) as DAILYPERFORMANCE,
+        select TO_CHAR(TMP.DATE_BUY, 'YYYY-MM-DD') AS DATEBUY , round(((sell * volume)-(buy * volume))/(buy * volume)*100, 1) as DAILYPERFORMANCE,
                (SELECT goal from INVEST_INFO where id = #{id}) AS GOAL
         FROM (SELECT DATE_BUY, SUM(sell) AS SELL, SUM(VOLUME) AS VOLUME, SUM(BUY) AS BUY
               from TRANSACTION
