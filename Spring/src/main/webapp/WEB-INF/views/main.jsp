@@ -108,13 +108,11 @@
     </div>
     <div class="button-container">
         <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
-        <a href="join" class="button">수익률 확인하기</a>
+        <input type="button" class="button" value="수익률 확인하기" onclick="goToResult();">
     </div>
     <%@ include file="include/footer.jsp" %>
 </div>
-<<<<<<< Updated upstream
 </body>
->>>>>>> Stashed changes
 <script>
     function goToDashboard() {
         alert("페이지 이동");
