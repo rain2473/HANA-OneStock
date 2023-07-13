@@ -12,9 +12,23 @@
         <link rel="stylesheet" href="../../resources/style/join.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body style="background-image: url("../img/background2.png")">
     <div class="container">
-        <%@ include file="include/header.jsp" %>
+        <nav>
+            <a href="/">
+                <img src="../../resources/img/logo.png" height="40">
+            </a>
+            <div>
+                <ul>
+                    <li class="nav-list">
+                        <a href="" class="nav-menu">서비스소개</a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#" class="nav-menu" onclick="openModal()">로그인</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="member">
             <form id="signupForm">
                 <input type="hidden" value="${provider}" name="provider">
@@ -60,6 +74,7 @@
                 <input type="submit" value="가입하기"></button>
             </form>
         </div>
+        <br>
         <%@ include file="include/footer.jsp" %>
     </div>
     </body>

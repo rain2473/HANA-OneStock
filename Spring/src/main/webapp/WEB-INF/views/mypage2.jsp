@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="../../resources/style/join.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body>
+    <body style="background-image: url("../img/background2.png")">
     <div class="container">
         <%@ include file="include/header.jsp" %>
 
@@ -56,6 +56,7 @@
                 <input type="submit" value="회원정보수정"></button>
             </form>
         </div>
+        <br>
         <%@ include file="include/footer.jsp" %>
     </div>
     </body>

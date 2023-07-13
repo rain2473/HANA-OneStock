@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <nav>
-        <a href="index">
+        <a href="/">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
@@ -28,7 +28,7 @@
     <div class="content">
         <div class="main">
             <div class="animate__animated animate__slideInLeft slow 4s">
-                <h1><span class="highlight">HANA - One Stock</span> SMART TRADING</h1>
+                <h1><span class="highlight">HANA - One Stock<br></span>SMART TRADING</h1>
             </div>
             <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
             <div onclick="openModal()">
