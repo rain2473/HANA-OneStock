@@ -56,7 +56,6 @@ public class OhlcvTest {
             }
 
         } catch (Exception e) {
-
         }
 
     }

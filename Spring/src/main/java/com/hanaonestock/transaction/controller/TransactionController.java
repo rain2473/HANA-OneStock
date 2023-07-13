@@ -105,4 +105,30 @@ public class TransactionController {
         // 모든 것이 정상적으로 처리되면, HTTP 상태 코드 200(OK)을 반환합니다.
         return ResponseEntity.ok().build();
     }
+
+    @ResponseBody
+    @GetMapping(value = "/get-user-goal")
+    public ResponseEntity<Integer> getUserGoal(@RequestParam("id") String id) {
+        Integer goal = memberService.findUserGoal(id);
+        System.out.println("id = " + id);
+        System.out.println("goal: " + goal);
+        if (goal == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(goal);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/deposit-user-cash")
+    public ResponseEntity<Integer> depositUserCash(@RequestParam("id") String id) {
+        int newCash = memberService.findUserCash(id) + 1000000;
+        System.out.println("newCash = " + newCash);
+        int state = memberService.updateInvestInfoCashById(id, newCash);
+        System.out.println("state = " + state);
+        if (state != 1) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(state);
+    }
+
 }
