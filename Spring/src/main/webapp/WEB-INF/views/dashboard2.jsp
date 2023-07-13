@@ -20,26 +20,28 @@
     <div class="content">
         <div class="content-container">
             <div class="chart2">
-                <c:set var="results" value="${requestScope.results}" />
-                <table>
-                    <tr>
-                        <th>Buy</th>
-                        <th>Sell</th>
-                        <th>Volume</th>
-                        <th>ISIN</th>
-                    </tr>
-
-                    <c:forEach items="${resultList}" var="result">
-                        <tr>
-
-                            <td class="box">${result.buy}</td>
-                            <td class="box">${result.sell}</td>
-                            <td class="box">${result.volume}</td>
-                            <td class="box">${result.isin}</td>
-
+                <div class="chart-menu">
+                    <c:set var="results" value="${requestScope.results}"/>
+                    <table>
+                        <tr style="font-size: 15px">
+                            <th>구매가</th>
+                            <th>판매가</th>
+                            <th>구매수량</th>
+                            <th>종목코드</th>
                         </tr>
-                    </c:forEach>
-                </table>
+
+                        <c:forEach items="${resultList}" var="result">
+                            <tr>
+
+                                <td class="box">${result.buy}</td>
+                                <td class="box">${result.sell}</td>
+                                <td class="box">${result.volume}</td>
+                                <td class="box">${result.isin}</td>
+
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
             </div>
             <div class="chart_div">
                 <div class="chart">
@@ -56,13 +58,13 @@
 </div>
 </body>
 <script>
-    $(document).ready(function() {
-         $.ajax({
+    $(document).ready(function () {
+        $.ajax({
             url: '/dashboard',
             type: 'GET',
             success: function (json) {
-                 const data = JSON.parse(json);
-                 alert("data "+data);
+                const data = JSON.parse(json);
+                alert("data " + data);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
