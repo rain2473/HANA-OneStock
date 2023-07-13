@@ -150,4 +150,14 @@ public class TransactionController {
         return ResponseEntity.ok(state);
     }
 
+    @ResponseBody
+    @GetMapping(value = "/selectDayOfTransaction")
+    public ResponseEntity<Double> selectDayOfTransaction() {
+    try{
+        double dayProfit = transactionService.selectDayOfTransaction();
+        return ResponseEntity.ok(dayProfit);
+    } catch (Exception e) {
+        return (ResponseEntity<Double>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    }
 }

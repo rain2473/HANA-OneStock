@@ -22,4 +22,5 @@ public interface TransactionService {
     // 회원의 거래내역 조회
     List<Result> transactionsByMember(String id);
 
+    double selectDayOfTransaction();
 }
