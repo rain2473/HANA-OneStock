@@ -4,6 +4,7 @@ package com.hanaonestock.stock.service;
 import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface StockService {
@@ -16,4 +17,5 @@ public interface StockService {
 
     List<RecommendedStock> recommendedStock();
 
+    void updateGoalOfInvestInfoById(HashMap<String, String> stockData);
 }

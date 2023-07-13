@@ -4,6 +4,7 @@ import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +16,5 @@ public interface StockMapper {
     List<Stock> stockListFindByName(String name);
     List<Stock> stockListFindByIsin(String isin);
     List<RecommendedStock> recommendedStock();
-
+    void updateGoalOfInvestInfoById(HashMap<String,String> stockData);
 }
