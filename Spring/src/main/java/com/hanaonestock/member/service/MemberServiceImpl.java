@@ -46,12 +46,24 @@ public class MemberServiceImpl implements MemberService{
     public void updateInvest(Member m) {
         memberMapper.updateInvest(m);
     }
+    @Override
     public int findUserCash(String id) {
         Optional<InvestInfo> optionalInvestInfo = memberMapper.findInvestInfoById(id);
         int UserCash = 0;
         if (optionalInvestInfo.isPresent()) {
             InvestInfo investInfo = optionalInvestInfo.get();
             UserCash = investInfo.getCash();
+        }
+        return UserCash;
+    }
+
+    @Override
+    public int findUserGoal(String id) {
+        Optional<InvestInfo> optionalInvestInfo = memberMapper.findInvestInfoById(id);
+        int UserCash = 0;
+        if (optionalInvestInfo.isPresent()) {
+            InvestInfo investInfo = optionalInvestInfo.get();
+            UserCash = investInfo.getGoal();
         }
         return UserCash;
     }

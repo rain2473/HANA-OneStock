@@ -9,6 +9,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        var cash;
+    </script>
 </head>
 <body>
 <header>
@@ -22,8 +25,8 @@
                     <a class="nav-menu">서비스소개</a>
                 <li class="nav-list">
                     <a class="nav-menu">마이페이지</a>
-                <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
-                <c:if test="${provider eq 'kakao'}">
+                    <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
+                    <c:if test="${provider eq 'kakao'}">
                 <li class="nav-list">
                     <a href="/oauth/logout" class="nav-menu">로그아웃</a>
                 </li>
@@ -43,22 +46,22 @@
     <div class="member_info_div">
         <div class="chart_div">
             <div class="chart">
-                <h3>박경덕님의 현재 보유 현금입니다.</h3>
+                <h3><%=session.getAttribute("name")%>님의 현재 보유 현금입니다.</h3>
                 <div class="money">
                     <div style="display: flex; align-items: center;">
                         <img src="../../resources/img/wallet.png" width="50"
                              style="vertical-align: middle; margin-right: 30px">
-                        <span style="vertical-align: middle; font-weight: 900; font-size: 40px;">289,000</span>
+                        <span id="cash" style="vertical-align: middle; font-weight: 900; font-size: 40px;">0원</span>
                     </div>
                     <div style="display: flex; align-items: center; margin: 30px 0px 30px 0px">
-                        <input type="button" class="small-btn" value="충전하기">
+                        <input type="button" id="deposit" class="small-btn" value="충전하기">
                         <input type="button" class="small-btn" value="충전내역">
                     </div>
                 </div>
-                <h3>박경덕님의 현재 수익률입니다.</h3>
+                <h3><%=session.getAttribute("name")%>님의 현재 수익률입니다.</h3>
                 <div style="font-weight: 900; font-size: 32px;">
-                    <p>목표수익률: 5.0%</p>
-                    <p>당일수익률: 4.7%</p>
+                    <p>목표수익률: <span id="goal">%</span></p>
+                    <p>당일수익률: <span id="profit">%</span></p>
                 </div>
                 <div style="display: flex; align-items: center; margin: 10px 0px 30px 0px">
                     <input type="button" class="small-btn" value="변경하기">
@@ -147,5 +150,84 @@
     </p>
     <br>
 </footer>
+<script>
+    getUserCash("<%=session.getAttribute("id")%>");
+    getUserGoal("<%=session.getAttribute("id")%>");
+
+    /**
+     *  사용자 잔고 받아오기
+     */
+    function getUserCash(id) {
+        $.ajax({
+            url: '/get-user-cash',
+            type: 'GET',
+            data: {
+                id: id // 대체할 사용자 식별자
+            },
+            success: function (data) {
+                // 요청이 성공했을 때의 처리
+                console.log('Received cash:', data);
+                const currentCash = document.getElementById("cash");
+                currentCash.innerText = data + " 원";
+                // data 변수에 서버에서 받아온 cash 값이 들어 있습니다.
+                // 이를 원하는 방식으로 처리하십시오.
+            },
+            error: function (xhr, status, error) {
+                // 요청이 실패했을 때의 처리
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    /**
+     *  사용자 Goal 받아오기
+     */
+    function getUserGoal(id) {
+        $.ajax({
+            url: '/get-user-goal',
+            type: 'GET',
+            data: {
+                id: id // 대체할 사용자 식별자
+            },
+            success: function (data) {
+                // 요청이 성공했을 때의 처리
+                console.log('Received goal:', data);
+                const currentCash = document.getElementById("goal");
+                currentCash.innerText = data + "%";
+            },
+            error: function (xhr, status, error) {
+                // 요청이 실패했을 때의 처리
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    // "충전하기" 버튼 클릭 시 실행되는 함수
+    document.getElementById('deposit').addEventListener('click', function () {
+        depositUserCash('<%=session.getAttribute("name")%>');
+    });
+
+    /**
+     * 사용자 cash deposit (100만원)
+     */
+    function depositUserCash(id) {
+        $.ajax({
+            url: '/deposit-user-cash',
+            type: 'GET',
+            data: {
+                id: id // 대체할 사용자 식별자
+            },
+            success: function (data) {
+                getUserCash(id);
+                alert("100만원 입금되었습니다.");
+            },
+            error: function (xhr, status, error) {
+                // 요청이 실패했을 때의 처리
+                console.error('Error:', error);
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
