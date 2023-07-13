@@ -49,4 +49,7 @@
         FETCH FIRST 4 ROWS ONLY
         ]]>
     </select>
+    <update id="updateGoalOfInvestInfoById" parameterType="HashMap">
+        UPDATE INVEST_INFO SET goal = #{goal} WHERE ID = #{id}
+    </update>
 </mapper>

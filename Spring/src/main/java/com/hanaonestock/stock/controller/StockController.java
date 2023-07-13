@@ -73,6 +73,10 @@ public class StockController {
     @RequestMapping("/main")
     public ModelAndView main(HttpSession session,@RequestParam("goal") String goal) {
         ModelAndView mav = new ModelAndView();
+        HashMap<String, String> stockData = new HashMap<>();
+        stockData.put("id",(String)session.getAttribute("id"));
+        stockData.put("goal",goal);
+        stockService.updateGoalOfInvestInfoById(stockData);
         List<RecommendedStock> stockList = stockService.recommendedStock();
         session.setAttribute("stockList", stockList);
         mav.addObject("stockList", stockList);
