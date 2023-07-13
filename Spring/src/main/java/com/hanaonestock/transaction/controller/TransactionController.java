@@ -46,32 +46,30 @@ public class TransactionController {
         return mav;
     }
 
-    @ResponseBody
-    @GetMapping("/result")
+    @RequestMapping("/dashboard2")
     public ResponseEntity<List<Result>> result(HttpSession session) {
         String id = (String) session.getAttribute("id");
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
         List<Result> resultList = transactionService.transactionsByMember(id);
+        List<DailyPerformance> dailyPerformanceList = transactionService.dailyPerformanceByMember(id);
         if (resultList == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(resultList);
-    }
 
-    @ResponseBody
-    @GetMapping("/result2")
-    public ResponseEntity<List<DailyPerformance>> result2(HttpSession session) {
-        String id = (String) session.getAttribute("id");
-        if (id == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        List<DailyPerformance> dailyPerformanceList = transactionService.dailyPerformanceByMember(id);
-        if (dailyPerformanceList == null) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonFilePath = servletContext.getRealPath("/resources/json/performance.json");
+            File file = new File(jsonFilePath);
+            objectMapper.writeValue(file, dailyPerformanceList);
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(dailyPerformanceList);
+
+        return ResponseEntity.ok(resultList);
     }
 
 
