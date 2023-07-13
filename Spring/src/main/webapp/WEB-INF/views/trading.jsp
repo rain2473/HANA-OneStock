@@ -160,6 +160,9 @@
         <div>+2.00%</div>
     </div>
     <div class="content">
+                    time: {year: 2018, month: 9, day: 25}
+                },
+                {
         <script>
             var chart = LightweightCharts.createChart(document.body, {
                 width: 600,
@@ -318,9 +321,6 @@
                     high: 101.92074283374939,
                     low: 89.25819769856513,
                     open: 89.25819769856513,
-                    time: {year: 2018, month: 9, day: 25}
-                },
-                {
                     close: 94.87113928076117,
                     high: 104.12503365679314,
                     low: 85.42405005240111,

@@ -7,6 +7,7 @@ import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.stock.service.OhlcvService;
 import com.hanaonestock.stock.service.StockService;
+import org.json.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -68,7 +71,7 @@ public class StockController {
     }
 
     @RequestMapping("/main")
-    public ModelAndView main(HttpSession session) {
+    public ModelAndView main(HttpSession session,@RequestParam("goal") String goal) {
         ModelAndView mav = new ModelAndView();
         List<RecommendedStock> stockList = stockService.recommendedStock();
         session.setAttribute("stockList", stockList);
@@ -79,17 +82,17 @@ public class StockController {
 
     @ResponseBody
     @GetMapping(value = "/special-stock/rising-top5")
-    public ResponseEntity<Map<List<Ohlcv>, List<String>>> findRisingTop5() {
-        Map<List<Ohlcv>, List<String>> risingTop5 = null;
+    public ResponseEntity<List<Map<String, String>>> findRisingTop5() {
+        List<Map<String, String>> resultList = new ArrayList<>();
         List<Ohlcv> ohlcvList = ohlcvService.findRisingTop5ByDate();
-        List<String> stockNames = null;
-
-        for (Ohlcv ohlcv: ohlcvList) {
-            stockNames.add(ohlcv.getIsin());
+        for (Ohlcv ohlcv : ohlcvList) {
+            Map<String, String> stockMap = new HashMap<>();
+            stockMap.put("isin", ohlcv.getIsin());
+            stockMap.put("name", ohlcv.getName());
+            resultList.add(stockMap);
         }
-
-        if (risingTop5 != null) {
-            return ResponseEntity.ok(risingTop5);
+        if (!resultList.isEmpty()) {
+            return ResponseEntity.ok(resultList);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -97,17 +100,18 @@ public class StockController {
 
     @ResponseBody
     @GetMapping(value = "/special-stock/falling-top5")
-    public ResponseEntity<Map<List<Ohlcv>, List<String>>> findFallingTop5() {
-        Map<List<Ohlcv>, List<String>> fallingTop5 = null;
+    public ResponseEntity<List<Map<String, String>>> findFallingTop5() {
+        List<Map<String, String>> resultList = new ArrayList<>();
         List<Ohlcv> ohlcvList = ohlcvService.findFallingTop5ByDate();
         List<String> stockNames = null;
-
-        for (Ohlcv ohlcv: ohlcvList) {
-            stockNames.add(ohlcv.getIsin());
+        for (Ohlcv ohlcv : ohlcvList) {
+            Map<String, String> stockMap = new HashMap<>();
+            stockMap.put("isin", ohlcv.getIsin());
+            stockMap.put("name", ohlcv.getName());
+            resultList.add(stockMap);
         }
-
-        if (fallingTop5 != null) {
-            return ResponseEntity.ok(fallingTop5);
+        if (!resultList.isEmpty()) {
+            return ResponseEntity.ok(resultList);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -115,17 +119,17 @@ public class StockController {
 
     @ResponseBody
     @GetMapping(value = "/special-stock/volume-top5")
-    public ResponseEntity<Map<List<Ohlcv>, List<String>>> findVolumeTop5() {
-        Map<List<Ohlcv>, List<String>> volumeTop5 = null;
+    public ResponseEntity<List<Map<String, String>>> findVolumeTop5() {
+        List<Map<String, String>> resultList = new ArrayList<>();
         List<Ohlcv> ohlcvList = ohlcvService.findVolumeTop5ByDate();
-        List<String> stockNames = null;
-
-        for (Ohlcv ohlcv: ohlcvList) {
-            stockNames.add(ohlcv.getIsin());
+        for (Ohlcv ohlcv : ohlcvList) {
+            Map<String, String> stockMap = new HashMap<>();
+            stockMap.put("isin", ohlcv.getIsin());
+            stockMap.put("name", ohlcv.getName());
+            resultList.add(stockMap);
         }
-
-        if (volumeTop5 != null) {
-            return ResponseEntity.ok(volumeTop5);
+        if (!resultList.isEmpty()) {
+            return ResponseEntity.ok(resultList);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -133,17 +137,18 @@ public class StockController {
 
     @ResponseBody
     @GetMapping(value = "/special-stock/amount-top5")
-    public ResponseEntity<Map<List<Ohlcv>, List<String>>> findAmountTop5() {
-        Map<List<Ohlcv>, List<String>> risingTop5 = null;
+    public ResponseEntity<List<Map<String, String>>> findAmountTop5() {
+        List<Map<String, String>> resultList = new ArrayList<>();
         List<Ohlcv> ohlcvList = ohlcvService.findAmountTop5ByDate();
         List<String> stockNames = null;
-
-        for (Ohlcv ohlcv: ohlcvList) {
-            stockNames.add(ohlcv.getIsin());
+        for (Ohlcv ohlcv : ohlcvList) {
+            Map<String, String> stockMap = new HashMap<>();
+            stockMap.put("isin", ohlcv.getIsin());
+            stockMap.put("name", ohlcv.getName());
+            resultList.add(stockMap);
         }
-
-        if (risingTop5 != null) {
-            return ResponseEntity.ok(risingTop5);
+        if (!resultList.isEmpty()) {
+            return ResponseEntity.ok(resultList);
         } else {
             return ResponseEntity.notFound().build();
         }
