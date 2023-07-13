@@ -1,5 +1,6 @@
 package com.hanaonestock.transaction.model.dao;
 
+import com.hanaonestock.transaction.model.dto.DailyPerformance;
 import com.hanaonestock.transaction.model.dto.Transaction;
 import org.apache.ibatis.annotations.Mapper;
 import com.hanaonestock.transaction.model.dto.Result;
@@ -20,4 +21,5 @@ public interface TransactionMapper {
 
     List<Result> findTransactionsById(String id);
     double selectDayOfTransaction(String id);
+    List<DailyPerformance> dailyPerfomanceById(String id);
 }

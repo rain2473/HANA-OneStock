@@ -142,12 +142,15 @@
         });
     }
 
-    // JSON 파일 로드 및 차트 생성
+    // 파이 차트 그리기
     fetch("../../resources/json/data.json")
         .then((response) => response.json())
         .then((data) => {
             // 결제내역 데이터 가져오기
             const assetData = data.assetData;
+
+            // 라벨 데이터 설정
+            const labels = assetData.map(item => [item.category, item.amount])
 
             // 차트 데이터 설정
             const chartData = {
@@ -159,7 +162,7 @@
                         'rgba(153, 102, 255, 0.5)'],
                     data: assetData.map(item => item.amount)
                 }],
-                labels: assetData.map(item => [item.category, item.amount])
+                labels: labels
             };
 
             // 차트 생성
@@ -184,7 +187,7 @@
                         labels: {
                             usePointStyle: true,
                             fontSize: 14,
-                            padding: 20,
+                            padding: 25,
                             fontColor: "black",
                         },
                     },
@@ -206,8 +209,8 @@
                         title: {
                             display: true,
                             text: "보유 자산",
-                        },
-                    },
+                        }
+                    }
                 }
             });
             // 차트 제목 업데이트

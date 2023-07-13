@@ -5,10 +5,7 @@ import com.hanaonestock.stock.model.dao.StockMapper;
 import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.transaction.model.dao.TransactionMapper;
-import com.hanaonestock.transaction.model.dto.BuyDto;
-import com.hanaonestock.transaction.model.dto.Result;
-import com.hanaonestock.transaction.model.dto.SellDto;
-import com.hanaonestock.transaction.model.dto.Transaction;
+import com.hanaonestock.transaction.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -149,5 +146,16 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public double selectDayOfTransaction(String id) {
         return transactionMapper.selectDayOfTransaction(id);
+    }
+
+    @Override
+    public List<DailyPerformance> dailyPerformanceByMember(String id) {
+        List<DailyPerformance> results = null;
+        try {
+            results = transactionMapper.dailyPerfomanceById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 }

@@ -82,6 +82,10 @@
                 </div>
             </div>
             <div class="list_div">
+                <div class="stock_title">
+                    <span>추천 주식</span>
+                </div>
+                <div style="display: flex; flex-direction: row">
                 <c:forEach var="stock" items="${stockList}" varStatus="status">
                     <div class="stock_list">
                         <fmt:formatNumber value="${stock.close}" pattern="#,##0" var="formattedClose"/>
@@ -103,6 +107,7 @@
                         <h3><c:out value="${formattedClose}"/></h3>
                     </div>
                 </c:forEach>
+                </div>
             </div>
         </div>
     </div>
