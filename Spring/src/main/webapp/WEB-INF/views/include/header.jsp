@@ -19,37 +19,36 @@
             <ul>
                 <li class="nav-list">
                     <a href="" class="nav-menu">서비스소개</a>
-                </li>
                 <li class="nav-list">
-                    <a href="/mypage" class="nav-menu">마이페이지</a>
-                </li>
+                    <a href="mypage" class="nav-menu">마이페이지</a>
                  <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
                  <%
                        String id = (String) session.getAttribute("id");
                        if (id != null) {
                  %>
-                         <c:choose>
-                             <c:when test="${empty provider}">
-                                 <li class="nav-list">
-                                     <a href="/logoutMember" class="nav-menu">로그아웃</a>
-                                 </li>
-                             </c:when>
-                             <c:when test="${provider eq 'kakao'}">
-                                 <li class="nav-list">
-                                     <a href="/oauth/logout" class="nav-menu">로그아웃</a>
-                                 </li>
-                             </c:when>
-                             <c:when test="${provider eq 'general'}">
-                                 <li class="nav-list">
-                                     <a href="/logoutMember" class="nav-menu">로그아웃</a>
-                                 </li>
-                             </c:when>
-                             <c:otherwise>
-                                 <li class="nav-list">
-                                     <a href="/logoutMember" class="nav-menu">로그아웃</a>
-                                 </li>
-                             </c:otherwise>
-                         </c:choose>
+                         <c:if test="${empty provider}">
+                              <li class="nav-list">
+                                  <a href="/logoutMember" class="nav-menu">로그아웃</a>
+                              </li>
+                         </c:if>
+                        <c:if test="${provider eq 'kakao'}">
+                             <li class="nav-list">
+                                 <a href="/oauth/logout" class="nav-menu">로그아웃</a>
+                             </li>
+                         </c:if>
+                          <c:if test="${provider eq 'general'}">
+                              <li class="nav-list">
+                                  <a href="/logoutMember" class="nav-menu">로그아웃</a>
+                              </li>
+                          </c:if>
+
+                         <%-- provider 데이터가 "kakao"가 아닐 경우 일반 로그아웃 버튼을 표시 --%>
+                         <c:if test="${provider eq 'null'}">
+                             <li class="nav-list">
+                                 <a href="/logoutMember" class="nav-menu">로그아웃</a>
+                             </li>
+                         </c:if>
+   
                  <%} else{%>
                         <li class="nav-list">
                              <a class="nav-menu" onclick="openModal()">로그인</a>
