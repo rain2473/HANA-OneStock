@@ -72,7 +72,6 @@ public class TransactionController {
         return ResponseEntity.ok(resultList);
     }
 
-
     @ResponseBody
     @GetMapping(value = "/get-chart")
     public ResponseEntity<String> getStockChartData(@RequestParam("input") String input) {
