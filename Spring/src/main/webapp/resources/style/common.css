@@ -13,12 +13,13 @@ body {
     background-image: url("../img/background.png");
     background-size: cover;
     height: 700px;
+    align-items: center;
     margin-left: 200px;
     margin-right: 200px;
 }
 
-footer {
-    color: #888888;
+.container {
+    margin-right: 0;
 }
 
 .content {
@@ -28,20 +29,12 @@ footer {
     justify-content: space-around;
 }
 
-/* CSS 스타일링 */
-header {
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    display: flex;
-    align-items: center;
-}
-
 nav {
     display: flex;
-    background-color: rgba(255, 255, 255, 1.0);
+    background-color: rgba(255, 255, 255, 0.5);
     height: 40px;
+    padding: 20px;
     text-align: center;
-    width: 100%;
     justify-content: space-between;
 }
 
@@ -51,8 +44,6 @@ nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    margin: 0 0 0 600px;
-    /*추후수정*/
 }
 
 nav ul li {
@@ -77,4 +68,9 @@ nav ul li {
     color: white;
     height: 20px;
     border-radius: 10px;
+}
+
+/*footer*/
+footer {
+    color: #888888;
 }
