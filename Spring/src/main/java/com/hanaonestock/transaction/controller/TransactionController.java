@@ -159,6 +159,7 @@ public class TransactionController {
     public ResponseEntity<Integer> depositUserCash(@RequestParam("id") String id) {
         int newCash = memberService.findUserCash(id) + 1000000;
         System.out.println("newCash = " + newCash);
+        System.out.println("id = " + id);
         int state = memberService.updateInvestInfoCashById(id, newCash);
         System.out.println("state = " + state);
         if (state != 1) {
