@@ -2,23 +2,23 @@
   "assetData": [
     {
       "date": "20230701",
-      "amount": 900000
+      "amount": 3.2
     },
     {
       "date": "20230702",
-      "amount": 400000
+      "amount": 5.2
     },
     {
       "date": "20230703",
-      "amount": 400000
+      "amount": 1.3
     },
     {
       "date": "20230704",
-      "amount": 50000
+      "amount": 0.2
     },
     {
       "date": "20230705",
-      "amount": 200000
+      "amount": 2.7
     }
   ]
 }
