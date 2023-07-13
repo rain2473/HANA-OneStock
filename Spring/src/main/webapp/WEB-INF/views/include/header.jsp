@@ -5,11 +5,10 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="../../../resources/style/header.css">
+    <link rel="stylesheet" href="../../../resources/style/common.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-
 <header>
     <nav>
          <a href="index_login">

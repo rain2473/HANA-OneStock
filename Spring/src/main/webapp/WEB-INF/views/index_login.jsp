@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -10,8 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
-
+<div class="container">
+<%@ include file="include/header.jsp" %>
 <div class="content">
     <div class="main">
         <div class="animate__animated animate__slideInLeft slow 4s">
@@ -37,24 +37,16 @@
                     <h4>목표 수익률을 입력하고,<br>
                         추천 주식을 확인하세요 !</h4>
                     <input type="text" id="goal" name="goal"><br><br>
-<%--                    main.jsp로 이동--%>
+                    <%--                    main.jsp로 이동--%>
                     <input type="button" class="button" value="추천 주식 확인하기" onclick="goToMain()">
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<footer>
-    <hr>
-    <p>
-        <span>고객센터 1800-0000</span><br/>
-        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-    </p>
-    <br>
-</footer>
+    <%@ include file="include/footer.jsp" %>
+</div>
+</body>
 <script>
     // 모달 열기 함수
     function openModal() {
@@ -69,9 +61,8 @@
     function goToMain() {
         const goal = $('[name="goal"]').val();
         var link = document.createElement("a");
-        link.href = "/main?goal="+goal;
+        link.href = "/main?goal=" + goal;
         link.click();
     }
 </script>
-</body>
 </html>

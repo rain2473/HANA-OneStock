@@ -24,6 +24,9 @@ public interface MemberService {
 
     void updateInvest(Member m);
     int findUserCash(String id);
+
+    int findUserGoal(String id);
+
     int updateInvestInfoCashById(String id, int cash);
 }
 

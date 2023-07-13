@@ -1,16 +1,19 @@
 .stock_title {
     margin: 15px;
+    text-align: center;
 }
 .stock_title>span{
     font-size: 20px;
     color: #3e3e3e;
-    font-weight: bolder;
+    font-weight: bold;
 }
 .stock_a{
     text-decoration : none;
 }
+
 .stock_type {
     margin-left: 15px;
+    text-align: center;
 }
 .stock_button {
     padding: 5px;
@@ -22,16 +25,19 @@
     background-color: #dedbdb;
     border: 1px solid #ffffff;
 }
-.stock_button:hover {
+
+.stock_button.active {
     background-color: #000;
     color: #ffffff;
 }
+
 .stock_lists {
     display: none;
     margin-top: 10px;
     padding: 10px;
     background-color: #f5f5f5;
     margin: 15px;
+    border-radius: 20px
 }
 .stock_lists li{
     list-style: none;
@@ -119,7 +125,9 @@ h3 {
     margin-top: 5px;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #888888;
 }
+
 .red_text {
     color: indianred;
 }

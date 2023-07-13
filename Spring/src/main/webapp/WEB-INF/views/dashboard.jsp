@@ -16,7 +16,8 @@
     </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
+<div class="container">
+<%@ include file="include/header.jsp" %>
 <div class="main">
     <div class="search-menu">
         <div class="a">
@@ -27,7 +28,7 @@
     </div>
 </div>
 <div class="content">
-    <div class="container">
+    <div class="content-container">
         <!-- 왼쪽 서브 메뉴 -->
         <div class="left_sub_menu">
             <div class="sub_menu">
@@ -71,8 +72,8 @@
             </div>
         </div>
         <div class="chart_div">
-            <div class="stock">
-                종목이름(종목번호)
+            <div class="stock-title">
+                종목이름(종목코드)
             </div>
             <div class="chart">
                 <script>
@@ -155,18 +156,12 @@
         </div>
     </div>
 </div>
-<footer>
-    <hr>
-    <p>
-        <span>고객센터 1800-0000</span><br/>
-        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-    </p>
-    <br>
-</footer>
-
+    <%@ include file="include/footer.jsp" %>
+</div>
+</body>
 <script>
+    getUserCash("<%=session.getAttribute("id")%>");
+
     /**
      *  검색 창 기능
      */
@@ -220,7 +215,6 @@
                 'input': input
             },
             success: function (stock) {
-                getUserCash("<%=session.getAttribute("id")%>");
                 getChartData(stock.isin);
                 $('.stock').text(stock.name + '(' + stock.isin + ')');
                 document.getElementById('isin').value = stock.isin;
@@ -536,8 +530,19 @@
                 getChartData(isin); // 차트 데이터 가져오기
             });
         });
+
+        // '추천종목' 리스트의 항목에 클릭 이벤트 추가
+        $('.stock_name').on('click', 'li', function () {
+            // 클릭한 항목의 '종목번호' 리스트에서 text 추출
+            var isin = $(this).parent().find('.small_menu li').first().text().trim().split(' ')[1];
+            // 클릭한 항목의 이름 추출
+            var name = $(this).text().trim();
+            // 특정 DOM 요소에 종목 이름과 번호 설정
+            $('.stock').text(name + '(' + isin + ')');
+            // 차트 데이터 가져오기
+            getChartData(isin);
+        });
     });
     bindEventListeners();
 </script>
-</body>
 </html>
