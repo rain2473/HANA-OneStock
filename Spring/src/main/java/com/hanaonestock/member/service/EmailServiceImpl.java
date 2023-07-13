@@ -32,13 +32,13 @@ public class EmailServiceImpl implements EmailService {
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to); // 보내는 대상
-        message.setSubject("이메일 인증 테스트"); // 제목
+        message.setSubject("HANA-ONESTOCK 가입 인증"); // 제목
 
         String msgg = "";
         msgg += "<div style='margin:20px;'>";
-        msgg += "<h1>안녕하세요 임떠영입니다. </h1>";
+        msgg += "<h1>HANA-ONESTOCK 가입 인증 메일</h1>";
         msgg += "<br>";
-        msgg += "<p>이메일 전송 테스트입니당<p>";
+        msgg += "<p>인증코드를 입력해주세요.<p>";
         msgg += "<br>";
         msgg += "<p>감사합니다.<p>";
         msgg += "<br>";
@@ -49,7 +49,7 @@ public class EmailServiceImpl implements EmailService {
         msgg += ePw + "</strong><div><br/> ";
         msgg += "</div>";
         message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress("lsy783@gmail.com", "ddeoyoung"));
+        message.setFrom(new InternetAddress("lsy783@gmail.com", "hanaonestock"));
 
         return message;
     }
