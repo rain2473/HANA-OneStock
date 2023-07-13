@@ -108,7 +108,7 @@
     </div>
     <div class="button-container">
         <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
-        <input type="button" class="button" value="수익률 확인하기" onclick="goToResult();">
+        <input type="button" class="button" value="수익률 확인하기" onclick="goToDashboard2();">
     </div>
     <%@ include file="include/footer.jsp" %>
 </div>
@@ -121,10 +121,10 @@
         link.click();
     }
 
-    function goToResult() {
+    function goToDashboard2() {
         alert("페이지 이동");
         var link = document.createElement("a");
-        link.href = "/result";
+        link.href = "/dashboard2";
         link.click();
     }
 

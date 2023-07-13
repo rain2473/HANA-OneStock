@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../resources/style/common.css">
-    <link rel="stylesheet" href="../../resources/style/dashboard.css">
+    <link rel="stylesheet" href="../../resources/style/dashboard2.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script>
@@ -18,21 +18,12 @@
 <body>
 <div class="container">
     <%@ include file="include/header.jsp" %>
-    <div class="main">
-        <div class="search-menu">
-            <div class="a">
-                <input class="search-box" type="text" placeholder="🔍 SEARCH">
-                <button class="search-button" onclick="handleSearch()">검색</button>
-                <div class="search-result"></div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <div class="content-container">
             <!-- 왼쪽 서브 메뉴 -->
             <div class="left_sub_menu">
                 <div class="sub_menu">
-                    <h2>📊 추천종목</h2>
+                    <h2>📉 보유종목</h2>
                     <c:forEach var="stock" items="${sessionScope.stockList}">
                         <ul class="stock_name">
                             <li><c:out value="${stock.name}" /><i class="arrow fas fa-angle-right"></i></li>
@@ -50,9 +41,6 @@
                             </ul>
                         </ul>
                     </c:forEach>
-                    <!-- 종목 추가 누르면 현재 종목 즐겨찾기 추가 -->
-                    <h2>✅ 종목추가</h2>
-                    <div class="add_stock"></div>
                 </div>
             </div>
             <div class="chart_div">
