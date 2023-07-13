@@ -16,7 +16,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<body style="background-image: url("../img/background2.png")">
     <%@ include file="include/header.jsp" %>
     <div class="main">
         <div class="search-menu">
@@ -391,7 +391,7 @@
                     <div class="left-column">
                         <div class="form-group">
                             <label for="price">매도 가격</label>
-                            <input type="text" id="price" name="price" placeholder="1000 KRW">
+                            <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
                         </div>
                     </div>
                     <div class="right-column">
