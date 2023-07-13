@@ -2,18 +2,6 @@ h3 {
     color: black;
 }
 
-.a {
-    position: relative;
-}
-
-.search-result {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    cursor: pointer;
-}
-
 .content {
     flex-direction: column;
 }
