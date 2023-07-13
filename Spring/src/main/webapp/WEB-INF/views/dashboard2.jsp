@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../../resources/style/common.css">
     <link rel="stylesheet" href="../../resources/style/dashboard2.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
     <script>
         var cash;
     </script>
@@ -26,12 +25,12 @@
             <div class="chart_div">
                 <div class="chart">
                     <h3>${name}님의 수익률입니다.</h3>
-                </span>
                 </div>
             </div>
         </div>
     </div>
-    <%@ include file="include/footer.jsp" %>
+</div>
+<%@ include file="include/footer.jsp" %>
 </div>
 </body>
 <script>
