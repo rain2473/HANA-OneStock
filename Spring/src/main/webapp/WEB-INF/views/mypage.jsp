@@ -147,7 +147,7 @@
 
     // "충전하기" 버튼 클릭 시 실행되는 함수
     document.getElementById('deposit').addEventListener('click', function () {
-        depositUserCash('<%=session.getAttribute("name")%>');
+        depositUserCash('<%=session.getAttribute("id")%>');
     });
 
     /**
