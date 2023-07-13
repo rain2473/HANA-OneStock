@@ -22,7 +22,7 @@ public interface MemberMapper {
     Member selectNameOfMember(String id);
     void insertInvestInfo(Member member);
     Optional<InvestInfo> findInvestInfoById(String id);
-    int updateInvestInfoCashById(Map<Integer, String> idAndNewCash);
+    int updateInvestInfoCashById(Map<String, Object> idAndNewCash);
     InvestInfo selectInvestInfo(String id);
     void updateInvest(Member m);
 }

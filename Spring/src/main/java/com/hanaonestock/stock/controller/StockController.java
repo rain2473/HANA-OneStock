@@ -1,12 +1,17 @@
 package com.hanaonestock.stock.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanaonestock.stock.model.dto.Ohlcv;
+import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.stock.service.OhlcvService;
 import com.hanaonestock.stock.service.StockService;
 import org.json.HTTP;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.json.JSONObject;
+
 import java.util.Map;
 
 @Controller
@@ -66,8 +71,11 @@ public class StockController {
     }
 
     @RequestMapping("/main")
-    public ModelAndView main(@RequestParam("goal") String goal) {
+    public ModelAndView main(HttpSession session,@RequestParam("goal") String goal) {
         ModelAndView mav = new ModelAndView();
+        List<RecommendedStock> stockList = stockService.recommendedStock();
+        session.setAttribute("stockList", stockList);
+        mav.addObject("stockList", stockList);
         mav.setViewName("main");
         return mav;
     }
@@ -145,4 +153,6 @@ public class StockController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }
