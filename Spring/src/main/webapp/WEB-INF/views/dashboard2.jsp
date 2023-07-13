@@ -23,8 +23,8 @@
             </div>
             <div class="chart_div">
                 <div class="chart">
-                    <h3>${name}님의 수익률입니다.</h3>
-                    <div style="width: 500px; height:400px">
+                    <h3>${name}님의 수익률</h3>
+                    <div style="width: 600px; height:450px; margin-bottom: 50px">
                         <canvas id="myLineChart"></canvas>
                     </div>
                 </div>
@@ -40,26 +40,25 @@
     fetch("../../resources/json/performance.json")
         .then(response => response.json())
         .then(data => {
-            // 차트 데이터 설정
+
+            /// 데이터 가공
             const chartData = {
-                datasets: [{
-                    borderColor: 'rgba(255, 99, 132, 1)',   // Red
-                    fill: false,
-                    data: data.assetData.map(item => item.amount)
-                }],
-                labels: data.assetData.map(item => item.date)
+                labels: data.map(item => item.dateBuy),
+                datasets: [
+                    {
+                        label: 'Performance',
+                        borderColor: 'rgba(255, 99, 132, 1)',   // Red
+                        fill: false,
+                        data: data.map(item => item.dailyPerformance)
+                    },
+                    {
+                        label: 'Goal',
+                        borderColor: 'rgba(54, 162, 235, 1)',    // Blue
+                        fill: false,
+                        data: data.map(item => item.goal)
+                    }
+                ]
             };
-
-            // 추가 직선 데이터 설정
-            const fixedLineData = {
-                label: 'Fixed Line',
-                borderColor: 'rgba(54, 162, 235, 1)',    // Blue
-                fill: false,
-                data: Array(data.assetData.length).fill(3),
-                pointRadius: 0   // 데이터 포인트 표시 없음
-            };
-
-            chartData.datasets.push(fixedLineData);
 
             // 차트 생성
             var ctx1 = document.getElementById("myLineChart");
@@ -76,24 +75,21 @@
                         }
                     },
                     maintainAspectRatio: false,
-                    legend: {
-                        display: false
-                    },
                     scales: {
-                        x: {
+                        xAxes: [{
                             display: true,
-                            title: {
+                            scaleLabel: {
                                 display: true,
-                                text: 'Date'
+                                labelString: 'Date'
                             }
-                        },
-                        y: {
+                        }],
+                        yAxes: [{
                             display: true,
-                            title: {
+                            scaleLabel: {
                                 display: true,
-                                text: 'Amount'
+                                labelString: 'Amount'
                             }
-                        }
+                        }]
                     }
                 }
             });
