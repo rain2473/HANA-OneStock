@@ -112,12 +112,21 @@
     </div>
     <%@ include file="include/footer.jsp" %>
 </div>
+<<<<<<< Updated upstream
 </body>
+>>>>>>> Stashed changes
 <script>
     function goToDashboard() {
         alert("페이지 이동");
         var link = document.createElement("a");
         link.href = "/dashboard";
+        link.click();
+    }
+
+    function goToResult() {
+        alert("페이지 이동");
+        var link = document.createElement("a");
+        link.href = "/result";
         link.click();
     }
 

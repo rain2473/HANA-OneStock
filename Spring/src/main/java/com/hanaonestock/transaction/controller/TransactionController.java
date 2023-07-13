@@ -7,6 +7,7 @@ import com.hanaonestock.member.service.MemberService;
 import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.transaction.model.dto.BuyDto;
+import com.hanaonestock.transaction.model.dto.Result;
 import com.hanaonestock.transaction.model.dto.SellDto;
 import com.hanaonestock.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -35,6 +38,22 @@ public class TransactionController {
         mav.setViewName("trading");
         return mav;
     }
+
+    @RequestMapping("/result")
+    public ResponseEntity<List<Result>> result(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<Result> resultList = transactionService.transactionsByMember(id);
+        if (resultList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(resultList);
+    }
+
 
     @ResponseBody
     @GetMapping(value = "/get-chart")
