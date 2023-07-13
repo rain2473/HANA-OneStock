@@ -22,8 +22,9 @@
             <div class="chart2">
                 <div class="chart-menu">
                     <c:set var="results" value="${requestScope.results}"/>
+                    <h3>거래내역</h3>
                     <table>
-                        <tr style="font-size: 15px">
+                        <tr class="results-title">
                             <th>구매가</th>
                             <th>판매가</th>
                             <th>구매수량</th>
