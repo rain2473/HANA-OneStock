@@ -74,7 +74,6 @@ public class MemberController {
         return mav;
     }
 
-
     @RequestMapping("/dashboard")
     public ModelAndView dashboard() {
         ModelAndView mav = new ModelAndView();
