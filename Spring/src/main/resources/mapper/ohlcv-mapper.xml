@@ -43,7 +43,7 @@
         JOIN (
             SELECT *
             FROM ohlcv
-            WHERE s_date = '20230712'
+            WHERE s_date = #{date}
             ORDER BY UPDOWN ASC
         ) o ON s.isin = o.isin
         WHERE ROWNUM <= 5
@@ -57,7 +57,7 @@
         JOIN (
             SELECT *
             FROM ohlcv
-            WHERE s_date = '20230712'
+            WHERE s_date = #{date}
             ORDER BY VOLUME DESC
         ) o ON s.isin = o.isin
         WHERE ROWNUM <= 5
@@ -71,7 +71,7 @@
         JOIN (
             SELECT *
             FROM ohlcv
-            WHERE s_date = '20230712'
+            WHERE s_date = #{date}
             ORDER BY AMOUNT DESC
         ) o ON s.isin = o.isin
         WHERE ROWNUM <= 5
