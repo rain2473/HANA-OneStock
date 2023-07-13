@@ -194,6 +194,8 @@
 </footer>
 
 <script>
+    getUserCash("<%=session.getAttribute("id")%>");
+
     /**
      *  검색 창 기능
      */
@@ -247,7 +249,6 @@
                 'input': input
             },
             success: function (stock) {
-                getUserCash("<%=session.getAttribute("id")%>");
                 getChartData(stock.isin);
                 $('.stock').text(stock.name + '(' + stock.isin + ')');
                 document.getElementById('isin').value = stock.isin;
@@ -562,6 +563,18 @@
                 $('.stock').text(name + '(' + isin + ')');
                 getChartData(isin); // 차트 데이터 가져오기
             });
+        });
+
+        // '추천종목' 리스트의 항목에 클릭 이벤트 추가
+        $('.stock_name').on('click', 'li', function () {
+            // 클릭한 항목의 '종목번호' 리스트에서 text 추출
+            var isin = $(this).parent().find('.small_menu li').first().text().trim().split(' ')[1];
+            // 클릭한 항목의 이름 추출
+            var name = $(this).text().trim();
+            // 특정 DOM 요소에 종목 이름과 번호 설정
+            $('.stock').text(name + '(' + isin + ')');
+            // 차트 데이터 가져오기
+            getChartData(isin);
         });
     });
     bindEventListeners();
