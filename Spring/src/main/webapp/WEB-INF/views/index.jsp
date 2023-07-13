@@ -17,7 +17,7 @@
         <div>
             <ul>
                 <li class="nav-list">
-                    <a href="" class="nav-menu">서비스소개</a>
+                    <a href="recommend" class="nav-menu">추천종목</a>
                 </li>
                 <li class="nav-list">
                     <a href="#" class="nav-menu" onclick="openModal()">로그인</a>

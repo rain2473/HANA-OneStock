@@ -3,6 +3,12 @@ h3 {
     font-size: 35px;
 }
 
+.chart-menu {
+    overflow-y: auto;
+    padding: 15px;
+}
+
+
 .content {
     flex-direction: column;
 }
@@ -38,7 +44,7 @@ h3 {
     opacity: 0.7;
     border-radius: 20px;
     margin: 50px 20px 50px 10px;
-    width: 760px;
+    width: 700px;
     height: 600px;
     color: black;
 }
@@ -53,7 +59,7 @@ h3 {
     opacity: 0.7;
     border-radius: 20px;
     margin: 50px 10px 50px 20px;
-    width: 760px;
+    width: 250px;
     height: 600px;
     color: black;
 }

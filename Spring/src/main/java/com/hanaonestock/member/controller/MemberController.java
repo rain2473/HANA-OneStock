@@ -61,7 +61,12 @@ public class MemberController {
         mav.setViewName("join");
         return mav;
     }
-
+    @RequestMapping("/recommend")
+    public ModelAndView recommend() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("main");
+        return mav;
+    }
     @RequestMapping("/index_login")
     public ModelAndView index_login(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();

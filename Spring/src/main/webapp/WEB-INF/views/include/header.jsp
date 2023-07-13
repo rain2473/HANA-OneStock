@@ -17,7 +17,7 @@
         <div>
             <ul>
                 <li class="nav-list">
-                    <a href="" class="nav-menu">서비스소개</a>
+                    <a href="recommend" class="nav-menu">추천종목</a>
                 <li class="nav-list">
                     <a href="mypage" class="nav-menu">마이페이지</a>
                  <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
