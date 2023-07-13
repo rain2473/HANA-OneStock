@@ -183,7 +183,7 @@
                         'rgba(153, 102, 255, 0.5)'],
                     data: assetData.map(item => item.totalPrice)
                 }],
-                labels: assetData.map(item => [item.name, item.totalPrice])
+                labels: assetData.map(item => [item.name + " : "+ item.totalPrice])
             };
 
             // 차트 생성
@@ -222,7 +222,7 @@
                             label: (tooltipItem, data) => {
                                 const dataset = data.datasets[tooltipItem.datasetIndex];
                                 const amount = dataset.data[tooltipItem.index];
-                                return `Amount: ${amount}`;
+                                return `Amount : ${amount}`;
                             }
                         }
                     },
