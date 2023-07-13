@@ -35,9 +35,14 @@ public class MemberController {
         mav.setViewName("index");
         return mav;
     }
-
     @RequestMapping("/mypage")
     public ModelAndView mypage(HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("mypage");
+        return mav;
+    }
+    @RequestMapping("/mypage2")
+    public ModelAndView mypage2(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
         ModelAndView mav = new ModelAndView();
@@ -58,8 +63,10 @@ public class MemberController {
     }
 
     @RequestMapping("/index_login")
-    public ModelAndView index_login(@RequestParam("id") String id) {
+    public ModelAndView index_login(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("id");
         Member m = memberService.selectNameOfMember(id);
         mav.addObject("provider",m.getProvider());
         mav.addObject("id",id);

@@ -14,69 +14,51 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
-    <header>
-        <nav>
-            <a href="/">
-            <img src="../../resources/img/logo.png" height="40">
-            </a>
-            <div class="justify-content-end">
-                <ul class="justify-content-end">
-                    <li class="nav-list">
-                        <a class="nav-menu">서비스소개</a>
-                    <li class="nav-list">
-                        <a class="nav-menu" onclick="openModal()">로그인</a>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <div class="container">
+        <%@ include file="include/header.jsp" %>
 
-    <div class="member">
-        <form id="updateForm">
-            <h1>회원정보수정</h1>
-            <br>
-            <div class="field">
-                <b>아이디</b>
-                <span><input type="text" name="id" value="${id}" readonly="readonly" style="background-color: lightgray; color: black;"></span>
-                <span class="idChk" id="idChk" style="color: green;"></span>
-            </div>
-            <div class="field">
-                <b>비밀번호</b>
-                <input class="userpw" type="password" name="password" value="${member.password}">
-                <span class="pwChk" style="color: green;"></span>
-            </div>
-            <div class="field">
-                <b>이름</b>
-                <input type="text" name="name" value="${name}" readonly="readonly" style="background-color: lightgray; color: black;">
-            </div>
-
-            <div class="field email">
-                <b>이메일</b>
-                <div>
-                    <input type="email" name="email" value="${member.email}" readonly="readonly" style="background-color: lightgray; color: black;">
+        <div class="member">
+            <form id="updateForm">
+                <h1>회원정보수정</h1>
+                <br>
+                <div class="field">
+                    <b>아이디</b>
+                    <span><input type="text" name="id" value="${id}" readonly="readonly"
+                                 style="background-color: lightgray; color: black;"></span>
+                    <span class="idChk" id="idChk" style="color: green;"></span>
                 </div>
-            </div>
-            <div class="field">
-                <b>전화번호</b>
-                <input type="tel" placeholder="전화번호 입력" name="phone" value="${member.phoneNumber}">
-            </div>
-            <div class="field">
-                <b>목표수익률</b>
-                <input type="text" placeholder="목표수익률 입력" name="goal" value="${invest.goal}">
-            </div>
-            <input type="submit" value="회원정보수정"></button>
-        </form>
+                <div class="field">
+                    <b>비밀번호</b>
+                    <input class="userpw" type="password" name="password" value="${member.password}">
+                    <span class="pwChk" style="color: green;"></span>
+                </div>
+                <div class="field">
+                    <b>이름</b>
+                    <input type="text" name="name" value="${name}" readonly="readonly"
+                           style="background-color: lightgray; color: black;">
+                </div>
+
+                <div class="field email">
+                    <b>이메일</b>
+                    <div>
+                        <input type="email" name="email" value="${member.email}" readonly="readonly"
+                               style="background-color: lightgray; color: black;">
+                    </div>
+                </div>
+                <div class="field">
+                    <b>전화번호</b>
+                    <input type="tel" placeholder="전화번호 입력" name="phone" value="${member.phoneNumber}">
+                </div>
+                <div class="field">
+                    <b>목표수익률</b>
+                    <input type="text" placeholder="목표수익률 입력" name="goal" value="${invest.goal}">
+                </div>
+                <input type="submit" value="회원정보수정"></button>
+            </form>
+        </div>
+        <%@ include file="include/footer.jsp" %>
     </div>
-    <footer>
-        <br>
-        <hr>
-        <p>
-            <span>고객센터 1800-0000</span><br/>
-            <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-            <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-            <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-        </p>
-        <br>
-    </footer>
+    </body>
     <script>
         // 회원 가입
         $('#updateForm').submit(function (event) {
@@ -91,7 +73,7 @@
                 id: id,
                 password: password,
                 phoneNumber: phoneNumber,
-                goal:goal
+                goal: goal
             };
 
             // Ajax 요청 보내기
@@ -100,7 +82,7 @@
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
-                success : function(response){
+                success: function (response) {
                     if (response === "회원 수정 성공") {
                         alert("회원 수정 성공");
                         var link = document.createElement("a");
@@ -115,5 +97,4 @@
 
 
     </script>
-    </body>
     </html>

@@ -16,34 +16,8 @@
     </script>
 </head>
 <body>
-<header>
-    <nav>
-        <a href="/">
-            <img src="../../resources/img/logo.png" height="40">
-        </a>
-        <div>
-            <ul>
-                <li class="nav-list">
-                    <a class="nav-menu">서비스소개</a>
-                <li class="nav-list">
-                    <a class="nav-menu">마이페이지</a>
-                <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
-                <c:if test="${provider eq 'kakao'}">
-                <li class="nav-list">
-                    <a href="/oauth/logout" class="nav-menu">로그아웃</a>
-                </li>
-                </c:if>
-
-                <%-- provider 데이터가 "kakao"가 아닐 경우 일반 로그아웃 버튼을 표시 --%>
-                <c:if test="${empty provider}">
-                    <li class="nav-list">
-                        <a href="/logoutMember" class="nav-menu">로그아웃</a>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-    </nav>
-</header>
+<div class="container">
+<%@ include file="include/header.jsp" %>
 <div class="main">
     <div class="search-menu">
         <div class="a">
@@ -54,7 +28,7 @@
     </div>
 </div>
 <div class="content">
-    <div class="container">
+    <div class="content-container">
         <!-- 왼쪽 서브 메뉴 -->
         <div class="left_sub_menu">
             <div class="sub_menu">
@@ -98,8 +72,8 @@
             </div>
         </div>
         <div class="chart_div">
-            <div class="stock">
-                종목이름(종목번호)
+            <div class="stock-title">
+                종목이름(종목코드)
             </div>
             <div class="chart">
                 <script>
@@ -182,17 +156,9 @@
         </div>
     </div>
 </div>
-<footer>
-    <hr>
-    <p>
-        <span>고객센터 1800-0000</span><br/>
-        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-    </p>
-    <br>
-</footer>
-
+    <%@ include file="include/footer.jsp" %>
+</div>
+</body>
 <script>
     getUserCash("<%=session.getAttribute("id")%>");
 
@@ -578,5 +544,4 @@
     });
     bindEventListeners();
 </script>
-</body>
 </html>

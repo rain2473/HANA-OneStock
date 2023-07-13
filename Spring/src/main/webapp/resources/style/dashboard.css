@@ -29,7 +29,7 @@ h3 {
     justify-content: center;
 }
 
-.container {
+.content-container {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -42,7 +42,7 @@ h3 {
 /*검색 메뉴*/
 .search-menu {
     width: 1050px; height: 35px;
-    padding: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -145,6 +145,9 @@ ul {
 }
 
 
+.stock-title {
+    padding-top: 15px;
+}
 
 .chart_div {
     display: flex;
