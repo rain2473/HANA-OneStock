@@ -32,7 +32,7 @@
         <!-- 왼쪽 서브 메뉴 -->
         <div class="left_sub_menu">
             <div class="sub_menu">
-                <h2>추천종목</h2>
+                <h2>📊 추천종목</h2>
                 <c:forEach var="stock" items="${sessionScope.stockList}">
                     <ul class="stock_name">
                         <li><c:out value="${stock.name}" /><i class="arrow fas fa-angle-right"></i></li>
@@ -50,29 +50,13 @@
                         </ul>
                     </ul>
                 </c:forEach>
-                <!--
-                <ul class="stock_name">
-                    <li>삼성전자<i class="arrow fas fa-angle-right"></i></li>
-                    <ul class="small_menu">
-                        <li>종목번호 005930</li>
-                        <li>69,500 <span class="blue_text"> -0.57%</span></li>
-                    </ul>
-                </ul>
-                <ul class="stock_name">
-                    <li>카카오<i class="arrow fas fa-angle-right"></i></li>
-                    <ul class="small_menu">
-                        <li>종목번호 035720</li>
-                        <li>49,850 <span> 0.00%</span></li>
-                    </ul>
-                </ul>
-                -->
                 <!-- 종목 추가 누르면 현재 종목 즐겨찾기 추가 -->
-                <h2>종목추가➕</h2>
+                <h2>✅ 종목추가</h2>
                 <div class="add_stock"></div>
             </div>
         </div>
         <div class="chart_div">
-            <div class="stock-title">
+            <div class="stock" style="margin-top: 15px;">
                 종목이름(종목코드)
             </div>
             <div class="chart">
@@ -162,9 +146,7 @@
 <script>
     getUserCash("<%=session.getAttribute("id")%>");
 
-    /**
-     *  검색 창 기능
-     */
+    // 검색창
     $(document).ready(function () {
         $('.search-box').on('input', function () {
             var input = $('.search-box').val();
@@ -186,26 +168,18 @@
             });
         });
 
-        /**
-         * Hide the search result when the user clicks outside
-         */
         $(document).click(function (event) {
             if (!$(event.target).closest('.searchBar').length) {
                 $('.search-result').hide();
             }
         });
 
-        /**
-         * Select the search result and fill in the search box
-         */
         $(document).on('click', '.search-result div', function () {
             $('.search-box').val($(this).text());
         });
     });
 
-    /**
-     * 사용자가 종목 검색 버튼을 클릭할 때 호출
-     */
+    // 검색 버튼 호출 시 동작
     function handleSearch() {
         const input = $('.search-box').val();
         $.ajax({
@@ -272,9 +246,7 @@
         });
     }
 
-    /**
-     *  사용자 잔고 받아오기
-     */
+    // 사용자 지갑
     function getUserCash(id) {
         $.ajax({
             url: '/get-user-cash',
@@ -327,9 +299,7 @@
 
         handleSearch();
 
-        /**
-         *  매수 트랜잭션
-         */
+        // 매수 트랜잭션
         $(document).ready(function() {
             $("#buyButton").click(function(event) {
                 event.preventDefault();
@@ -370,9 +340,7 @@
             });
         });
 
-        /**
-         * 매도 트랜잭션
-         */
+        // 매도 트랜잭션
         $(document).ready(function() {
             $("#sellButton").click(function(event) {
                 event.preventDefault();
