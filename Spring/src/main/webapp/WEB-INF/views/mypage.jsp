@@ -60,8 +60,8 @@
                 </div>
                 <h3><%=session.getAttribute("name")%>님의 현재 수익률입니다.</h3>
                 <div style="font-weight: 900; font-size: 32px;">
-                    <p>목표수익률: <span id="goal">%</span></p>
-                    <p>당일수익률: <span id="profit">%</span></p>
+                    <p>목표 수익률: <span id="goal">%</span></p>
+                    <p>당일 실현 수익률: <span id="profit">%</span></p>
                 </div>
                 <div style="display: flex; align-items: center; margin: 10px 0px 30px 0px">
                     <input type="button" class="small-btn" value="변경하기">
