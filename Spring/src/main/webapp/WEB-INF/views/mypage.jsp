@@ -61,6 +61,9 @@
         $.ajax({
             url: '/selectDayOfTransaction',
             type: 'GET',
+            data: {
+                id: '<%=session.getAttribute("id")%>'
+            },
             success: function (data) {
                 $('#profit').text(data + "%");
             },
