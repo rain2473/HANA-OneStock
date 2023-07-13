@@ -3,9 +3,8 @@ package com.hanaonestock.transaction.service;
 import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.transaction.model.dto.BuyDto;
 import com.hanaonestock.transaction.model.dto.SellDto;
-
+import com.hanaonestock.transaction.model.dto.Result;
 import java.util.List;
-import java.util.Map;
 
 public interface TransactionService {
     // 매수
@@ -19,5 +18,8 @@ public interface TransactionService {
 
     // 보유 해당 주식 수
     int sumHasVolume(String id, String isin);
+
+    // 회원의 거래내역 조회
+    List<Result> transactionsByMember(String id);
 
 }

@@ -6,6 +6,7 @@ import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.transaction.model.dao.TransactionMapper;
 import com.hanaonestock.transaction.model.dto.BuyDto;
+import com.hanaonestock.transaction.model.dto.Result;
 import com.hanaonestock.transaction.model.dto.SellDto;
 import com.hanaonestock.transaction.model.dto.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,5 +131,18 @@ public class TransactionServiceImpl implements TransactionService {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    @Override
+    public List<Result> transactionsByMember(String id) {
+        List<Result> results = null;
+        Stock stock;
+
+        try {
+            results = transactionMapper.findTransactionsById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 }

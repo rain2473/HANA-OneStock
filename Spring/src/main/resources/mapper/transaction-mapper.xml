@@ -20,4 +20,10 @@
         where id = #{id} and isin = #{isin} and date_sell is null
     </select>
 
+    <select id="findTransactionsById" resultType="com.hanaonestock.transaction.model.dto.Result" parameterType="String">
+        select ID, BUY, SELL, VOLUME, ISIN, DATE_BUY, DATE_SELL, NAME
+        FROM (SELECT TRANSACTION.*, STOCK.NAME FROM TRANSACTION, STOCK WHERE TRANSACTION.ISIN = STOCK.ISIN)
+        where ID = #{id} and SELL is NOT null
+    </select>
+
 </mapper>

@@ -6,6 +6,7 @@ import com.hanaonestock.stock.model.dto.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +77,11 @@ public class StockServiceImpl implements StockService {
             e.printStackTrace();
         }
         return stockList;
+    }
+
+    @Override
+    public void updateGoalOfInvestInfoById(HashMap<String,String> stockData) {
+        stockMapper.updateGoalOfInvestInfoById(stockData);
     }
 
 }
