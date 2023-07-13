@@ -47,16 +47,16 @@ public class TransactionController {
     }
 
     @RequestMapping("/dashboard2")
-    public ResponseEntity<List<Result>> result(HttpSession session) {
+    public ModelAndView result(HttpSession session) {
         String id = (String) session.getAttribute("id");
         if (id == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ModelAndView("redirect:/index");  // 초기 페이지로 리디렉션
         }
 
         List<Result> resultList = transactionService.transactionsByMember(id);
         List<DailyPerformance> dailyPerformanceList = transactionService.dailyPerformanceByMember(id);
         if (resultList == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ModelAndView("error");  // 오류 페이지로 이동
         }
 
         try {
@@ -66,10 +66,12 @@ public class TransactionController {
             objectMapper.writeValue(file, dailyPerformanceList);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ModelAndView("error");  // 오류 페이지로 이동
         }
 
-        return ResponseEntity.ok(resultList);
+        ModelAndView modelAndView = new ModelAndView("dashboard2");
+        modelAndView.addObject("resultList", resultList);
+        return modelAndView;
     }
 
 

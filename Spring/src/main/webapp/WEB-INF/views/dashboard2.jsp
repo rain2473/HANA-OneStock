@@ -18,6 +18,26 @@
     <div class="content">
         <div class="content-container">
             <div class="chart2">
+                <c:set var="results" value="${requestScope.results}" />
+                <table>
+                    <tr>
+                        <th>Buy</th>
+                        <th>Sell</th>
+                        <th>Volume</th>
+                        <th>ISIN</th>
+                    </tr>
+
+                    <c:forEach items="${resultList}" var="result">
+                        <tr>
+
+                            <td class="box">${result.buy}</td>
+                            <td class="box">${result.sell}</td>
+                            <td class="box">${result.volume}</td>
+                            <td class="box">${result.isin}</td>
+
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
             <div class="chart_div">
                 <div class="chart">
@@ -32,6 +52,19 @@
 </div>
 </body>
 <script>
+    $(document).ready(function() {
+         $.ajax({
+            url: '/dashboard',
+            type: 'GET',
+            success: function (json) {
+                 const data = JSON.parse(json);
+                 alert("data "+data);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
     // JSON 파일 가져오기
     fetch("../../resources/json/result.json")
         .then((response) => response.json())
