@@ -396,8 +396,8 @@
                     </div>
                     <div class="right-column">
                         <div class="form-group">
-                            <label for="orderQuantity" hidden>주문 수량</label>
-                            <input type="text" id="orderQuantity" name="orderQuantity" placeholder="0" hidden>
+                            <label for="orderQuantity" hidden>매도 수량</label>
+                            <input type="text" id="orderQuantity" name="orderQuantity" placeholder="0">
                         </div>
                     </div>
                     <div class="form-group" hidden>

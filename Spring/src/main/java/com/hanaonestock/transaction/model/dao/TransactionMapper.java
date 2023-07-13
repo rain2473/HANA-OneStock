@@ -19,5 +19,5 @@ public interface TransactionMapper {
     Optional<Integer> sumHasVolumeByIdIsin(Map<String, Object> idAndIsin);
 
     List<Result> findTransactionsById(String id);
-    double selectDayOfTransaction();
+    double selectDayOfTransaction(String id);
 }

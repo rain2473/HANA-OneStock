@@ -57,12 +57,15 @@
 </div>
 </body>
 <script>
-    $(document).ready(function() {
-         $.ajax({
+    $(document).ready(function () {
+        $.ajax({
             url: '/selectDayOfTransaction',
             type: 'GET',
+            data: {
+                id: '<%=session.getAttribute("id")%>'
+            },
             success: function (data) {
-                $('#profit').text(data+"%");
+                $('#profit').text(data + "%");
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
