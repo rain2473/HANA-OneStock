@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,121 +9,114 @@
     <link rel="stylesheet" href="../../resources/style/mypage.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script>
         var cash;
     </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
-<div class="content">
-    <div class="member_info_div">
-        <div class="chart_div">
-            <div class="chart">
-                <h3><%=session.getAttribute("name")%>님의 현재 보유 현금입니다.</h3>
-                <div class="money">
-                    <div style="display: flex; align-items: center;">
-                        <img src="../../resources/img/wallet.png" width="50"
-                             style="vertical-align: middle; margin-right: 30px">
-                        <span id="cash" style="vertical-align: middle; font-weight: 900; font-size: 40px;">0원</span>
+<div class="container">
+    <%@ include file="include/header.jsp" %>
+    <div class="content">
+        <div class="member_info_div">
+            <div class="chart_div">
+                <div class="chart">
+                    <h3><%=session.getAttribute("name")%>님의 현재 보유 현금입니다.</h3>
+                    <div class="money">
+                        <div style="display: flex; align-items: center;">
+                            <img src="../../resources/img/wallet.png" width="50"
+                                 style="vertical-align: middle; margin-right: 30px">
+                            <span id="cash" style="vertical-align: middle; font-weight: 900; font-size: 40px;">0원</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin: 30px 0px 30px 0px; justify-content: center">
+                            <input type="button" id="deposit" class="small-btn" value="충전하기">
+                            <input type="button" class="small-btn" value="충전내역">
+                        </div>
                     </div>
-                    <div style="display: flex; align-items: center; margin: 30px 0px 30px 0px">
-                        <input type="button" id="deposit" class="small-btn" value="충전하기">
-                        <input type="button" class="small-btn" value="충전내역">
+                    <h3><%=session.getAttribute("name")%>님의 현재 수익률입니다.</h3>
+                    <div style="font-weight: 900; font-size: 32px;">
+                        <p>목표수익률: <span id="goal">%</span></p>
+                        <p>당일수익률: <span id="profit">%</span></p>
+                    </div>
+                    <div style="display: flex; align-items: center; margin: 10px 0px 30px 0px">
+                        <input type="button" class="small-btn" value="변경하기">
                     </div>
                 </div>
-                <h3><%=session.getAttribute("name")%>님의 현재 수익률입니다.</h3>
-                <div style="font-weight: 900; font-size: 32px;">
-                    <p>목표수익률: <span id="goal">%</span></p>
-                    <p>당일수익률: <span id="profit">%</span></p>
-                </div>
-                <div style="display: flex; align-items: center; margin: 10px 0px 30px 0px">
-                    <input type="button" class="small-btn" value="변경하기">
-                </div>
-            </div>
-            <div class="chart">
-                <div class="piechart">
-                    <h3 id="chartTitle"></h3>
-                    <script>
-                        fetch("../../resources/json/data.json")
-                            .then((response) => response.json())
-                            .then((data) => {
-                                // 결제내역 데이터 가져오기
-                                const assetData = data.assetData;
+                <div class="chart">
+                    <div class="piechart">
+                        <h3 id="chartTitle"></h3>
+                        <script>
+                            fetch("../../resources/json/data.json")
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    // 결제내역 데이터 가져오기
+                                    const assetData = data.assetData;
 
-                                // 차트 데이터 설정
-                                const chartData = {
-                                    datasets: [{
-                                        backgroundColor: ['rgba(255, 99, 132, 0.5)',
-                                            'rgba(54, 162, 235, 0.5)',
-                                            'rgba(255, 206, 86, 0.5)',
-                                            'rgba(75, 192, 192, 0.5)',
-                                            'rgba(153, 102, 255, 0.5)'],
-                                        data: assetData.map(item => item.amount)
-                                    }],
-                                    labels: assetData.map(item => `${item.category} : ${item.amount}`)
-                                };
+                                    // 차트 데이터 설정
+                                    const chartData = {
+                                        datasets: [{
+                                            backgroundColor: ['rgba(255, 99, 132, 0.5)',
+                                                'rgba(54, 162, 235, 0.5)',
+                                                'rgba(255, 206, 86, 0.5)',
+                                                'rgba(75, 192, 192, 0.5)',
+                                                'rgba(153, 102, 255, 0.5)'],
+                                            data: assetData.map(item => item.amount)
+                                        }],
+                                        labels: assetData.map(item => `${item.category} : ${item.amount}`)
+                                    };
 
-                                // 차트 생성
-                                var ctx1 = document.getElementById("myPieChart");
-                                var myPieChart = new Chart(ctx1, {
-                                    type: 'pie',
-                                    data: chartData,
-                                    options: {
-                                        layout: {
-                                            padding: {
-                                                top: 0, // 위쪽 패딩 조정
-                                                bottom: 80, // 아래쪽 패딩 조정
-                                                left: 90, // 왼쪽 패딩 조정
-                                                right: 90 // 오른쪽 패딩 조정
-                                            }
-                                        },
-                                        cutoutPercentage: 30,
-                                        maintainAspectRatio: false,
-                                        legend: {
-                                            position: 'bottom',
-                                            align: 'start',
-                                            labels: {
-                                                usePointStyle: true,
-                                                fontSize: 14,
-                                                padding: 20,
-                                                fontColor: "black",
+                                    // 차트 생성
+                                    var ctx1 = document.getElementById("myPieChart");
+                                    var myPieChart = new Chart(ctx1, {
+                                        type: 'pie',
+                                        data: chartData,
+                                        options: {
+                                            layout: {
+                                                padding: {
+                                                    top: 0, // 위쪽 패딩 조정
+                                                    bottom: 80, // 아래쪽 패딩 조정
+                                                    left: 90, // 왼쪽 패딩 조정
+                                                    right: 90 // 오른쪽 패딩 조정
+                                                }
                                             },
-                                        },
-                                        plugins: {
-                                            title: {
-                                                display: true,
-                                                text: "보유 자산",
+                                            cutoutPercentage: 30,
+                                            maintainAspectRatio: false,
+                                            legend: {
+                                                position: 'bottom',
+                                                align: 'start',
+                                                labels: {
+                                                    usePointStyle: true,
+                                                    fontSize: 14,
+                                                    padding: 20,
+                                                    fontColor: "black",
+                                                },
                                             },
-                                        },
-                                    }
+                                            plugins: {
+                                                title: {
+                                                    display: true,
+                                                    text: "보유 자산",
+                                                },
+                                            },
+                                        }
+                                    });
+                                    // 차트 제목 업데이트
+                                    document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
+                                })
+                                .catch((error) => {
+                                    console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
                                 });
-                                // 차트 제목 업데이트
-                                document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
-                            })
-                            .catch((error) => {
-                                console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
-                            });
-                    </script>
-                    <canvas id="myPieChart"></canvas>
+                        </script>
+                        <canvas id="myPieChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="button-container">
+        <a href="mypage2" class="button">회원정보 수정</a>
+    </div>
+    <%@ include file="include/footer.jsp" %>
 </div>
-<div class="button-container">
-    <a href="mypage2" class="button">회원정보 수정</a>
-</div>
-<footer>
-    <hr>
-    <p>
-        <span>고객센터 1800-0000</span><br/>
-        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-    </p>
-    <br>
-</footer>
+</body>
 <script>
     getUserCash("<%=session.getAttribute("id")%>");
     getUserGoal("<%=session.getAttribute("id")%>");
@@ -202,5 +196,4 @@
     }
 
 </script>
-</body>
 </html>

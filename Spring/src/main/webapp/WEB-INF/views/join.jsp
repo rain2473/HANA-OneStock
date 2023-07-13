@@ -13,78 +13,56 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
-    <header>
-        <nav>
-            <a href="/">
-            <img src="../../resources/img/logo.png" height="40">
-            </a>
-            <div class="justify-content-end">
-                <ul class="justify-content-end">
-                    <li class="nav-list">
-                        <a class="nav-menu">서비스소개</a>
-                    <li class="nav-list">
-                        <a class="nav-menu" onclick="openModal()">로그인</a>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <div class="member">
-        <form id="signupForm">
-            <input type="hidden" value="${provider}" name="provider">
-            <h1>회원가입</h1>
-            <br>
-            <div class="field">
-                <b>아이디</b>
-                <span><input type="text" name="id"></span>
-                <span class="idChk" id="idChk" style="color: green;"></span>
-            </div>
-            <div class="field">
-                <b>비밀번호</b>
-                <input class="userpw" type="password" name="password">
-                <span class="pwChk" style="color: green;"></span>
-            </div>
-            <div class="field">
-                <b>비밀번호 재확인</b>
-                <input class="userpw-confirm" type="password" name="password_confirm">
-                <span class="pwChkRe" style="color: orange;"></span>
-            </div>
-            <div class="field">
-                <b>이름</b>
-                <input type="text" name="name" value="${name}">
-            </div>
-
-            <div class="field email">
-                <b>본인 확인 이메일</b>
-                <div>
-                    <input type="email" name="email" value="${email}">
-                    <input type="button" value="인증메일 받기" onclick="sendVerificationEmail()">
-                    <input type="text" placeholder="인증번호를 입력하세요" name="ePw">
-                    <input type="button" value="인증하기" onclick="verifyEmail()">
+    <div class="container">
+        <%@ include file="include/header.jsp" %>
+        <div class="member">
+            <form id="signupForm">
+                <input type="hidden" value="${provider}" name="provider">
+                <h1>회원가입</h1>
+                <br>
+                <div class="field">
+                    <b>아이디</b>
+                    <span><input type="text" name="id"></span>
+                    <span class="idChk" id="idChk" style="color: green;"></span>
                 </div>
-            </div>
-            <div class="field">
-                <b>전화번호</b>
-                <input type="tel" placeholder="전화번호 입력" name="phone">
-            </div>
-            <div class="field">
-                <b>목표수익률</b>
-                <input type="text" placeholder="목표수익률 입력" name="goal">
-            </div>
-            <input type="submit" value="가입하기"></button>
-        </form>
+                <div class="field">
+                    <b>비밀번호</b>
+                    <input class="userpw" type="password" name="password">
+                    <span class="pwChk" style="color: green;"></span>
+                </div>
+                <div class="field">
+                    <b>비밀번호 재확인</b>
+                    <input class="userpw-confirm" type="password" name="password_confirm">
+                    <span class="pwChkRe" style="color: orange;"></span>
+                </div>
+                <div class="field">
+                    <b>이름</b>
+                    <input type="text" name="name" value="${name}">
+                </div>
+
+                <div class="field email">
+                    <b>본인 확인 이메일</b>
+                    <div>
+                        <input type="email" name="email" value="${email}">
+                        <input type="button" value="인증메일 받기" onclick="sendVerificationEmail()">
+                        <input type="text" placeholder="인증번호를 입력하세요" name="ePw">
+                        <input type="button" value="인증하기" onclick="verifyEmail()">
+                    </div>
+                </div>
+                <div class="field">
+                    <b>전화번호</b>
+                    <input type="tel" placeholder="전화번호 입력" name="phone">
+                </div>
+                <div class="field">
+                    <b>목표수익률</b>
+                    <input type="text" placeholder="목표수익률 입력" name="goal">
+                </div>
+                <input type="submit" value="가입하기"></button>
+            </form>
+        </div>
+        <%@ include file="include/footer.jsp" %>
     </div>
-    <footer>
-        <br>
-        <hr>
-        <p>
-            <span>고객센터 1800-0000</span><br/>
-            <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-            <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-            <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-        </p>
-        <br>
-    </footer>
+    </body>
     <script>
         // 이메일 인증
         var ePw; // 서버에서 전송된 인증번호를 저장할 변수
@@ -148,8 +126,8 @@
                 name: name,
                 email: email,
                 phoneNumber: phoneNumber,
-                provider : provider,
-                goal:goal
+                provider: provider,
+                goal: goal
             };
 
             // Ajax 요청 보내기
@@ -158,7 +136,7 @@
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
-                success : function(response){
+                success: function (response) {
                     if (response === "회원 등록 성공") {
                         alert("회원 등록 성공");
                         var link = document.createElement("a");
@@ -174,15 +152,15 @@
         // 유효성 검사
         var timer; // 타이머 변수
 
-        $('[name=id]').on('input', function() {
+        $('[name=id]').on('input', function () {
             clearTimeout(timer);
             var id = $(this).val();
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 $.ajax({
                     url: "/idCheck",
-                    data: { id: id },
+                    data: {id: id},
                     type: "post",
-                    success: function(response) {
+                    success: function (response) {
                         if (response.exists) {
                             $("#idChk").html("이미 사용중인 아이디 입니다.");
                         } else {
@@ -193,14 +171,14 @@
             }, 300);
         })
 
-        $('[name=password]').on('keyup',function(event) {
+        $('[name=password]').on('keyup', function (event) {
             if (/(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/g.test($('[name=password]').val())) {
                 $('.pwChk').html("<i class='bi bi-exclamation-circle'></i>");
             } else {
                 $('.pwChk').html("<i class='bi bi-exclamation-circle'></i> 숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력");
             }
         });
-        $('[name=password_confirm]').focusout(function() {
+        $('[name=password_confirm]').focusout(function () {
             var pwd1 = $("[name=password]").val();
             var pwd2 = $("[name=password_confirm]").val();
 
@@ -216,5 +194,4 @@
         });
 
     </script>
-    </body>
     </html>

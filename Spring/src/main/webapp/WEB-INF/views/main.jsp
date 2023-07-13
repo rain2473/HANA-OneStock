@@ -14,111 +14,105 @@
 
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
-<div class="content">
-    <div class="memberinfo_div">
-        <div class="chart_div">
-            <div class="chart">
-                <div class="stock_title">
-                    <span>증시 현황</span>
+<div class="container">
+    <%@ include file="include/header.jsp" %>
+    <div class="content">
+        <div class="memberinfo_div">
+            <div class="chart_div">
+                <div class="chart">
+                    <div class="stock_title">
+                        <span>증시 현황</span>
+                    </div>
+                    <div id="chart-container"></div>
+                    <div style="text-align: center; margin-top: 10px">
+                        <span class="small_text" id="latest-value"></span>
+                    </div>
+                    <script>
+                        <%-- JSON 데이터 가져오기 --%>
+                        <%@ page import="org.springframework.core.io.ClassPathResource" %>
+                        <%@ page import="org.springframework.core.io.Resource" %>
+                        <%@ page import="org.apache.commons.io.IOUtils" %>
+                        <%@ page import="java.nio.charset.StandardCharsets" %>
+                        <%@ page import="java.io.InputStream" %>
+
+                        <%-- JSON 파일 경로 --%>
+                        <% String filePath = "kospi.json"; %>
+
+                        <%-- JSON 데이터 읽기 --%>
+                        <% Resource resource = new ClassPathResource(filePath); %>
+                        <% InputStream inputStream = resource.getInputStream(); %>
+                        <% String fileContent = IOUtils.toString(inputStream, StandardCharsets.UTF_8); %>
+
+                        <%-- JSON 데이터 파싱 --%>
+                        <%@ page import="org.json.JSONArray" %>
+                        <%@ page import="org.json.JSONObject" %>
+                        <% JSONArray jsonArray = new JSONArray(fileContent); %>
+                    </script>
                 </div>
-                <div id="chart-container"></div>
-                <div style="text-align: center; margin-top: 10px">
-                    <span class="small_text" id="latest-value"></span>
+                <div class="chart">
+                    <div class="stock_title">
+                        <span class="stock_a">특징 종목</span>
+                    </div>
+                    <div class="stock_type">
+                        <button class="stock_button" id="increase_button" data-target="increase_list">상승률</button>
+                        <button class="stock_button" id="decrease_button" data-target="decrease_list">하락률</button>
+                        <button class="stock_button" id="volume_button" data-target="volume_list">거래량</button>
+                        <button class="stock_button" id="trading_button" data-target="trading_list">거래대금</button>
+                    </div>
+
+                    <!-- 각 리스트 추가 -->
+                    <div class="stock_lists" id="increase_list">
+                        <ul id="increase-resultList">
+                        </ul>
+                    </div>
+                    <div class="stock_lists" id="decrease_list">
+                        <ul id="decrease-resultList">
+                        </ul>
+                    </div>
+
+                    <div class="stock_lists" id="volume_list">
+                        <ul id="volume-resultList">
+                        </ul>
+                    </div>
+
+                    <div class="stock_lists" id="trading_list">
+                        <ul id="trading-resultList">
+                        </ul>
+                    </div>
                 </div>
-                <script>
-                    <%-- JSON 데이터 가져오기 --%>
-                    <%@ page import="org.springframework.core.io.ClassPathResource" %>
-                    <%@ page import="org.springframework.core.io.Resource" %>
-                    <%@ page import="org.apache.commons.io.IOUtils" %>
-                    <%@ page import="java.nio.charset.StandardCharsets" %>
-                    <%@ page import="java.io.InputStream" %>
-
-                    <%-- JSON 파일 경로 --%>
-                    <% String filePath = "kospi.json"; %>
-
-                    <%-- JSON 데이터 읽기 --%>
-                    <% Resource resource = new ClassPathResource(filePath); %>
-                    <% InputStream inputStream = resource.getInputStream(); %>
-                    <% String fileContent = IOUtils.toString(inputStream, StandardCharsets.UTF_8); %>
-
-                    <%-- JSON 데이터 파싱 --%>
-                    <%@ page import="org.json.JSONArray" %>
-                    <%@ page import="org.json.JSONObject" %>
-                    <% JSONArray jsonArray = new JSONArray(fileContent); %>
-                </script>
             </div>
-            <div class="chart">
-                <div class="stock_title">
-                    <span class="stock_a">특징 종목</span>
-                </div>
-                <div class="stock_type">
-                    <button class="stock_button" id="increase_button" data-target="increase_list">상승률</button>
-                    <button class="stock_button" id="decrease_button" data-target="decrease_list">하락률</button>
-                    <button class="stock_button" id="volume_button" data-target="volume_list">거래량</button>
-                    <button class="stock_button" id="trading_button" data-target="trading_list">거래대금</button>
-                </div>
-
-                <!-- 각 리스트 추가 -->
-                <div class="stock_lists" id="increase_list">
-                    <ul id="increase-resultList">
-                    </ul>
-                </div>
-                <div class="stock_lists" id="decrease_list">
-                    <ul id="decrease-resultList">
-                    </ul>
-                </div>
-
-                <div class="stock_lists" id="volume_list">
-                    <ul id="volume-resultList">
-                    </ul>
-                </div>
-
-                <div class="stock_lists" id="trading_list">
-                    <ul id="trading-resultList">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="list_div">
-            <c:forEach var="stock" items="${stockList}" varStatus="status">
-                <div class="stock_list">
-                    <fmt:formatNumber value="${stock.close}" pattern="#,##0" var="formattedClose"/>
-                    <h3><c:out value="${stock.name}"/></h3>
-                    <c:choose>
-                        <c:when test="${stock.updown >= 0}">
+            <div class="list_div">
+                <c:forEach var="stock" items="${stockList}" varStatus="status">
+                    <div class="stock_list">
+                        <fmt:formatNumber value="${stock.close}" pattern="#,##0" var="formattedClose"/>
+                        <h3><c:out value="${stock.name}"/></h3>
+                        <c:choose>
+                            <c:when test="${stock.updown >= 0}">
                             <span class="small_text red_text">
                                 <c:out value="${stock.updown}"/>%
                                 ▲<c:out value="${stock.gap}"/>
                             </span>
-                        </c:when>
-                        <c:otherwise>
+                            </c:when>
+                            <c:otherwise>
                             <span class="small_text blue_text">
                                 <c:out value="${stock.updown}"/>%
                                 ▼<c:out value="${stock.gap}"/>
                             </span>
-                        </c:otherwise>
-                    </c:choose>
-                    <h3><c:out value="${formattedClose}"/></h3>
-                </div>
-            </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        <h3><c:out value="${formattedClose}"/></h3>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
     </div>
+    <div class="button-container">
+        <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
+        <a href="join" class="button">수익률 확인하기</a>
+    </div>
+    <%@ include file="include/footer.jsp" %>
 </div>
-<div class="button-container">
-    <input type="button" class="button" value="거래소 둘러보기" onclick="goToDashboard();">
-    <a href="join" class="button">수익률 확인하기</a>
-</div>
-<footer>
-    <hr>
-    <p>
-        <span>고객센터 1800-0000</span><br/>
-        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-    </p>
-    <br>
-</footer>
+</body>
 <script>
     function goToDashboard() {
         alert("페이지 이동");
@@ -256,5 +250,4 @@
         });
     }
 </script>
-</body>
 </html>
