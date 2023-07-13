@@ -17,7 +17,7 @@ h3 {
     top: 100%;
     left: 0;
     width: 100%;
-    margin-left: 80px;
+    cursor: pointer;
 }
 
 .content {
@@ -71,7 +71,7 @@ h3 {
 .left_sub_menu {
     display: flex;
     top: 50px;
-    width: 200px;
+    width: 180px;
     left: 45px;
     background: white;
     border-right: 1px solid rgba(0, 0, 0, 0.07);
@@ -111,6 +111,10 @@ h3 {
     cursor: pointer;
 }
 
+.small_menu {
+    pointer-events: none;
+}
+
 .sub_menu>.stock_name>.small_menu li {
     color: #333;
     font-size: 13px;
@@ -142,11 +146,6 @@ ul {
 
 .has_sub {
     width: 100%;
-}
-
-
-.stock-title {
-    padding-top: 15px;
 }
 
 .chart_div {

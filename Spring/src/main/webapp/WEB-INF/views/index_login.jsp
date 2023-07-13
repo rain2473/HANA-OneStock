@@ -15,7 +15,7 @@
 <div class="content">
     <div class="main">
         <div class="animate__animated animate__slideInLeft slow 4s">
-            <h1><span class="highlight">HANA - One Stock</span> SMART TRADING</h1>
+            <h1><span class="highlight">HANA - One Stock</span><br>SMART TRADING</h1>
         </div>
         <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
         <div onclick="openModal()">
