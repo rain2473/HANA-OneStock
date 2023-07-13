@@ -118,6 +118,21 @@
 </div>
 </body>
 <script>
+    $(document).ready(function() {
+         $.ajax({
+            url: '/selectDayOfTransaction',
+            type: 'GET',
+            success: function (data) {
+                $('#profit').text(data+"%");
+            },
+            error: function (xhr, status, error) {
+
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+<script>
     getUserCash("<%=session.getAttribute("id")%>");
     getUserGoal("<%=session.getAttribute("id")%>");
 

@@ -145,4 +145,9 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return results;
     }
+
+    @Override
+    public double selectDayOfTransaction() {
+        return transactionMapper.selectDayOfTransaction();
+    }
 }
