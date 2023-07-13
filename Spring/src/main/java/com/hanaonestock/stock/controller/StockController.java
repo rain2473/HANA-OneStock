@@ -7,9 +7,6 @@ import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
 import com.hanaonestock.stock.service.OhlcvService;
 import com.hanaonestock.stock.service.StockService;
-import org.json.HTTP;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,6 +73,24 @@ public class StockController {
         mav.addObject("stockList", stockList);
         mav.setViewName("main");
         return mav;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/selectAssetsById")
+    public ResponseEntity<String> selectAssetsById(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        List<Stock> stockList = stockService.selectAssetsById((String) session.getAttribute("id"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(stockList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            // JSON 변환 실패 시 적절한 에러 처리를 수행합니다.
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        // JSON 문자열을 ResponseEntity에 담아 반환합니다.
+        return ResponseEntity.ok(json);
     }
 
     @ResponseBody

@@ -84,4 +84,9 @@ public class StockServiceImpl implements StockService {
         stockMapper.updateGoalOfInvestInfoById(stockData);
     }
 
+    @Override
+    public List<Stock> selectAssetsById(String id) {
+        return stockMapper.selectAssetsById(id);
+    }
+
 }
