@@ -52,11 +52,19 @@
     </div>
     <div class="button-container">
         <a href="mypage2" class="button">회원정보 수정</a>
+        <a href="#" class="button" onclick="goToDashboard2();">수익률 확인하기</a>
     </div>
     <%@ include file="include/footer.jsp" %>
 </div>
 </body>
 <script>
+    function goToDashboard2() {
+        alert("페이지 이동");
+        var link = document.createElement("a");
+        link.href = "/dashboard2";
+        link.click();
+    }
+
     $(document).ready(function () {
         $.ajax({
             url: '/selectDayOfTransaction',
