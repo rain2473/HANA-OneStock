@@ -160,4 +160,19 @@ public class TransactionController {
             return (ResponseEntity<Double>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ResponseBody
+    @GetMapping(value = "/sumHasVolume")
+    public ResponseEntity<Integer> selectDayOfTransaction(@RequestParam("id") String id, @RequestParam("isin") String isin) {
+        int volume = 0;
+        try {
+            volume = transactionService.sumHasVolume(id, isin);
+            System.out.println(id + isin);
+            System.out.println(volume);
+            return ResponseEntity.ok(volume);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return (ResponseEntity<Integer>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
