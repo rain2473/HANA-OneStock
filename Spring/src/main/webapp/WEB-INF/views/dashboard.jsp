@@ -16,7 +16,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<body style="background-image: url("../img/background2.png")">
     <%@ include file="include/header.jsp" %>
     <div class="main">
         <div class="search-menu">

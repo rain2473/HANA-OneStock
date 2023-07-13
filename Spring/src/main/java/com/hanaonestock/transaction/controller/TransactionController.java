@@ -45,7 +45,6 @@ public class TransactionController {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
         List<Result> resultList = transactionService.transactionsByMember(id);
         if (resultList == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
