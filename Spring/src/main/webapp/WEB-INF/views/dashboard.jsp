@@ -219,13 +219,18 @@
                 // 차트를 그림
                 candlestickSeries.setData(candleData);
 
+                // isin 폼 값 대입
+                document.getElementById('isin').value = isin;
+
                 // 매수/매도 가격 폼에 종가 적용
                 const PriceInput = document.getElementById('price');
                 if (candleData.length > 0) {
                     const latestClose = Math.floor(candleData[candleData.length - 1].close); // 소수점 제거
                     PriceInput.value = latestClose.toString(); // 정수로 변환하여 문자열로 표시
+                    price = PriceInput.value;
                 } else {
                     PriceInput.value = ''; // 데이터가 없을 경우 빈 값으로 설정
+                    price = '';
                 }
 
                 // 주문 가능 폼에 사용자 시드를 고려한 최대 주문 가능 액수 적용
@@ -267,7 +272,6 @@
             }
         });
     }
-
 
     function bindEventListeners() {
         document.getElementById('orderQuantity').addEventListener('input', function() {
@@ -331,7 +335,7 @@
                         },
                         error: function() {
                             alert('Transaction failed!');
-                            location.reload();
+                            // location.reload();
                         },
                     });
                 } else {
@@ -369,7 +373,6 @@
                 });
             });
         });
-
     }
 
     // 매수/매도 폼 변경
@@ -377,6 +380,10 @@
     var tradeForm = document.getElementById("tradeForm");
     var isBuyForm = true;
     toggleButton.addEventListener("click", function () {
+        const isin = document.getElementById("isin").value;
+        const priceInput = document.getElementById("price").value;
+        console.log(isin);
+        console.log(priceInput);
         if (isBuyForm) {
             tradeForm.innerHTML = `
                     <input type="hidden" id="isin" name="isin" value="">
@@ -384,7 +391,7 @@
                     <div class="left-column">
                         <div class="form-group">
                             <label for="price">매도 가격</label>
-                            <input type="text" id="price" name="price" placeholder="1000 KRW">
+                            <input type="text" id="price" name="price" placeholder="1000 KRW" readonly>
                         </div>
                     </div>
                     <div class="right-column">
@@ -451,6 +458,8 @@
             toggleButton.innerText = "매도하기";
         }
         isBuyForm = !isBuyForm;
+        document.getElementById("isin").value = isin;
+        document.getElementById("price").value = priceInput;
         bindEventListeners();
     });
 
