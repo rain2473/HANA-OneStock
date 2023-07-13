@@ -14,21 +14,7 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     <body>
-    <header>
-        <nav>
-            <a href="/">
-            <img src="../../resources/img/logo.png" height="40">
-            </a>
-            <div class="justify-content-end">
-                <ul class="justify-content-end">
-                    <li class="nav-list">
-                        <a class="nav-menu">서비스소개</a>
-                    <li class="nav-list">
-                        <a class="nav-menu" onclick="openModal()">로그인</a>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
     <div class="member">
         <form id="updateForm">

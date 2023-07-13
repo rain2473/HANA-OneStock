@@ -9,21 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<header>
-    <nav>
-        <a href="/">
-        <img src="../../resources/img/logo.png" height="40">
-        </a>
-        <div class="justify-content-end">
-            <ul class="justify-content-end">
-                <li class="nav-list">
-                    <a class="nav-menu">서비스소개</a>
-                <li class="nav-list">
-                    <a class="nav-menu" onclick="openModal()">로그인</a>
-            </ul>
-        </div>
-    </nav>
-</header>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
 
 <div class="content">
     <div class="main">
@@ -71,16 +57,7 @@
     </div>
 </div>
 
-<footer>
-    <hr>
-    <p>
-        <span>고객센터 1800-0000</span><br/>
-        <span>평일 AM 09:00 ~ PM 18:00 </span><br/>
-        <span>서울특별시 영등포구 의사당대로 82(여의도동) | 사업자등록번호 116-81-05992 </span><br/>
-        <span>Copyright 2023. HANA-OneStock. All Rights Reserved.</span>
-    </p>
-    <br>
-</footer>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
     // 모달 열기 함수
@@ -115,7 +92,7 @@
                     // index_login.jsp로 이동
                     alert("로그인 성공");
                     var link = document.createElement("a");
-                    link.href = "/index_login?id="+id;
+                    link.href = "/index_login";
                     link.click();
                 } else {
                     console.error("로그인 실패");

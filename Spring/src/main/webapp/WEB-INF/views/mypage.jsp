@@ -11,34 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
-<header>
-    <nav>
-        <a href="index_login">
-            <img src="../../resources/img/logo.png" height="40">
-        </a>
-        <div>
-            <ul>
-                <li class="nav-list">
-                    <a class="nav-menu">서비스소개</a>
-                <li class="nav-list">
-                    <a class="nav-menu">마이페이지</a>
-                <%-- provider 데이터가 "kakao"일 경우 카카오 로그인 버튼을 표시 --%>
-                <c:if test="${provider eq 'kakao'}">
-                <li class="nav-list">
-                    <a href="/oauth/logout" class="nav-menu">로그아웃</a>
-                </li>
-                </c:if>
-
-                <%-- provider 데이터가 "kakao"가 아닐 경우 일반 로그아웃 버튼을 표시 --%>
-                <c:if test="${empty provider}">
-                    <li class="nav-list">
-                        <a href="/logoutMember" class="nav-menu">로그아웃</a>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-    </nav>
-</header>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
 <div class="content">
     <div class="member_info_div">
         <div class="chart_div">
@@ -135,7 +108,7 @@
     </div>
 </div>
 <div class="button-container">
-    <a href="join" class="button">회원정보 수정</a>
+    <a href="mypage2" class="button">회원정보 수정</a>
 </div>
 <footer>
     <hr>
