@@ -25,23 +25,26 @@
                     <h3>거래내역</h3>
                     <table>
                         <tr class="results-title">
-                            <th>구매가</th>
-                            <th>판매가</th>
-                            <th>구매수량</th>
-                            <th>종목코드</th>
+                            <th class="highlight">종목명</th>
+                            <th class="highlight">구매가</th>
+                            <th class="highlight">판매가</th>
+                            <th class="highlight">구매수량</th>
                         </tr>
 
                         <c:forEach items="${resultList}" var="result">
                             <tr>
-
+                                <td class="box">${result.name}</td>
                                 <td class="box">${result.buy}</td>
                                 <td class="box">${result.sell}</td>
                                 <td class="box">${result.volume}</td>
-                                <td class="box">${result.isin}</td>
-
                             </tr>
                         </c:forEach>
                     </table>
+                </div>
+                <div class="button-container">
+                    <div onclick="openModal()">
+                        <a href="#" class="button">자세히 보기</a>
+                    </div>
                 </div>
             </div>
             <div class="chart_div">
@@ -54,6 +57,42 @@
             </div>
         </div>
     </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <br>
+                <h2>${name}님의 거래내역</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" style="overflow: auto;">
+                <table style="width: 100%; height: 100%; margin: 10px; padding: 100px 30px 30px 30px">
+                    <tr class="results-title">
+                        <th class="highlight">종목명</th>
+                        <th class="highlight">종목코드</th>
+                        <th class="highlight">구매가</th>
+                        <th class="highlight">판매가</th>
+                        <th class="highlight">구매수량</th>
+                        <th class="highlight">매수일자</th>
+                        <th class="highlight">매도일자</th>
+                    </tr>
+
+                    <c:forEach items="${resultList}" var="result">
+                        <tr>
+                            <td class="box">${result.name}</td>
+                            <td class="box">${result.isin}</td>
+                            <td class="box">${result.buy}</td>
+                            <td class="box">${result.sell}</td>
+                            <td class="box">${result.volume}</td>
+                            <td class="box">${result.dateBuy}</td>
+                            <td class="box">${result.dateSell}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 <%@ include file="include/footer.jsp" %>
 </div>
@@ -136,5 +175,15 @@
         .catch(error => {
             console.error("JSON 파일을 로드하는 중 오류가 발생했습니다:", error);
         });
+
+    // 모달 열기 함수
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    // 모달 닫기 함수
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
 </script>
 </html>
