@@ -1,5 +1,6 @@
 package com.hanaonestock.member.service;
 
+import com.hanaonestock.member.model.dto.Deposit;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 
@@ -29,5 +30,9 @@ public interface MemberService {
     int findUserGoal(String id);
 
     int updateInvestInfoCashById(String id, int cash);
+
+    int insertDeposit(Deposit deposit);
+
+    int deposit(String id, int cash);
 }
 
