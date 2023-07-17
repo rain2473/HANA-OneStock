@@ -107,7 +107,7 @@ public class Scheduler {
     /**
      * 16시에 실행되는 스프링 스케줄러
      */
-    @Scheduled(cron = "0 0 16 * * ?")
+    @Scheduled(cron = "0 0 18 * * ?")
     public void runAt4PMGet() {
 
         String fundamentalJson = getResquestJson(fundamentalStr);
