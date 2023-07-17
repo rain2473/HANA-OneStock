@@ -23,13 +23,12 @@
                     <h3><%=session.getAttribute("name")%>님의 현재 보유 현금입니다.</h3>
                     <div class="money">
                         <div style="display: flex; align-items: center;">
-                            <img src="../../resources/img/wallet.png" width="50"
-                                 style="vertical-align: middle; margin-right: 30px">
+                            <img src="../../resources/img/wallet.png" width="50" style="vertical-align: middle; margin-right: 30px">
                             <span id="cash" style="vertical-align: middle; font-weight: 900; font-size: 40px;">0원</span>
                         </div>
                         <div style="display: flex; align-items: center; margin: 30px 0px 30px 0px; justify-content: center">
-                            <input type="button" id="deposit" class="small-btn" value="충전하기">
-                            <input type="button" class="small-btn" value="충전내역">
+                            <button class="small-btn" onclick="showDepositDialog()">충전하기</button>
+                            <input type="button" class="small-btn" onclick="openModal()" value="충전내역">
                         </div>
                     </div>
                     <h3><%=session.getAttribute("name")%>님의 현재 수익률입니다.</h3>
@@ -54,6 +53,30 @@
         <a href="mypage2" class="button">회원정보 수정</a>
         <a href="#" class="button" onclick="goToDashboard2();">수익률 확인하기</a>
     </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <br>
+                <h2>${name}님의 충전내역</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" style="overflow: auto;">
+                <table style="width: 100%; height: 100%; margin: 10px; padding: 30px 30px 30px 30px">
+                    <thead>
+                    <tr class="results-title">
+                        <th class="highlight">금액</th>
+                        <th class="highlight">일자</th>
+                    </tr>
+                    </thead>
+                    <tbody id="depositTableBody">
+                    <!-- 여기에 동적으로 내용 추가 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <%@ include file="include/footer.jsp" %>
 </div>
 </body>
@@ -136,6 +159,83 @@
         });
     }
 
+    // 사용자 충전 내역 받아오기
+    function showDepositHistory() {
+        $.ajax({
+            url: '/get-deposit-history',
+            type: 'GET',
+            data: {
+                id: '<%=session.getAttribute("id")%>'
+            },
+            success: function (data) {
+                console.log("충전 내역 가져오기 성공")
+                console.log(data);
+                openModal(data); // 모달 열기
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    // 모달 열기 함수
+    function openModal() {
+        showDepositHistory();
+    }
+
+    // 모달 닫기 함수
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // 사용자 충전 내역 받아오기
+    function showDepositHistory() {
+        $.ajax({
+            url: '/get-deposit-history',
+            type: 'GET',
+            data: {
+                id: '<%=session.getAttribute("id")%>'
+            },
+            success: function (data) {
+                console.log("충전 내역 가져오기 성공")
+                console.log(data);
+                showModal(data); // 모달 열기
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    // 모달 열기 및 데이터 전달 함수
+    function showModal(depositList) {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "block";
+
+        const tableBody = document.getElementById("depositTableBody");
+
+        // 기존 내역 삭제
+        while (tableBody.firstChild) {
+            tableBody.removeChild(tableBody.firstChild);
+        }
+
+        // 새로운 내역 추가
+        for (let i = 0; i < depositList.length; i++) {
+            const deposit = depositList[i];
+            const row = document.createElement("tr");
+
+            const amountCell = document.createElement("td");
+            amountCell.textContent = deposit.amount;
+            row.appendChild(amountCell);
+
+            const dateCell = document.createElement("td");
+            dateCell.textContent = deposit.s_date != null ? deposit.s_date : 'N/A';
+            row.appendChild(dateCell);
+
+            tableBody.appendChild(row);
+        }
+    }
+
     /**
      *  사용자 Goal 받아오기
      */
@@ -156,9 +256,23 @@
         });
     }
 
+    function showDepositDialog() {
+        var amount = prompt("충전할 금액을 입력하세요.");
+        if (amount) {
+            depositUserCash('<%=session.getAttribute("id")%>', amount);
+        } else {
+            alert('충전할 금액을 입력해주세요.');
+        }
+    }
+
     // "충전하기" 버튼 클릭 시 실행되는 함수
     document.getElementById('deposit').addEventListener('click', function () {
-        depositUserCash('<%=session.getAttribute("id")%>', 10000);
+        const amount = document.getElementById('depositAmount').value;
+        if (amount) {
+            depositUserCash('<%=session.getAttribute("id")%>', amount);
+        } else {
+            alert('충전할 금액을 입력해주세요.');
+        }
     });
 
     /**

@@ -3,6 +3,7 @@ package com.hanaonestock.member.model.dao;
 import com.hanaonestock.member.model.dto.Deposit;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
+import com.hanaonestock.transaction.model.dto.Result;
 import org.apache.ibatis.annotations.Mapper;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,4 +30,5 @@ public interface MemberMapper {
     InvestInfo selectInvestInfo(String id);
     void updateInvest(Member m);
     int insertDeposit(Deposit deposit);
+    List<Deposit> selectDeposit(String id);
 }

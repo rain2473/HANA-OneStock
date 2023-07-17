@@ -79,4 +79,11 @@
         INSERT INTO deposit (id, amount)
         VALUES (#{id}, #{amount})
     </insert>
+    <!--    충전 내역-->
+    <select id="selectDeposit" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.Deposit">
+        SELECT *
+        FROM deposit
+        WHERE ID = #{id}
+        ORDER BY D_ID
+    </select>
 </mapper>

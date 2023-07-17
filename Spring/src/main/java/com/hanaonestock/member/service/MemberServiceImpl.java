@@ -4,6 +4,7 @@ import com.hanaonestock.member.model.dao.MemberMapper;
 import com.hanaonestock.member.model.dto.Deposit;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
+import com.hanaonestock.transaction.model.dto.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,11 +108,23 @@ public class MemberServiceImpl implements MemberService {
             deposit.setAmount(cash);
             updateInvestInfoCashById(id, newCash + 100);
             insertDeposit(deposit);
+            selectDeposit(id);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    @Override
+    public List<Deposit> selectDeposit(String id) {
+        List<Deposit> resultList = null;
+        try {
+            resultList = memberMapper.selectDeposit(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
     @Override
