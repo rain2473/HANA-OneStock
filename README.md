@@ -35,11 +35,11 @@
 
 ## 발표 ppt
    [발표자료](/ppt.pdf)
-   <img src="ppt.PNG"/>
-   <img src="erd.PNG"/>
-   <img src="team.PNG"/>
-   <img src="system.PNG"/>
-   <img src="system2.PNG"/>
+   <img src="ppt.png"/>
+   <img src="erd.png"/>
+   <img src="team.png"/>
+   <img src="system.png"/>
+   <img src="system2.png"/>
 
 ## 시연 동영상  
 [![시연영상](/video.PNG)](https://youtu.be/6wMFATMGVQQ)
