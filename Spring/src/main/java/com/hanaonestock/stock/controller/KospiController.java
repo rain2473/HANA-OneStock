@@ -29,6 +29,8 @@ import java.time.format.DateTimeFormatter;
 public class KospiController {
     @Value("${flask.server.url}")
     private String flaskServerUrl;
+    @Value("${kospi.json.path}")
+    private String kospiJsonPath;
     private LocalDate today;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     public static final String kospiStr = "kospi";
@@ -46,7 +48,7 @@ public class KospiController {
         String kospiJson = getResquestJson(kospiStr);
         try {
             // JSON 데이터를 파일로 저장
-            Resource resource = new ClassPathResource("kospi.json");
+            Resource resource = new ClassPathResource(kospiJsonPath);
             File file = resource.getFile();
             FileUtils.writeStringToFile(file, kospiJson, StandardCharsets.UTF_8);
 
