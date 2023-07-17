@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 import com.hanaonestock.member.service.MemberService;
+import com.hanaonestock.stock.service.KospiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,10 +23,13 @@ import java.util.Map;
 @Controller
 public class MemberController {
     private final MemberService memberService;
+    private final KospiService kospiService;
+
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, KospiService kospiService) {
         this.memberService = memberService;
+        this.kospiService = kospiService;
     }
 
     @RequestMapping("/")
@@ -64,7 +67,12 @@ public class MemberController {
     @RequestMapping("/recommend")
     public ModelAndView recommend() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("main");
+        if(kospiService.writeKospiData()){
+            mav.setViewName("main");
+        }
+        else{
+            mav.setViewName("error");
+        }
         return mav;
     }
     @RequestMapping("/index_login")

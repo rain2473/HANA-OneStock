@@ -36,7 +36,7 @@
                         <%@ page import="java.io.InputStream" %>
 
                         <%-- JSON 파일 경로 --%>
-                        <% String filePath = "kospi.json"; %>
+                        <% String filePath = "/kospi.json"; %>
 
                         <%-- JSON 데이터 읽기 --%>
                         <% Resource resource = new ClassPathResource(filePath); %>

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanaonestock.stock.model.dto.Ohlcv;
 import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.hanaonestock.stock.model.dto.Stock;
+import com.hanaonestock.stock.service.KospiService;
 import com.hanaonestock.stock.service.OhlcvService;
 import com.hanaonestock.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,13 @@ public class StockController {
 
     private final StockService stockService;
     private final OhlcvService ohlcvService;
+    private final KospiService kospiService;
 
     @Autowired
-    StockController(StockService stockService, OhlcvService ohlcvService) {
+    StockController(StockService stockService, OhlcvService ohlcvService, KospiService kospiService) {
         this.stockService = stockService;
         this.ohlcvService = ohlcvService;
+        this.kospiService = kospiService;
     }
 
     @ResponseBody
@@ -71,7 +74,12 @@ public class StockController {
         List<RecommendedStock> stockList = stockService.recommendedStock();
         session.setAttribute("stockList", stockList);
         mav.addObject("stockList", stockList);
-        mav.setViewName("main");
+        if(kospiService.writeKospiData()){
+            mav.setViewName("main");
+        }
+        else{
+            mav.setViewName("error");
+        }
         return mav;
     }
 
