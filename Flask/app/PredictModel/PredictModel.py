@@ -17,7 +17,7 @@ def updateLabelEncoder(today):
         if s_date not in date_label['s_date'].values:
             new_row = pd.DataFrame({'s_date': [s_date], 'num': [maxLabel + 1]})
             date_label = pd.concat([date_label, new_row], ignore_index=True)
-    pickle.dump(date_label, open('date_label.sav', 'wb'))
+    pickle.dump(date_label, open('PredictModel/date_label.sav', 'wb'))
 
 # 2. 가져온 전일, 당일 시세 정보 전처리 : 가격예측&등락예측 모델용
 def preprocessingNewData(today):
