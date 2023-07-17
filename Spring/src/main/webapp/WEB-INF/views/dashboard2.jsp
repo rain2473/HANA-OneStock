@@ -30,15 +30,12 @@
                             <th>구매수량</th>
                             <th>종목코드</th>
                         </tr>
-
                         <c:forEach items="${resultList}" var="result">
                             <tr>
-
                                 <td class="box">${result.buy}</td>
                                 <td class="box">${result.sell}</td>
                                 <td class="box">${result.volume}</td>
                                 <td class="box">${result.isin}</td>
-
                             </tr>
                         </c:forEach>
                     </table>
