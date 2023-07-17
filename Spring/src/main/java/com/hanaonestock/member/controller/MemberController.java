@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -84,7 +85,6 @@ public class MemberController {
         mav.setViewName("dashboard");
         return mav;
     }
-
 
     @ResponseBody
     @GetMapping(value = "/api/main")
@@ -159,14 +159,6 @@ public class MemberController {
         String id = (String) session.getAttribute("id");
         ModelAndView mav = new ModelAndView();
         session.invalidate();
-//        int isSuccess = memberService.deleteMember(id);
-//        if(isSuccess!=-1) {
-//            session.invalidate();
-//            mav.addObject("msg", "로그아웃 성공");
-//        }else {
-//            mav.addObject("msg", "로그아웃 실패");
-//
-//        }
         mav.addObject("msg", "로그아웃 성공");
         mav.addObject("loc","/");
         mav.setViewName("/common/message");
