@@ -74,7 +74,7 @@ public class KakaoOAuth2Controller {
                         session.invalidate();
                     }
                     // 카카오 계정 로그아웃 URL로 리다이렉트
-                    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=3e04da871b237fb6169d1ec2b50af7fb&logout_redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F";
+                    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=3e04da871b237fb6169d1ec2b50af7fb&logout_redirect_uri=http%3A%2F%2F146.56.107.188%3A8080%2F";
 
                 }
             }

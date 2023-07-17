@@ -13,6 +13,7 @@ import com.hanaonestock.transaction.model.dto.Result;
 import com.hanaonestock.transaction.model.dto.SellDto;
 import com.hanaonestock.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ import javax.servlet.ServletContext;
 @Controller
 public class TransactionController {
 
+    @Value("${performance.json.path}")
+    private String performanceJsonPath;
     private final TransactionService transactionService;
     private final MemberService memberService;
 
@@ -62,8 +65,7 @@ public class TransactionController {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            String jsonFilePath = servletContext.getRealPath("/resources/json/performance.json");
-            File file = new File(jsonFilePath);
+            File file = new File(performanceJsonPath);
             objectMapper.writeValue(file, dailyPerformanceList);
         } catch (Exception e) {
             e.printStackTrace();
