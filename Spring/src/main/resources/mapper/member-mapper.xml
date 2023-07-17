@@ -32,8 +32,8 @@
         where id = #{id}
         and pw = #{password}
     </select>
-    <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="int">
-        SELECT count(*)
+    <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT *
         FROM member
         where email = #{email}
           and name = #{name}
