@@ -17,7 +17,7 @@
         <div>
             <ul>
                 <li class="nav-list">
-                    <a href="#" class="nav-menu" onclick="openModal()">추천종목</a>
+                    <a href="#" class="nav-menu" onclick="openModalLogin()">추천종목</a>
                 </li>
                 <li class="nav-list">
                     <a href="#" class="nav-menu" onclick="openModalLogin()">로그인</a>
@@ -75,7 +75,7 @@
                     <p>소셜 계정으로 로그인 또는 가입 시 <br>개인정보 처리 방침 및 서비스 이용약관에 동의한 것으로 간주합니다.</p>
                 </div>
             </div>
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModalLogin()">&times;</span>
         </div>
     </div>
     <div id="myModalMain" class="modal">
@@ -83,7 +83,7 @@
             <div class="modal-header">
                 <br>
                 <h2>${name} 환영합니다.</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
+                <span class="close" onclick="closeModalMain()">&times;</span>
             </div>
             <div class="modal-body">
                 <form>
@@ -108,14 +108,14 @@
     }
 
     // 모달 닫기 함수
-    function closeModal() {
+    function closeModalLogin() {
         document.getElementById("myModal").style.display = "none";
     }
     function openModalMain(){
         document.getElementById("myModalMain").style.display = "none";
     }
     // 모달 닫기 함수
-    function closeModal() {
+    function closeModalMain() {
         document.getElementById("myModalMain").style.display = "none";
     }
     // 로그인

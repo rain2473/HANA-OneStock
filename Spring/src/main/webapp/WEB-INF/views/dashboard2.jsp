@@ -30,7 +30,6 @@
                             <th class="highlight">판매가</th>
                             <th class="highlight">구매수량</th>
                         </tr>
-
                         <c:forEach items="${resultList}" var="result">
                             <tr>
                                 <td class="box">${result.name}</td>

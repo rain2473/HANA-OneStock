@@ -3,6 +3,7 @@ package com.hanaonestock.member.service;
 import com.hanaonestock.member.model.dto.Deposit;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
+import com.hanaonestock.transaction.model.dto.Result;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,5 +28,6 @@ public interface MemberService {
     int updateInvestInfoCashById(String id, int cash);
     int insertDeposit(Deposit deposit);
     int deposit(String id, int cash);
+    List<Deposit> selectDeposit(String id);
 }
 

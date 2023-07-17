@@ -2,6 +2,7 @@ package com.hanaonestock.transaction.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanaonestock.member.model.dto.Deposit;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.service.MemberService;
 import com.hanaonestock.stock.model.dto.Ohlcv;
@@ -166,6 +167,17 @@ public class TransactionController {
         }
         return ResponseEntity.ok(state);
     }
+
+    @GetMapping(value = "/get-deposit-history")
+    public ResponseEntity<?> getDepositHistory(@RequestParam("id") String id) {
+        List<Deposit> depositList = memberService.selectDeposit(id);
+        System.out.println(depositList);
+        if (depositList == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(depositList);
+    }
+
 
     @ResponseBody
     @GetMapping(value = "/selectDayOfTransaction")
