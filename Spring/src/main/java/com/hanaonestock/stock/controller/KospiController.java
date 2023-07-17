@@ -46,11 +46,11 @@ public class KospiController {
     @GetMapping(value = "/kospi")
     public ResponseEntity<Resource> index() {
         String kospiJson = getResquestJson(kospiStr);
-        try {
+	try {
             // JSON 데이터를 파일로 저장
-            Resource resource = new ClassPathResource(kospiJsonPath);
-            File file = resource.getFile();
-            FileUtils.writeStringToFile(file, kospiJson, StandardCharsets.UTF_8);
+            File file = new File(kospiJsonPath);
+	    FileUtils.writeStringToFile(file, kospiJson, StandardCharsets.UTF_8);
+	    Resource resource = new ClassPathResource(kospiJsonPath);
 
             // 파일을 Resource로 변환하여 클라이언트에게 리턴
             return ResponseEntity.ok()
