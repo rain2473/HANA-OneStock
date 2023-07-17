@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="../../resources/style/join.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    <body style="background-image: url("../img/background2.png")">
+    <body>
     <div class="container">
         <nav>
             <a href="/">
@@ -134,6 +134,11 @@
             const provider = $('[name="provider"]').val();
             const goal = $('[name="goal"]').val();
 
+            // Check if email verification is completed
+            if (ePw === undefined) {
+                alert("이메일 인증을 완료해야 합니다.");
+                return;
+            }
 
             const data = {
                 id: id,
@@ -207,6 +212,5 @@
                 }
             }
         });
-
     </script>
     </html>
