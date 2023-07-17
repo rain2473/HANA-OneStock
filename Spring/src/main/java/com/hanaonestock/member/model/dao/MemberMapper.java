@@ -1,5 +1,6 @@
 package com.hanaonestock.member.model.dao;
 
+import com.hanaonestock.member.model.dto.Deposit;
 import com.hanaonestock.member.model.dto.InvestInfo;
 import com.hanaonestock.member.model.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,5 +28,5 @@ public interface MemberMapper {
     int updateInvestInfoCashById(Map<String, Object> idAndNewCash);
     InvestInfo selectInvestInfo(String id);
     void updateInvest(Member m);
-
+    int insertDeposit(Deposit deposit);
 }
