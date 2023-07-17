@@ -20,7 +20,7 @@
                     <a href="#" class="nav-menu" onclick="openModal()">추천종목</a>
                 </li>
                 <li class="nav-list">
-                    <a href="#" class="nav-menu" onclick="openModal()">로그인</a>
+                    <a href="#" class="nav-menu" onclick="openModalLogin()">로그인</a>
                 </li>
             </ul>
         </div>
@@ -31,12 +31,20 @@
                 <h1><span class="highlight">HANA - One Stock<br></span>SMART TRADING</h1>
             </div>
             <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
-            <div onclick="openModal()">
+            <%
+                String id = (String) session.getAttribute("id");
+                if (id != null) {
+            %>
+            <div onclick="openModalLogin()">
                 <a href="#" class="btn">시작하기</a>
             </div>
+            <% } else{%>
+            <div onclick="openModalMain()">
+                <a href="#" class="btn">시작하기</a>
+            </div>
+            <%} %>
         </div>
     </div>
-
     <div id="myModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -70,12 +78,32 @@
             <span class="close" onclick="closeModal()">&times;</span>
         </div>
     </div>
+    <div id="myModalMain" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <br>
+                <h2>${name} 환영합니다.</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-body">
+                        <h4>목표 수익률을 입력하고,<br>
+                            추천 주식을 확인하세요 !</h4>
+                        <input type="text" id="goal" name="goal"><br><br>
+                        <%--                    main.jsp로 이동--%>
+                        <input type="button" class="button" value="추천 주식 확인하기" onclick="goToMain()">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <%@ include file="include/footer.jsp" %>
 </div>
 </body>
 <script type="text/javascript">
     // 모달 열기 함수
-    function openModal() {
+    function openModalLogin() {
         document.getElementById("myModal").style.display = "block";
     }
 
@@ -83,7 +111,13 @@
     function closeModal() {
         document.getElementById("myModal").style.display = "none";
     }
-
+    function openModalMain(){
+        document.getElementById("myModalMain").style.display = "none";
+    }
+    // 모달 닫기 함수
+    function closeModal() {
+        document.getElementById("myModalMain").style.display = "none";
+    }
     // 로그인
     function loginFormFunc() {
         var formData = $("#loginForm").serialize();

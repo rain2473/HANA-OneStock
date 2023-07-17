@@ -158,12 +158,9 @@ public class TransactionController {
 
     @ResponseBody
     @GetMapping(value = "/deposit-user-cash")
-    public ResponseEntity<Integer> depositUserCash(@RequestParam("id") String id) {
-        int newCash = memberService.findUserCash(id) + 1000000;
-        System.out.println("newCash = " + newCash);
-        System.out.println("id = " + id);
-        int state = memberService.updateInvestInfoCashById(id, newCash);
-        System.out.println("state = " + state);
+    public ResponseEntity<Integer> depositUserCash(@RequestParam("id") String id, @RequestParam("amount") int amount) {
+        int state = memberService.deposit(id, amount);
+        System.out.println("id, amount = " + id + amount);
         if (state != 1) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

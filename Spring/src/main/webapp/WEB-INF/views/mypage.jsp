@@ -73,35 +73,35 @@
                 id: '<%=session.getAttribute("id")%>'
             },
             success: function (data) {
-                $('#profit').text(data+"%");
+                $('#profit').text(data + "%");
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
             }
         });
     });
-    $(document).ready(function() {
-         $.ajax({
+    $(document).ready(function () {
+        $.ajax({
             url: '/selectAssetsById',
             type: 'GET',
             success: function (json) {
-                 const data = JSON.parse(json);
-                 // 차트 그리는 코드
-                 drawChart(data);
+                const data = JSON.parse(json);
+                // 차트 그리는 코드
+                drawChart(data);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
             }
         });
     });
-    $(document).ready(function() {
-         $.ajax({
+    $(document).ready(function () {
+        $.ajax({
             url: '/selectAssetsById',
             type: 'GET',
             success: function (json) {
-                 const data = JSON.parse(json);
-                 // 차트 그리는 코드
-                 drawChart(data);
+                const data = JSON.parse(json);
+                // 차트 그리는 코드
+                drawChart(data);
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
@@ -121,7 +121,7 @@
             url: '/get-user-cash',
             type: 'GET',
             data: {
-                id: id // 대체할 사용자 식별자
+                id: id,         // 대체할 사용자 식별자
             },
             success: function (data) {
                 const currentCash = document.getElementById("cash");
@@ -155,110 +155,112 @@
 
     // "충전하기" 버튼 클릭 시 실행되는 함수
     document.getElementById('deposit').addEventListener('click', function () {
-        depositUserCash('<%=session.getAttribute("id")%>');
+        depositUserCash('<%=session.getAttribute("id")%>', 10000);
     });
 
     /**
      * 사용자 cash deposit (100만원)
      */
-    function depositUserCash(id) {
+    function depositUserCash(id, amount) {
         $.ajax({
             url: '/deposit-user-cash',
             type: 'GET',
             data: {
-                id: id // 대체할 사용자 식별자
+                id: id, // 대체할 사용자 식별자
+                amount: amount
             },
             success: function (data) {
                 getUserCash(id);
-                alert("100만원 입금되었습니다.");
+                alert(amount + "원 정상 입금되었습니다.");
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
             }
         });
     }
-        function drawChart(data) {
-            // 결제내역 데이터 가져오기
-            const assetData = data;
 
-            // 차트 데이터 설정
-            const chartData = {
-                datasets: [{
-                    backgroundColor: ['rgba(255, 99, 132, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(255, 206, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(153, 102, 255, 0.5)'],
-                    data: assetData.map(item => item.totalPrice)
-                }],
-                labels: assetData.map(item => [item.name + " : "+ item.totalPrice])
-            };
+    function drawChart(data) {
+        // 결제내역 데이터 가져오기
+        const assetData = data;
 
-            // 차트 생성
-            var ctx1 = document.getElementById("myPieChart");
-            var myPieChart = new Chart(ctx1, {
-                type: 'pie',
-                data: chartData,
-                options: {
-                    layout: {
-                        padding: {
-                            top: 0,
-                            bottom: 80,
-                            left: 90,
-                            right: 90
-                        }
+        // 차트 데이터 설정
+        const chartData = {
+            datasets: [{
+                backgroundColor: ['rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)'],
+                data: assetData.map(item => item.totalPrice)
+            }],
+            labels: assetData.map(item => [item.name + " : " + item.totalPrice])
+        };
+
+        // 차트 생성
+        var ctx1 = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx1, {
+            type: 'pie',
+            data: chartData,
+            options: {
+                layout: {
+                    padding: {
+                        top: 0,
+                        bottom: 80,
+                        left: 90,
+                        right: 90
+                    }
+                },
+                cutoutPercentage: 30,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom',
+                    align: 'start',
+                    labels: {
+                        usePointStyle: true,
+                        fontSize: 14,
+                        padding: 25,
+                        fontColor: "black",
                     },
-                    cutoutPercentage: 30,
-                    maintainAspectRatio: false,
-                    legend: {
-                        position: 'bottom',
-                        align: 'start',
-                        labels: {
-                            usePointStyle: true,
-                            fontSize: 14,
-                            padding: 25,
-                            fontColor: "black",
+                },
+                tooltips: {
+                    callbacks: {
+                        title: (tooltipItem, data) => {
+                            const index = tooltipItem[0].index;
+                            const category = data.labels[index];
+                            return category;
                         },
-                    },
-                    tooltips: {
-                        callbacks: {
-                            title: (tooltipItem, data) => {
-                                const index = tooltipItem[0].index;
-                                const category = data.labels[index];
-                                return category;
-                            },
-                            label: (tooltipItem, data) => {
-                                const dataset = data.datasets[tooltipItem.datasetIndex];
-                                const amount = dataset.data[tooltipItem.index];
-                                return `Amount : ${amount}`;
-                            }
-                        }
-                    },
-                    tooltips: {
-                        callbacks: {
-                            title: (tooltipItem, data) => {
-                                const index = tooltipItem[0].index;
-                                const category = data.labels[index];
-                                return category;
-                            },
-                            label: (tooltipItem, data) => {
-                                const index = tooltipItem.index;
-                                const category = data.labels[index];
-                                const amount = data.datasets[0].data[index];
-                                return `${category} : ${amount}`;
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: "보유 자산",
+                        label: (tooltipItem, data) => {
+                            const dataset = data.datasets[tooltipItem.datasetIndex];
+                            const amount = dataset.data[tooltipItem.index];
+                            return `Amount : ${amount}`;
                         }
                     }
+                },
+                tooltips: {
+                    callbacks: {
+                        title: (tooltipItem, data) => {
+                            const index = tooltipItem[0].index;
+                            const category = data.labels[index];
+                            return category;
+                        },
+                        label: (tooltipItem, data) => {
+                            const index = tooltipItem.index;
+                            const category = data.labels[index];
+                            const amount = data.datasets[0].data[index];
+                            return `${category} : ${amount}`;
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "보유 자산",
+                    }
                 }
-            });
-            // 차트 제목 업데이트
-            document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
-        }
+            }
+        });
+        // 차트 제목 업데이트
+        document.getElementById("chartTitle").textContent = myPieChart.options.plugins.title.text;
+    }
 </script>
 </html>

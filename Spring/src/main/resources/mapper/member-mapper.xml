@@ -32,8 +32,8 @@
         where id = #{id}
         and pw = #{password}
     </select>
-    <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="int">
-        SELECT count(*)
+    <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT *
         FROM member
         where email = #{email}
           and name = #{name}
@@ -74,4 +74,9 @@
     <update id="updateInvestInfoCashById" parameterType="java.util.Map">
         UPDATE INVEST_INFO SET CASH = #{cash} WHERE ID = #{id}
     </update>
+    <!-- 입금 등록 -->
+    <insert id="insertDeposit" parameterType="com.hanaonestock.member.model.dto.Deposit">
+        INSERT INTO deposit (id, amount)
+        VALUES (#{id}, #{amount})
+    </insert>
 </mapper>
