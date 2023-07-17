@@ -30,7 +30,6 @@
                             <th class="highlight">판매가</th>
                             <th class="highlight">구매수량</th>
                         </tr>
-
                         <c:forEach items="${resultList}" var="result">
                             <tr>
                                 <td class="box">${result.name}</td>
@@ -112,7 +111,7 @@
         });
     });
     // JSON 파일 가져오기
-    fetch("../../resources/json/performance.json")
+    fetch("/performance.json")
         .then(response => response.json())
         .then(data => {
 

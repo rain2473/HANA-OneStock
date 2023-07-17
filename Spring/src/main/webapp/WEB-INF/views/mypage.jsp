@@ -58,8 +58,11 @@
 </div>
 </body>
 <script>
+    /**
+     *  페이지 이동
+     */
     function goToDashboard2() {
-        alert("페이지 이동");
+        alert("페이지 이동")
         var link = document.createElement("a");
         link.href = "/dashboard2";
         link.click();

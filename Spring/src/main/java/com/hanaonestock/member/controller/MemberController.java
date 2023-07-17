@@ -164,5 +164,4 @@ public class MemberController {
         mav.setViewName("/common/message");
         return mav;
     }
-
 }
