@@ -111,7 +111,7 @@
         });
     });
     // JSON 파일 가져오기
-    fetch("../../resources/json/performance.json")
+    fetch("/resources/json/performance.json")
         .then(response => response.json())
         .then(data => {
 

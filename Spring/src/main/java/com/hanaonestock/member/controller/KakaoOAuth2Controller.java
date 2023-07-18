@@ -54,6 +54,7 @@ public class KakaoOAuth2Controller {
             mav.addObject("provider",provider);
             mav.setViewName("join");
         }
+        session.setAttribute("name", memberResult.getName());
         session.setAttribute("id", memberResult.getId());
         session.setAttribute("provider", memberResult.getProvider() );
         return mav;

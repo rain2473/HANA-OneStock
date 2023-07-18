@@ -32,11 +32,11 @@
             WHERE S_DATE =
                   CASE
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 1
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 2
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
                       ELSE
-                          TRUNC(SYSDATE + 3 / 8)
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
                       END
             ORDER BY UPDOWN DESC
         ) o ON s.isin = o.isin
@@ -54,11 +54,11 @@
             WHERE S_DATE =
                   CASE
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 1
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 2
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
                       ELSE
-                          TRUNC(SYSDATE + 3 / 8)
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
                       END
             ORDER BY UPDOWN ASC
         ) o ON s.isin = o.isin
@@ -76,11 +76,11 @@
             WHERE S_DATE =
                   CASE
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 1
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 2
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
                       ELSE
-                          TRUNC(SYSDATE + 3 / 8)
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
                       END
             ORDER BY VOLUME DESC
         ) o ON s.isin = o.isin
@@ -98,11 +98,11 @@
             WHERE S_DATE =
                   CASE
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 1
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
                       WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
-                          TRUNC(SYSDATE + 3 / 8) - 2
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
                       ELSE
-                          TRUNC(SYSDATE + 3 / 8)
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
                       END
             ORDER BY AMOUNT DESC
         ) o ON s.isin = o.isin

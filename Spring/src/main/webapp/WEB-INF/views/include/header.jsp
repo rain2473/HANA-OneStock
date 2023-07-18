@@ -47,7 +47,6 @@
                         <a href="/logoutMember" class="nav-menu">로그아웃</a>
                     </li>
                 </c:if>
-
                 <%} else{%>
                 <li class="nav-list">
                     <a class="nav-menu" onclick="openModalLogin()">로그인</a>
