@@ -84,8 +84,8 @@
                             <td class="box">${result.buy}</td>
                             <td class="box">${result.sell}</td>
                             <td class="box">${result.volume}</td>
-                            <td class="box">${result.dateBuy}</td>
-                            <td class="box">${result.dateSell}</td>
+                            <td class="box">${result.date_buy}</td>
+                            <td class="box">${result.date_sell}</td>
                         </tr>
                     </c:forEach>
                 </table>
