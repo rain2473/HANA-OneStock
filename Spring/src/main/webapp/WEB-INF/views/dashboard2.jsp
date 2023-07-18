@@ -64,8 +64,9 @@
                 <h2>${name}님의 거래내역</h2>
                 <span class="close" onclick="closeModal()">&times;</span>
             </div>
-            <div class="modal-body" style="overflow: auto;">
-                <table style="width: 100%; height: 100%; margin: 10px; padding: 100px 30px 30px 30px">
+            <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                <div style="display: flex; justify-content: center; height: 100%;">
+                    <table style="width: 90%; table-layout: fixed; margin: 15px 0 15px 0">
                     <tr class="results-title">
                         <th class="highlight">종목명</th>
                         <th class="highlight">종목코드</th>
