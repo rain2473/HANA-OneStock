@@ -103,6 +103,13 @@
     function closeModalMain() {
         document.getElementById("myModalMain").style.display = "none";
     }
+    // main 이동
+    function goToMain() {
+        const goal = $('[name="goal"]').val();
+        var link = document.createElement("a");
+        link.href = "/main?goal=" + goal;
+        link.click();
+    }
     // 로그인
     function loginFormFunc() {
         var formData = $("#loginForm").serialize();

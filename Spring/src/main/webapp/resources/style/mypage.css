@@ -121,7 +121,7 @@ h3 {
     color: black;
 }
 
-.modalMain {
+.modal {
     display: none; /* 모달 창 초기에 숨김 */
     position: fixed;
     z-index: 1;
@@ -134,7 +134,7 @@ h3 {
     border-radius: 10px;
 }
 
-.modal-content-main {
+.modal-content {
     border-radius: 8px;
     background-color: white;
     margin: 15% auto;
@@ -146,7 +146,7 @@ h3 {
     position: relative; /* 추가 */
 }
 
-.modal-header-main {
+.modal-header {
     flex : 1;
     background-color: #A6D4D4;
     border-top-left-radius: 10px;
@@ -155,7 +155,7 @@ h3 {
     text-align: center;
 }
 
-.modal-body-main {
+.modal-body {
     flex: 10;
     display: flex;
     justify-content: center;
