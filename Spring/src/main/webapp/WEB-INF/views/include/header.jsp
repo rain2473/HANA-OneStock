@@ -11,7 +11,7 @@
 <body>
 <header>
     <nav>
-        <a href="index_login">
+        <a href="/">
             <img src="../../resources/img/logo.png" height="40">
         </a>
         <div>
