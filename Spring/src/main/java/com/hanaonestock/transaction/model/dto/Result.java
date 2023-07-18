@@ -14,8 +14,8 @@ public class Result {
     private int buy;
     private int sell; // nullable
     private int volume;
-    private String dateBuy;
-    private String dateSell; // nullable
+    private String date_buy;
+    private String date_sell; // nullable
 
     // Default constructor
     public Result() {
