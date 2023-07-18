@@ -65,6 +65,7 @@ def predictToday(today):
     result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', "tmp_updown", 'e_updown'], axis =1, inplace=True)
     result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
     result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
+    result['s_date'] = result['s_date'].str.replace("-","")
     return result
 
 # 4. 예측 평가 테이블 작성 및 json 반환
@@ -85,4 +86,5 @@ def scoreYesterday(today):
     result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', 'tmp_updown', "e_updown","r_updown"], axis =1, inplace=True)
     result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
     result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
+    result['s_date'] = result['s_date'].str.replace("-","")
     return result
