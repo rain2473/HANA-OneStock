@@ -33,7 +33,7 @@ public class KospiServiceImpl implements KospiService{
     @Override
     public boolean writeKospiData() {
         String kospiJson = getResquestJson();
-        File file = new File(kospiJsonPath);
+        File file = new File(kospiJsonPath); 
         try {
             // JSON 데이터를 파일로 저장
             FileUtils.writeStringToFile(file, kospiJson, StandardCharsets.UTF_8);
