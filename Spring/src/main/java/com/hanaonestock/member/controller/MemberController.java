@@ -1,5 +1,6 @@
 package com.hanaonestock.member.controller;
 
+import com.hanaonestock.stock.model.dto.RecommendedStock;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanaonestock.member.model.dto.InvestInfo;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.hanaonestock.stock.service.StockService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -24,12 +25,13 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
     private final KospiService kospiService;
-
+    private final StockService stockService;
 
     @Autowired
-    public MemberController(MemberService memberService, KospiService kospiService) {
+    public MemberController(MemberService memberService, KospiService kospiService, StockService stockService) {
         this.memberService = memberService;
         this.kospiService = kospiService;
+	this.stockService = stockService;
     }
 
     @RequestMapping("/")
@@ -65,25 +67,17 @@ public class MemberController {
         return mav;
     }
     @RequestMapping("/recommend")
-    public ModelAndView recommend() {
+    public ModelAndView recommend(HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        if(kospiService.writeKospiData()){
+        List<RecommendedStock> stockList = stockService.recommendedStock();
+        session.setAttribute("stockList", stockList);
+        mav.addObject("stockList", stockList);
+	if(kospiService.writeKospiData()){
             mav.setViewName("main");
         }
         else{
             mav.setViewName("error");
         }
-        return mav;
-    }
-    @RequestMapping("/index_login")
-    public ModelAndView index_login(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView();
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
-        Member m = memberService.selectNameOfMember(id);
-        mav.addObject("provider",m.getProvider());
-        mav.addObject("id",id);
-        mav.setViewName("index_login");
         return mav;
     }
 

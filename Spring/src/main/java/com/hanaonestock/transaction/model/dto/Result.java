@@ -9,13 +9,13 @@ import javax.persistence.Id;
 public class Result {
     @Id
     private String id; // 사용자 아이디
+    private String name;
+    private String isin;
     private int buy;
     private int sell; // nullable
     private int volume;
-    private String isin;
-    private String dateBuy;
-    private String dateSell; // nullable
-    private String name;
+    private String date_buy;
+    private String date_sell; // nullable
 
     // Default constructor
     public Result() {

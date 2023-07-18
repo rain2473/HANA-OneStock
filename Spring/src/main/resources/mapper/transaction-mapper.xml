@@ -4,13 +4,13 @@
 
 <mapper namespace="com.hanaonestock.transaction.model.dao.TransactionMapper">
     <insert id="insertBuyTransaction" parameterType="com.hanaonestock.transaction.model.dto.Transaction">
-        INSERT INTO TRANSACTION (T_ID, ID, BUY, VOLUME, ISIN, DATE_BUY, DURATION)
-        VALUES (T_ID_seq.NEXTVAL, #{id}, #{buy}, #{volume}, #{isin}, #{dateBuy}, #{duration})
+        INSERT INTO TRANSACTION (T_ID, ID, BUY, VOLUME, ISIN, DURATION)
+        VALUES (T_ID_seq.NEXTVAL, #{id}, #{buy}, #{volume}, #{isin}, #{duration})
     </insert>
 
     <update id="updateSellTransaction" parameterType="com.hanaonestock.transaction.model.dto.Transaction">
         UPDATE TRANSACTION
-        SET SELL = #{sell}, DATE_SELL = #{dateSell}
+        SET SELL = #{sell}, DATE_SELL = sysdate + 3/8
         WHERE ID = #{id} and ISIN = #{isin}
     </update>
 
@@ -21,7 +21,7 @@
     </select>
 
     <select id="findTransactionsById" resultType="com.hanaonestock.transaction.model.dto.Result" parameterType="String">
-        select ID, BUY, SELL, VOLUME, ISIN, DATE_BUY, DATE_SELL, NAME
+        SELECT ID, NAME, ISIN, BUY, SELL, VOLUME, DATE_BUY, DATE_SELL
         FROM (SELECT TRANSACTION.*, STOCK.NAME FROM TRANSACTION, STOCK WHERE TRANSACTION.ISIN = STOCK.ISIN)
         where ID = #{id} and SELL is NOT null
     </select>

@@ -24,16 +24,16 @@
     </div>
 </div>
 
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
+<div id="myModalMain" class="modalMain">
+    <div class="modal-content-main">
+        <div class="modal-header-main">
             <br>
             <h2>${name} 환영합니다.</h2>
             <span class="close" onclick="closeModal()">&times;</span>
         </div>
-        <div class="modal-body">
+        <div class="modal-body-main">
             <form>
-                <div class="form-body">
+                <div class="form-body-main">
                     <h4>목표 수익률을 입력하고,<br>
                         추천 주식을 확인하세요 !</h4>
                     <input type="text" id="goal" name="goal"><br><br>
@@ -50,12 +50,12 @@
 <script>
     // 모달 열기 함수
     function openModal() {
-        document.getElementById("myModal").style.display = "block";
+        document.getElementById("myModalMain").style.display = "block";
     }
 
     // 모달 닫기 함수
     function closeModal() {
-        document.getElementById("myModal").style.display = "none";
+        document.getElementById("myModalMain").style.display = "none";
     }
 
     function goToMain() {
