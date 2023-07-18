@@ -3,6 +3,7 @@ package com.hanaonestock.member.controller;
 import com.hanaonestock.member.model.dto.Member;
 import com.hanaonestock.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -21,6 +22,8 @@ import java.util.Map;
 @Controller
 public class KakaoOAuth2Controller {
     private final MemberService memberService;
+    @Value("${cloud.kakao.server.url}")
+    private String cloudKaKaoPath;
     @Autowired
     public KakaoOAuth2Controller(MemberService memberService) {this.memberService = memberService;}
 
@@ -75,8 +78,7 @@ public class KakaoOAuth2Controller {
                         session.invalidate();
                     }
                     // 카카오 계정 로그아웃 URL로 리다이렉트
-                    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=3e04da871b237fb6169d1ec2b50af7fb&logout_redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F";
-
+                    return "redirect:"+cloudKaKaoPath;
                 }
             }
             // 일반적인 로그아웃 처리

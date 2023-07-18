@@ -188,7 +188,7 @@ public class TransactionController {
             double dayProfit = transactionService.selectDayOfTransaction(id);
             return ResponseEntity.ok(dayProfit);
         } catch (Exception e) {
-            return (ResponseEntity<Double>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
