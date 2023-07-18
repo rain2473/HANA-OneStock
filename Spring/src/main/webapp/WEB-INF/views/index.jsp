@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,47 +11,32 @@
 </head>
 <body>
 <div class="container">
-    <nav>
-        <a href="/">
-            <img src="../../resources/img/logo.png" height="40">
-        </a>
-        <div>
-            <ul>
-                <li class="nav-list">
-                    <a href="#" class="nav-menu" onclick="openModalLogin()">추천종목</a>
-                </li>
-                <li class="nav-list">
-                    <a href="#" class="nav-menu" onclick="openModalLogin()">로그인</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <%@ include file="include/header.jsp" %>
     <div class="content">
         <div class="main">
             <div class="animate__animated animate__slideInLeft slow 4s">
                 <h1><span class="highlight">HANA - One Stock<br></span>SMART TRADING</h1>
             </div>
             <h3>당연하지 않았던 투자환경, 이제는 당연하게</h3>
-            <%
-                String id = (String) session.getAttribute("id");
-                if (id != null) {
-            %>
-            <div onclick="openModalLogin()">
-                <a href="#" class="btn">시작하기</a>
-            </div>
-            <% } else{%>
-            <div onclick="openModalMain()">
-                <a href="#" class="btn">시작하기</a>
-            </div>
-            <%} %>
+            <c:choose>
+                <c:when test="${not empty sessionScope.id}">
+                    <div onclick="openModalMain()">
+                        <a href="#" class="btn">시작하기</a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div onclick="openModalLogin()">
+                        <a href="#" class="btn">시작하기</a>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
-    <div id="myModal" class="modal">
+    <div id="myModalLogin" class="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
                 <img src="../../resources/img/logo2.png" width="205">
             </div>
-
             <div class="modal-body">
                 <div class="form-body">
                     <h2>로그인</h2>
@@ -69,8 +55,8 @@
                     <br>
                     <a href="/oauth2/authorization/kakao" class="kakao_btn"><img src="../../resources/img/kakao.png"
                                                                                  width="20"> 카카오로 시작하기</a>
-
                 </div>
+                <br>
                 <div class="text">
                     <p>소셜 계정으로 로그인 또는 가입 시 <br>개인정보 처리 방침 및 서비스 이용약관에 동의한 것으로 간주합니다.</p>
                 </div>
@@ -78,21 +64,21 @@
             <span class="close" onclick="closeModalLogin()">&times;</span>
         </div>
     </div>
-    <div id="myModalMain" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div id="myModalMain" class="modalMain">
+        <div class="modal-content-main">
+            <div class="modal-header-main">
                 <br>
-                <h2>${name} 환영합니다.</h2>
-                <span class="close" onclick="closeModalMain()">&times;</span>
+                <span style="font-size: 30px;"><h2>${name} 환영합니다.</h2></span>
+                <span class="close-main" onclick="closeModalMain()">&times;</span>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-body">
+            <div class="modal-body-main">
+                <form style="text-align: center">
+                    <div class="form-body-main">
                         <h4>목표 수익률을 입력하고,<br>
                             추천 주식을 확인하세요 !</h4>
                         <input type="text" id="goal" name="goal"><br><br>
                         <%--                    main.jsp로 이동--%>
-                        <input type="button" class="button" value="추천 주식 확인하기" onclick="goToMain()">
+                        <input type="button" class="button-main" value="추천 주식 확인하기" onclick="goToMain()">
                     </div>
                 </form>
             </div>
@@ -104,15 +90,14 @@
 <script type="text/javascript">
     // 모달 열기 함수
     function openModalLogin() {
-        document.getElementById("myModal").style.display = "block";
+        document.getElementById("myModalLogin").style.display = "block";
     }
-
     // 모달 닫기 함수
     function closeModalLogin() {
-        document.getElementById("myModal").style.display = "none";
+        document.getElementById("myModalLogin").style.display = "none";
     }
     function openModalMain(){
-        document.getElementById("myModalMain").style.display = "none";
+        document.getElementById("myModalMain").style.display = "block";
     }
     // 모달 닫기 함수
     function closeModalMain() {
@@ -140,7 +125,7 @@
                     // index_login.jsp로 이동
                     alert("로그인 성공");
                     var link = document.createElement("a");
-                    link.href = "/index_login";
+                    link.href = "/";
                     link.click();
                 } else {
                     console.error("로그인 실패");

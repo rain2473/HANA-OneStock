@@ -67,17 +67,6 @@ public class MemberController {
         mav.setViewName("main");
         return mav;
     }
-    @RequestMapping("/index_login")
-    public ModelAndView index_login(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView();
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
-        Member m = memberService.selectNameOfMember(id);
-        mav.addObject("provider",m.getProvider());
-        mav.addObject("id",id);
-        mav.setViewName("index_login");
-        return mav;
-    }
 
     @RequestMapping("/dashboard")
     public ModelAndView dashboard() {

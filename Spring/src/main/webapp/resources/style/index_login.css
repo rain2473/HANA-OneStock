@@ -78,7 +78,7 @@ input[type="password"] {
     box-sizing: border-box;
 }
 
-.form-body {
+.form-body-main {
     margin-bottom: 70px;
     text-align: center;
     justify-content: center;
@@ -91,7 +91,7 @@ input[type="password"] {
 }
 
 /*모달 스타일*/
-.modal {
+.modalMain {
     display: none; /* 모달 창 초기에 숨김 */
     position: fixed;
     z-index: 1;
@@ -104,7 +104,7 @@ input[type="password"] {
     border-radius: 10px;
 }
 
-.modal-content {
+.modal-content-main {
     border-radius: 8px;
     background-color: white;
     margin: 15% auto;
@@ -116,7 +116,7 @@ input[type="password"] {
     position: relative; /* 추가 */
 }
 
-.modal-header {
+.modal-header-main {
     flex : 1;
     background-color: #A6D4D4;
     border-top-left-radius: 10px;
@@ -125,7 +125,7 @@ input[type="password"] {
     text-align: center;
 }
 
-.modal-body {
+.modal-body-main {
     flex: 2;
     display: flex;
     justify-content: center;
