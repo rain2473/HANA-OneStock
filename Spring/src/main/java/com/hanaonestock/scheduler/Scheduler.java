@@ -35,6 +35,7 @@ public class Scheduler {
     @Value("${flask.server.url}")
     private String flaskServerUrl;
     private LocalDate today;
+    private LocalDate nextDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final ObjectMapper mapper = new ObjectMapper();
     public static final String ohlcvStr = "ohlcv";
@@ -47,8 +48,23 @@ public class Scheduler {
      */
     private String getResquestJson(String str) {
         today = LocalDate.now();
+        LocalDate chooseDay = null;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> flaskResponse = restTemplate.getForEntity(flaskServerUrl + "/stock_info/" + str + "/" + today.format(formatter), String.class);
+
+        switch (str) {
+            case ohlcvStr:
+            case fundamentalStr:
+                chooseDay = today;
+                break;
+            case predictStr:
+            case scoreStr:
+                chooseDay = today.plusDays(1);
+                break;
+            default:
+                return null;
+        }
+
+        ResponseEntity<String> flaskResponse = restTemplate.getForEntity(flaskServerUrl + "/stock_info/" + str + "/" + chooseDay.format(formatter), String.class);
         return flaskResponse.getBody().replaceAll("^\"|\"$", "").replaceAll("\\\\", "").toLowerCase();
     }
 
@@ -107,7 +123,7 @@ public class Scheduler {
     /**
      * 16시에 실행되는 스프링 스케줄러
      */
-    @Scheduled(cron = "0 0 18 * * ?")
+    @Scheduled(cron = "0 0 16 * * ?")
     public void runAt4PMGet() {
 
         String fundamentalJson = getResquestJson(fundamentalStr);
