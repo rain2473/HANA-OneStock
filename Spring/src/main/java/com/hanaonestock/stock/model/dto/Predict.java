@@ -6,7 +6,7 @@ import lombok.Data;
 public class Predict {
 
     private String isin;
-    private Date s_date;
+    private String s_date;
     private int close;
     private int p_price;
     private int r_price;

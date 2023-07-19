@@ -7,7 +7,7 @@ import java.util.Date;
 public class Ohlcv {
     private String name;
     private String isin;
-    private Date s_date;
+    private String s_date;
     private int open;
     private int high;
     private int low;

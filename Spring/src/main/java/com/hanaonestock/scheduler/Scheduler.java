@@ -35,7 +35,6 @@ public class Scheduler {
     @Value("${flask.server.url}")
     private String flaskServerUrl;
     private LocalDate today;
-    private LocalDate nextDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final ObjectMapper mapper = new ObjectMapper();
     public static final String ohlcvStr = "ohlcv";
