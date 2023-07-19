@@ -8,7 +8,7 @@ import java.util.List;
 public class Fundamental {
 
     private String isin;
-    private String s_date;
+    private Date s_date;
     private double per;
     private int eps;
     private int bps;
