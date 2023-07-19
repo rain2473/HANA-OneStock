@@ -11,13 +11,13 @@
         INSERT INTO PREDICT
             (isin, s_date, close, p_price, p_rate, predict)
         VALUES
-            (#{isin}, #{s_date}, #{close}, #{p_price}, #{p_rate}, #{predict})
+            (#{isin}, TO_DATE(#{s_date}, 'YYYYMMDD'),, #{close}, #{p_price}, #{p_rate}, #{predict})
     </insert>
 
     <insert id="updateData" parameterType="com.hanaonestock.stock.model.dto.Predict">
         UPDATE PREDICT SET
             r_price = #{r_price}, r_rate = #{r_rate}, correct = #{correct} , error = #{error}
-        WHERE isin = #{isin} AND s_date = #{s_date}
+        WHERE isin = #{isin} AND s_date = TO_DATE(#{s_date}, 'YYYYMMDD'),
     </insert>
 
     <select id="findByIsinAndDate" resultType="com.hanaonestock.stock.model.dto.Predict">

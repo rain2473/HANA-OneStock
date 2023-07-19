@@ -8,7 +8,7 @@ import java.util.Date;
 public class RecommendedStock {
 
     private String isin;
-    private String s_date;
+    private Date s_date;
     private String name;
     private double updown;
     private int close;

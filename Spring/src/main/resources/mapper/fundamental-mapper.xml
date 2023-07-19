@@ -12,7 +12,7 @@
         INSERT INTO FUNDAMENTAL
             (ISIN, S_DATE, BPS, PER, PBR, EPS, DIV, DPS)
         VALUES
-            (#{isin}, #{s_date}, #{bps}, #{per}, #{pbr}, #{eps}, #{div}, #{dps})
+            (#{isin}, TO_DATE(#{s_date}, 'YYYYMMDD'), #{bps}, #{per}, #{pbr}, #{eps}, #{div}, #{dps})
     </insert>
 
 </mapper>
