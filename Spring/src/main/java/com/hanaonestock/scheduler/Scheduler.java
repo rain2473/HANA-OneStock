@@ -50,20 +50,7 @@ public class Scheduler {
         LocalDate chooseDay = null;
         RestTemplate restTemplate = new RestTemplate();
 
-        switch (str) {
-            case ohlcvStr:
-            case fundamentalStr:
-                chooseDay = today;
-                break;
-            case predictStr:
-            case scoreStr:
-                chooseDay = today.plusDays(1);
-                break;
-            default:
-                return null;
-        }
-
-        ResponseEntity<String> flaskResponse = restTemplate.getForEntity(flaskServerUrl + "/stock_info/" + str + "/" + chooseDay.format(formatter), String.class);
+        ResponseEntity<String> flaskResponse = restTemplate.getForEntity(flaskServerUrl + "/stock_info/" + str + "/" + today.format(formatter), String.class);
         return flaskResponse.getBody().replaceAll("^\"|\"$", "").replaceAll("\\\\", "").toLowerCase();
     }
 
