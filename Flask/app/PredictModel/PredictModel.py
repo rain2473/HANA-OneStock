@@ -1,6 +1,7 @@
 import pandas as pd
 from pykrx import stock as st
 import pickle
+from datetime import datetime   
 
 close_model = pickle.load(open('PredictModel/predict_close_model_new.sav', 'rb'))
 updown_model = pickle.load(open('PredictModel/predict_updown_model_new.sav', 'rb'))
@@ -52,39 +53,53 @@ def preprocessingNewData(today):
 
 # 3. 예측 결과 테이블 작성 및 json 반환
 def predictToday(today):
-    [_, r_price, r_updown, new_data] = preprocessingNewData(today)
-    p_price = pd.DataFrame(close_model.predict(new_data), columns=['p_price'])
-    e_updown = pd.DataFrame(updown_model.predict(new_data), columns=['e_updown'])
+    if is_not_weekend(today):
+        [_, r_price, r_updown, new_data] = preprocessingNewData(today)
+        p_price = pd.DataFrame(close_model.predict(new_data), columns=['p_price'])
+        e_updown = pd.DataFrame(updown_model.predict(new_data), columns=['e_updown'])
 
-    result = pd.concat([new_data, p_price, e_updown], axis=1)
-    result['p_price'] = round(result['p_price']).astype(int)
-    result['e_updown'] = (round(result['e_updown'], 1) + 0.5).astype(int)
-    result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
-    result['tmp_updown'] = (result['p_rate'] > 0).astype(int)
-    result['predict'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
-    result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', "tmp_updown", 'e_updown'], axis =1, inplace=True)
-    result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
-    result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
-    result['s_date'] = result['s_date'].str.replace("-","")
-    return result
+        result = pd.concat([new_data, p_price, e_updown], axis=1)
+        result['p_price'] = round(result['p_price']).astype(int)
+        result['e_updown'] = (round(result['e_updown'], 1) + 0.5).astype(int)
+        result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
+        result['tmp_updown'] = (result['p_rate'] > 0).astype(int)
+        result['predict'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
+        result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', "tmp_updown", 'e_updown'], axis =1, inplace=True)
+        result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
+        result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
+        result['s_date'] = result['s_date'].str.replace("-","")
+        return result
 
 # 4. 예측 평가 테이블 작성 및 json 반환
 def scoreYesterday(today):
-    [new_data, r_price, r_updown, _] = preprocessingNewData(today)
-    p_price = pd.DataFrame(close_model.predict(new_data), columns=['p_price'])
-    e_updown = pd.DataFrame(updown_model.predict(new_data), columns=['e_updown'])
+    if is_not_weekend(today):
+        [new_data, r_price, r_updown, _] = preprocessingNewData(today)
+        p_price = pd.DataFrame(close_model.predict(new_data), columns=['p_price'])
+        e_updown = pd.DataFrame(updown_model.predict(new_data), columns=['e_updown'])
 
-    result = pd.concat([new_data, p_price, r_price , e_updown, r_updown], axis=1)
-    result['p_price'] = round(result['p_price']).astype(int)
-    result['e_updown'] = (round(result['e_updown'], 1) + 0.5).astype(int)
-    result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
-    result['r_rate'] = round((result['r_price'] - result['close']) / result['close'] * 100, 2)
-    result['tmp_updown'] = (result['p_rate'] > 0).astype(int)
-    result['predict'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
-    result['correct'] = (result['predict']==result['r_updown']).astype(int)
-    result['error'] = round((abs((result['p_price'] - result['r_price']) / result['r_price']) * 100), 2)
-    result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', 'tmp_updown', "e_updown","r_updown"], axis =1, inplace=True)
-    result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
-    result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
-    result['s_date'] = result['s_date'].str.replace("-","")
-    return result
+        result = pd.concat([new_data, p_price, r_price , e_updown, r_updown], axis=1)
+        result['p_price'] = round(result['p_price']).astype(int)
+        result['e_updown'] = (round(result['e_updown'], 1) + 0.5).astype(int)
+        result['p_rate'] = round((result['p_price'] - result['close']) / result['close'] * 100, 2)
+        result['r_rate'] = round((result['r_price'] - result['close']) / result['close'] * 100, 2)
+        result['tmp_updown'] = (result['p_rate'] > 0).astype(int)
+        result['predict'] = ((result['e_updown'] == 1) & (result['tmp_updown'] == 1)).astype(int)
+        result['correct'] = (result['predict']==result['r_updown']).astype(int)
+        result['error'] = round((abs((result['p_price'] - result['r_price']) / result['r_price']) * 100), 2)
+        result.drop(['open', 'high', 'low', 'volume', 'amount', 'updown', 'tmp_updown', "e_updown","r_updown"], axis =1, inplace=True)
+        result['isin'].replace(stock_label.set_index('num')['isin'], inplace=True)
+        result['s_date'].replace(date_label.set_index('num')['s_date'], inplace=True)
+        result['s_date'] = result['s_date'].str.replace("-","")
+        return result
+
+
+def is_not_weekend(date_str):
+    # 입력받은 날짜 문자열을 datetime 객체로 변환
+    date_obj = datetime.strptime(date_str, "%Y%m%d")
+    
+    # datetime 객체의 weekday 메서드를 사용하여 요일을 확인 (0: 월요일, 6: 일요일)
+    # 주말은 토요일(5) 또는 일요일(6)이므로 해당 요일에 해당하는지 확인
+    if date_obj.weekday() in (5, 6):
+        return False
+    else:
+        return True
