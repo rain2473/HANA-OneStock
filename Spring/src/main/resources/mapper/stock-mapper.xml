@@ -34,11 +34,11 @@
             (SELECT * FROM PREDICT WHERE S_DATE =
                  CASE
                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
-                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
+                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE + 3 / 8, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
-                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
+                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE + 3 / 8, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
                      ELSE
-                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
+                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE + 3 / 8, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
                      END AND PREDICT = 1 ORDER BY P_RATE DESC) P
                 INNER JOIN
             (SELECT ISIN, ROUND(PERCENTILE_CONT(0.1) WITHIN GROUP (ORDER BY VOLUME)) AS Bottom FROM OHLCV GROUP BY ISIN) O1
